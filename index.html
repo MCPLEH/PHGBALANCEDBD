@@ -1272,13 +1272,12 @@
         </section>
     </div>
 </div>
-<!DOCTYPE html>
 <html>
 <head>
     <title>Кнопки-счетчики</title>
     <style>
         body {
-            display: flex;
+            //display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -1290,7 +1289,7 @@
         .counter-container {
             display: flex;
             gap: 30px;
-            margin-left: 100px;
+            margin-left: 800px; /* Основное изменение здесь */
         }
         button {
             padding: 15px 30px;
@@ -1305,82 +1304,29 @@
         #likeBtn {
             background: #4CAF50;
         }
-        #likeBtn:hover:not(:disabled) {
+        #likeBtn:hover {
             background: #45a049;
         }
         #dislikeBtn {
             background: #f44336;
         }
-        #dislikeBtn:hover:not(:disabled) {
+        #dislikeBtn:hover {
             background: #d32f2f;
         }
-        button:active:not(:disabled) {
+        button:active {
             transform: scale(0.98);
-        }
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
     <div class="counter-container">
-        <button id="dislikeBtn" onclick="vote('dislike')">
-            👎: <span id="dislikeCount">0</span>
+        <button id="dislikeBtn" onclick="localStorage.dislikes = (parseInt(localStorage.dislikes) || 0); this.innerHTML = '👎: ' + ++localStorage.dislikes">
+            👎: <script>document.write(localStorage.dislikes || 0)</script>
         </button>
-        <button id="likeBtn" onclick="vote('like')">
-            👍: <span id="likeCount">0</span>
+        <button id="likeBtn" onclick="localStorage.likes = (parseInt(localStorage.likes) || 0); this.innerHTML = '👍: ' + ++localStorage.likes">
+            👍: <script>document.write(localStorage.likes || 0)</script>
         </button>
     </div>
-
-    <script>
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем сохраненные значения
-            document.getElementById('likeCount').textContent = 
-                localStorage.getItem('likes') || 0;
-            document.getElementById('dislikeCount').textContent = 
-                localStorage.getItem('dislikes') || 0;
-            
-            // Проверяем, голосовал ли уже пользователь в этой сессии
-            if(sessionStorage.getItem('hasVoted')) {
-                disableButtons();
-            }
-        });
-
-        function vote(type) {
-            if(sessionStorage.getItem('hasVoted')) {
-                alert('Вы уже проголосовали в этом сеансе!');
-                return;
-            }
-            
-            // Получаем текущее значение
-            let currentValue = parseInt(localStorage.getItem(type + 's')) || 0;
-            currentValue++;
-            
-            // Обновляем в localStorage и на странице
-            localStorage.setItem(type + 's', currentValue);
-            document.getElementById(type + 'Count').textContent = currentValue;
-            
-            // Помечаем как проголосовавшего (только для этой сессии)
-            sessionStorage.setItem('hasVoted', 'true');
-            disableButtons();
-            
-            // Анимация
-            animateButton(type);
-        }
-        
-        function disableButtons() {
-            document.getElementById('likeBtn').disabled = true;
-            document.getElementById('dislikeBtn').disabled = true;
-        }
-        
-        function animateButton(type) {
-            const btn = document.getElementById(type + 'Btn');
-            btn.style.transform = 'scale(1.1)';
-            setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
-        }
-    </script>
 </body>
 </html>
 	<center>
@@ -1398,3 +1344,4 @@
 			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
 </body>
 </html>
+
