@@ -987,7 +987,7 @@
                         <td>Групповой Этап</td>
                         <td>18.08.2025</td>
                         <td>Начало в 19:00 МСК</td>
-                        <td>4 команды - Best of Wins</td>
+                        <td>5 команд - Best of Wins</td>
                     </tr>
                     <tr>
                         <td>Отборочный Этап</td>
@@ -1160,7 +1160,7 @@
 <body>
     <h1 class="tournament-title">Турнирная сетка и список команд</h1>
         <p class="note">Результаты сетки обновляются раз в сутки.</p>
-    <center><img src="https://i.postimg.cc/0NXxzd88/2.png" alt="Логотип"></center>
+    <center><img src="https://i.postimg.cc/XvMTZH5c/2.png" alt="Логотип"></center>
    <h4></h4>
    <section class="section">
 			</a>
@@ -1272,9 +1272,66 @@
         </section>
     </div>
 </div>
-    <center>
-        
-            <br>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Кнопки-счетчики</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            gap: 20px;
+        }
+        .counter-container {
+            display: flex;
+            gap: 30px;
+			margin-left: 100px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        #likeBtn {
+            background: #4CAF50;
+        }
+        #likeBtn:hover {
+            background: #45a049;
+        }
+        #dislikeBtn {
+            background: #f44336;
+        }
+        #dislikeBtn:hover {
+            background: #d32f2f;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+<button id="dislikeBtn" onclick="localStorage.dislikes = (parseInt(localStorage.dislikes) || 0); this.innerHTML = '👎: ' + ++localStorage.dislikes">
+    👎: <script>document.write(localStorage.dislikes || 0)</script>
+</button>
+<button id="likeBtn" onclick="localStorage.likes = (parseInt(localStorage.likes) || 0); this.innerHTML = '👍: ' + ++localStorage.likes">
+    👍: <script>document.write(localStorage.likes || 0)</script>
+</button>
+    </div>
+</body>
+</html>
+	<center>
+           <br>
 			<p>© 2025 Турнир по <a href="https://deadbydaylight.com/" target="_blank" rel="noopener noreferrer">Dead by Daylight</a> | Организаторы: MCPLEH</p>
 			<h4></h4>
         </div>
@@ -1288,5 +1345,3 @@
 			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
 </body>
 </html>
-
-
