@@ -222,7 +222,7 @@
 <body>
 <!-- Контейнер для кнопок -->
     <div class="buttons-container">
-       <button class="open-btn" onclick="openKillersPage()">Открыть список киллеров</button> <button class="reset-btn" onclick="resetAll()">Сбросить баны карт</button> <button class="open-btn" onclick="openMapsPage()">Открыть список карт</button>
+    <button class="open-btn" onclick="openKillersPage()">Открыть список киллеров</button> <button class="reset-btn" onclick="resetAll()">Сбросить баны киллеров</button> <button class="open-btn" onclick="openMapsPage()">Открыть список карт</button> <button class="reset-btn" onclick="openManualPage()">Инструкция</button>
         
     </div>
     <script>
@@ -233,6 +233,11 @@
         
         function openMapsPage() {
             window.location.href = "Pick1Ban.html";
+            // или window.open("maps.html", "_blank"); для новой вкладки
+        }
+		
+		function openManualPage() {
+            window.location.href = "Manual.html";
             // или window.open("maps.html", "_blank"); для новой вкладки
         }
     </script>
