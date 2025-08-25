@@ -421,10 +421,9 @@
         <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
         <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
     </center>
-
     <script>
     // Конфигурация Google Apps Script
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZPbM7t0ZrudMDW_kRCWoMi4MAR_g91pjDVon8SeY1yYUdUDj6muG9mKanmfCr-Tc/exec'; // Замените на URL вашего веб-приложения
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZPbM7t0ZrudMDW_kRCWoMi4MAR_g91pjDVon8SeY1yYUdUDj6muG9mKanmfCr-Tc/exec';
     
     document.addEventListener('DOMContentLoaded', function() {
         const reviewsList = document.getElementById('reviews-list');
@@ -433,8 +432,10 @@
         const loadMoreBtn = document.getElementById('load-more');
         const notification = document.getElementById('notification');
         const loginModeratorBtn = document.getElementById('login-moderator');
+        const logoutModeratorBtn = document.getElementById('logout-moderator');
         const moderatorTools = document.getElementById('moderator-tools');
         const moderationList = document.getElementById('moderation-list');
+        const moderatorPassword = document.getElementById('moderator-password');
         
         let currentRating = 0;
         let allReviews = [];
@@ -477,36 +478,164 @@
         // Функция для загрузки отзывов через Google Apps Script
         async function loadReviewsFromScript() {
             try {
+                showNotification('Загрузка отзывов...', true);
+                
+                console.log('Запрос отзывов с URL:', SCRIPT_URL + '?action=get');
                 const response = await fetch(`${SCRIPT_URL}?action=get`);
                 const data = await response.json();
                 
-                if (data.success && data.reviews) {
-                    allReviews = data.reviews;
+                console.log('Ответ от сервера (отзывы):', data);
+                
+                if (data.success) {
+                    allReviews = data.reviews || [];
                     displayReviews();
-                    showNotification('Отзывы успешно загружены');
+                    
+                    if (allReviews.length > 0) {
+                        showNotification(`Загружено ${allReviews.length} отзывов`);
+                    } else {
+                        showNotification('Пока нет отзывов');
+                    }
                 } else {
-                    showNotification('Пока нет отзывов', false);
-                    allReviews = [];
-                    displayReviews();
+                    showNotification('Ошибка загрузки: ' + (data.message || 'Неизвестная ошибка'), false);
+                    loadMockReviews();
                 }
                 
             } catch (error) {
                 console.error('Ошибка загрузки отзывов:', error);
-                showNotification('Ошибка загрузки отзывов', false);
-                // Загрузка демо-данных при ошибке
+                showNotification('Ошибка загрузки отзывов: ' + error.message, false);
                 loadMockReviews();
             }
         }
 
-        // Загрузка mock-отзывов (для демонстрации)
-        function loadMockReviews() {
-            const mockReviews = [
-                { id: 1, author: 'Игрок_1', rating: 5, content: 'Отличный проект! Очень помог улучшить мои навыки в DBD.', date: '2023-10-15' },
-                { id: 2, author: 'Игрок_2', rating: 4, content: 'Хорошая система перков, но иногда не хватает описаний некоторых механик.', date: '2023-10-10' }
-            ];
+        // Функция для загрузки отзывов на модерацию
+        async function loadModerationReviews() {
+            try {
+                showNotification('Загрузка отзывов для модерации...', true);
+                
+                console.log('Запрос модерации с URL:', SCRIPT_URL + '?action=getModeration');
+                const response = await fetch(`${SCRIPT_URL}?action=getModeration`);
+                const data = await response.json();
+                
+                console.log('Ответ от сервера (модерация):', data);
+                
+                if (data.success) {
+                    displayModerationReviews(data.reviews || []);
+                    
+                    if (data.reviews && data.reviews.length > 0) {
+                        showNotification(`Загружено ${data.reviews.length} отзывов для модерации`);
+                    } else {
+                        showNotification('Нет отзывов для модерации');
+                    }
+                } else {
+                    showNotification('Ошибка загрузки модерации: ' + (data.message || 'Неизвестная ошибка'), false);
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки отзывов для модерации:', error);
+                showNotification('Ошибка загрузки отзывов для модерации: ' + error.message, false);
+            }
+        }
+
+        // Функция для отображения отзывов на модерации
+        function displayModerationReviews(reviews) {
+            if (!reviews || reviews.length === 0) {
+                moderationList.innerHTML = `
+                    <div class="empty-reviews">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #4caf50; margin-bottom: 1rem;"></i>
+                        <p>Нет отзывов для модерации</p>
+                        <p style="font-size: 0.9rem; color: #888;">Все отзывы проверены</p>
+                    </div>
+                `;
+                return;
+            }
             
-            allReviews = mockReviews;
-            displayReviews();
+            moderationList.innerHTML = '';
+            reviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-card';
+                reviewElement.dataset.id = review.id;
+                
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
+                }
+                
+                const displayDate = review.date || (review.timestamp ? new Date(review.timestamp).toLocaleDateString('ru-RU') : 'Дата не указана');
+                
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-author">${review.author || 'Аноним'}</span>
+                        <span class="review-date">${displayDate}</span>
+                    </div>
+                    <div class="review-content">${review.content || ''}</div>
+                    <div class="review-rating">${starsHtml}</div>
+                    <div class="review-id" style="font-size: 0.8rem; color: #888; margin-top: 0.5rem;">
+                        ID: ${review.id} | Статус: ${review.status || 'unknown'}
+                    </div>
+                    <div class="moderator-controls" style="margin-top: 1rem; display: flex; gap: 10px;">
+                        <button class="btn btn-small approve-btn" style="flex: 1;">
+                            <i class="fas fa-check"></i> Одобрить
+                        </button>
+                        <button class="btn btn-small btn-danger reject-btn" style="flex: 1;">
+                            <i class="fas fa-times"></i> Удалить
+                        </button>
+                    </div>
+                `;
+                
+                moderationList.appendChild(reviewElement);
+            });
+            
+            // Добавляем обработчики для кнопок модерации
+            document.querySelectorAll('.approve-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const reviewElement = this.closest('.review-card');
+                    const reviewId = reviewElement.dataset.id;
+                    const author = reviewElement.querySelector('.review-author').textContent;
+                    
+                    if (confirm(`Одобрить отзыв от ${author}?`)) {
+                        await moderateReview(reviewId, 'approve');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.reject-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const reviewElement = this.closest('.review-card');
+                    const reviewId = reviewElement.dataset.id;
+                    const author = reviewElement.querySelector('.review-author').textContent;
+                    
+                    if (confirm(`Удалить отзыв от ${author}?`)) {
+                        await moderateReview(reviewId, 'reject');
+                    }
+                });
+            });
+        }
+
+        // Функция для модерации отзыва
+        async function moderateReview(reviewId, action) {
+            try {
+                showNotification('Обработка...', true);
+                
+                const response = await fetch(`${SCRIPT_URL}?action=moderate&id=${reviewId}&action=${action}`);
+                const data = await response.json();
+                
+                console.log('Ответ модерации:', data);
+                
+                if (data.success) {
+                    showNotification(`Отзыв ${action === 'approve' ? 'одобрен' : 'удален'}`);
+                    // Перезагружаем список модерации
+                    setTimeout(() => {
+                        loadModerationReviews();
+                        // Также обновляем основные отзывы если одобрили
+                        if (action === 'approve') {
+                            setTimeout(() => loadReviewsFromScript(), 500);
+                        }
+                    }, 1000);
+                } else {
+                    showNotification('Ошибка модерации: ' + (data.message || 'Неизвестная ошибка'), false);
+                }
+            } catch (error) {
+                showNotification('Ошибка модерации: ' + error.message, false);
+            }
         }
 
         // Функция для отправки отзыва через Google Apps Script
@@ -516,7 +645,6 @@
                 formData.append('author', author);
                 formData.append('rating', rating);
                 formData.append('content', content);
-                formData.append('action', 'add');
                 
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
@@ -526,12 +654,14 @@
                     body: formData
                 });
                 
-                const data = await response.json();
-                return data;
+                return await response.json();
                 
             } catch (error) {
                 console.error('Ошибка отправки отзыва:', error);
-                throw new Error('Не удалось отправить отзыв');
+                return {
+                    success: false,
+                    message: 'Сетевая ошибка: ' + error.message
+                };
             }
         }
 
@@ -556,12 +686,14 @@
                     starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
                 }
                 
+                const displayDate = review.date || (review.timestamp ? new Date(review.timestamp).toLocaleDateString('ru-RU') : 'Дата не указана');
+                
                 reviewElement.innerHTML = `
                     <div class="review-header">
-                        <span class="review-author">${review.author}</span>
-                        <span class="review-date">${review.date || review.timestamp}</span>
+                        <span class="review-author">${review.author || 'Аноним'}</span>
+                        <span class="review-date">${displayDate}</span>
                     </div>
-                    <div class="review-content">${review.content}</div>
+                    <div class="review-content">${review.content || ''}</div>
                     <div class="review-rating">${starsHtml}</div>
                 `;
                 
@@ -586,16 +718,6 @@
                 return;
             }
             
-            if (author.length > 50) {
-                showNotification('Имя не должно превышать 50 символов', false);
-                return;
-            }
-            
-            if (content.length > 500) {
-                showNotification('Отзыв не должен превышать 500 символов', false);
-                return;
-            }
-            
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
             
@@ -603,7 +725,6 @@
                 const result = await submitReviewToScript(author, content, currentRating);
                 
                 if (result.success) {
-                    // Сбрасываем форму
                     document.getElementById('review-author').value = '';
                     document.getElementById('review-content').value = '';
                     currentRating = 0;
@@ -611,7 +732,6 @@
                     
                     showNotification('Спасибо за ваш отзыв! Он будет опубликован после проверки.');
                     
-                    // Обновляем отзывы через несколько секунд
                     setTimeout(() => {
                         loadReviewsFromScript();
                     }, 2000);
@@ -635,10 +755,13 @@
 
         // Функции для модератора
         loginModeratorBtn.addEventListener('click', function() {
-            const password = document.getElementById('moderator-password').value;
+            const password = moderatorPassword.value;
             
             if (password === MODERATOR_PASSWORD) {
                 moderatorTools.style.display = 'block';
+                moderatorPassword.style.display = 'none';
+                loginModeratorBtn.style.display = 'none';
+                if (logoutModeratorBtn) logoutModeratorBtn.style.display = 'inline-block';
                 loadModerationReviews();
                 showNotification('Добро пожаловать в панель модератора!');
             } else {
@@ -646,94 +769,21 @@
             }
         });
 
+        // Кнопка выхода из режима модератора
+        if (logoutModeratorBtn) {
+            logoutModeratorBtn.addEventListener('click', function() {
+                moderatorTools.style.display = 'none';
+                moderatorPassword.style.display = 'inline-block';
+                loginModeratorBtn.style.display = 'inline-block';
+                this.style.display = 'none';
+                moderatorPassword.value = '';
+                showNotification('Вы вышли из режима модератора');
+            });
+        }
+
         // Загружаем отзывы при загрузке страницы
         loadReviewsFromScript();
-        
-        // Обновляем отзывы каждые 2 минуты
-        setInterval(loadReviewsFromScript, 120000);
     });
-	// Функция для загрузки отзывов на модерацию
-async function loadModerationReviews() {
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=getModeration`);
-        const data = await response.json();
-        
-        if (data.success && data.reviews) {
-            displayModerationReviews(data.reviews);
-        }
-    } catch (error) {
-        console.error('Ошибка загрузки отзывов для модерации:', error);
-    }
-}
-
-// Функция для отображения отзывов на модерации
-function displayModerationReviews(reviews) {
-    if (reviews.length === 0) {
-        moderationList.innerHTML = '<div class="empty-reviews">Нет отзывов для модерации</div>';
-        return;
-    }
-    
-    moderationList.innerHTML = '';
-    reviews.forEach(review => {
-        const reviewElement = document.createElement('div');
-        reviewElement.className = 'review-card';
-        reviewElement.dataset.id = review.id;
-        
-        let starsHtml = '';
-        for (let i = 1; i <= 5; i++) {
-            starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
-        }
-        
-        reviewElement.innerHTML = `
-            <div class="review-header">
-                <span class="review-author">${review.author}</span>
-                <span class="review-date">${review.date}</span>
-            </div>
-            <div class="review-content">${review.content}</div>
-            <div class="review-rating">${starsHtml}</div>
-            <div class="moderator-controls">
-                <button class="btn btn-small approve-btn">Одобрить</button>
-                <button class="btn btn-small btn-danger reject-btn">Удалить</button>
-            </div>
-        `;
-        
-        moderationList.appendChild(reviewElement);
-    });
-    
-    // Добавляем обработчики для кнопок модерации
-    document.querySelectorAll('.approve-btn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const reviewId = this.closest('.review-card').dataset.id;
-            await moderateReview(reviewId, 'approve');
-            loadModerationReviews();
-            loadReviewsFromScript();
-        });
-    });
-    
-    document.querySelectorAll('.reject-btn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const reviewId = this.closest('.review-card').dataset.id;
-            await moderateReview(reviewId, 'reject');
-            loadModerationReviews();
-        });
-    });
-}
-
-// Функция для модерации отзыва
-async function moderateReview(reviewId, action) {
-    try {
-        const response = await fetch(`${SCRIPT_URL}?action=moderate&id=${reviewId}&action=${action}`);
-        const data = await response.json();
-        
-        if (data.success) {
-            showNotification(`Отзыв ${action === 'approve' ? 'одобрен' : 'удален'}`);
-        } else {
-            showNotification('Ошибка модерации', false);
-        }
-    } catch (error) {
-        showNotification('Ошибка модерации', false);
-    }
-}
 </script>
 </body>
 </html>
