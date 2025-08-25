@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | DBD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Eater&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        //.hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .perk-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .section {
+            background-color: rgba(40, 40, 40, 0.7);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        /* Стили для двух столбцов */
+        .points-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .points-column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .points-column h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: rgba(194, 25, 25, 0.2);
+        }
+        
+        /* Стили для рулетки */
+        .wheel-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        
+        #wheelCanvas {
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+        
+        .pointer {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 50px;
+            background-color: #ff0000;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        
+        .controls-section {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .section-title {
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #333;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tab.active {
+            background: #ff0000;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .wheel-input-group {
+            margin-bottom: 15px;
+        }
+        
+        .wheel-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+        
+        .wheel-input-group input[type="text"], .wheel-input-group input[type="color"], .wheel-input-group select {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .wheel-input-group input[type="text"]:focus, .wheel-input-group select:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+        
+        .color-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .color-group input[type="color"] {
+            width: 60px;
+            height: 40px;
+            padding: 2px;
+        }
+        
+        .item-list {
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 4px;
+        }
+        
+        .item input {
+            flex: 1;
+            margin-right: 10px;
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 5px;
+        }
+        
+        .remove-btn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .remove-btn:hover {
+            background: #cc0000;
+        }
+        
+        .wheel-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .wheel-button {
+            padding: 12px 20px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Roboto Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .wheel-button:hover {
+            background: #cc0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        
+        .spin {
+            background: linear-gradient(135deg, #ff0000 0%, #990000 100%);
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            margin-top: 20px;
+        }
+        
+        .url-section {
+            width: 100%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+        
+        textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #fff;
+            resize: none;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .url-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        #copyStatus {
+            margin-left: 15px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .blood-splatter {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        .blood-1 {
+            top: 10%;
+            left: 5%;
+            font-size: 120px;
+            transform: rotate(-20deg);
+        }
+        
+        .blood-2 {
+            bottom: 15%;
+            right: 8%;
+            font-size: 150px;
+            transform: rotate(15deg);
+        }
+        
+        .obs-hint {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .font-example {
+            font-size: 16px;
+            margin-top: 5px;
+            color: #ff0000;
+        }
+
+        /* Стили для OBS режима */
+        body.obs-mode {
+            background: transparent;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        body.obs-mode .container {
+            max-width: 400px;
+        }
+        
+        body.obs-mode .wheel-container {
+            margin-bottom: 0;
+        }
+        
+        body.obs-mode header,
+        body.obs-mode .controls-section,
+        body.obs-mode .url-section,
+        body.obs-mode .blood-splatter {
+            display: none !important;
+        }
+        
+        body.obs-mode #spinButton {
+            display: none;
+        }
+        
+        @media (max-width: 900px) {
+            .wheel-container {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blood-splatter blood-1">🩸</div>
+    <div class="blood-splatter blood-2">🩸</div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="perksK.html">Перки</a></li>
+                        <li><a href="Guides.html">Гайды</a></li>
+                        <li><a href="Gallery.html">Галерея</a></li>
+                        <li><a href="sponsors.html">Партнеры</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    
+	<section class="hero">
+        <div class="container">
+            <center><h1>Рулетка Боли и страданий</h1>
+            <p>Вы можете крутить рулетку тут, или встроить её в свой OBS бесплатно</p></center>
+        </div>
+    </section>
+<br>
+    <div class="container">
+        <div class="wheel-section">
+            <div class="wheel-container">
+                <canvas id="wheelCanvas" width="400" height="400"></canvas>
+                <div class="pointer"></div>
+            </div>
+            <button id="spinButton" class="wheel-button spin">Крутить рулетку</button>
+        </div>
+        
+        <div class="controls-section">
+            <div class="tabs">
+                <div class="tab active" data-tab="items">Элементы</div>
+                <div class="tab" data-tab="colors">Цвета</div>
+                <div class="tab" data-tab="fonts">Шрифты</div>
+            </div>
+            
+            <div class="tab-content active" id="items-tab">
+                <h2 class="section-title">Управление элементами</h2>
+                
+                <div class="wheel-input-group">
+                    <label for="newItem">Новый элемент:</label>
+                    <input type="text" id="newItem" placeholder="Введите текст элемента">
+                </div>
+                
+                <button id="addItemBtn" class="wheel-button">Добавить элемент</button>
+                
+                <div class="item-list" id="itemsList">
+                    <!-- Элементы будут добавляться здесь -->
+                </div>
+                
+                <div class="wheel-buttons">
+                    <button id="clearItemsBtn" class="wheel-button">Очистить все</button>
+                    <button id="randomizeBtn" class="wheel-button">Случайный порядок</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="colors-tab">
+                <h2 class="section-title">Настройка цветов</h2>
+                
+                <div class="wheel-input-group">
+                    <label for="color1">Цвет сегмента 1:</label>
+                    <div class="color-group">
+                        <input type="color" id="color1" value="#000000">
+                        <input type="text" id="color1-text" value="#000000">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="color2">Цвет сегмента 2:</label>
+                    <div class="color-group">
+                        <input type="color" id="color2" value="#8b0000">
+                        <input type="text" id="color2-text" value="#8b0000">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="textColor1">Цвет текста для сегмента 1:</label>
+                    <div class="color-group">
+                        <input type="color" id="textColor1" value="#ff0000">
+                        <input type="text" id="textColor1-text" value="#ff0000">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="textColor2">Цвет текста для сегмента 2:</label>
+                    <div class="color-group">
+                        <input type="color" id="textColor2" value="#ffffff">
+                        <input type="text" id="textColor2-text" value="#ffffff">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="centerColor">Цвет центра:</label>
+                    <div class="color-group">
+                        <input type="color" id="centerColor" value="#000000">
+                        <input type="text" id="centerColor-text" value="#000000">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="centerBorderColor">Цвет границы центра:</label>
+                    <div class="color-group">
+                        <input type="color" id="centerBorderColor" value="#ff0000">
+                        <input type="text" id="centerBorderColor-text" value="#ff0000">
+                    </div>
+                </div>
+                
+                <button id="applyColors" class="wheel-button">Применить цвета</button>
+            </div>
+            
+            <div class="tab-content" id="fonts-tab">
+                <h2 class="section-title">Настройка шрифтов</h2>
+                
+                <div class="wheel-input-group">
+                    <label for="fontSelect">Выберите шрифт:</label>
+                    <select id="fontSelect">
+                        <option value="'Roboto Mono', monospace">Roboto Mono (по умолчанию)</option>
+                        <option value="'Creepster', cursive">Creepster</option>
+                        <option value="'Special Elite', cursive">Special Elite</option>
+                        <option value="'Nosifer', cursive">Nosifer</option>
+                        <option value="'Eater', cursive">Eater</option>
+                        <option value="'MedievalSharp', cursive">MedievalSharp</option>
+                        <option value="'Butcherman', cursive">Butcherman</option>
+                        <option value="'Grenze Gotisch', cursive">Grenze Gotisch</option>
+                        <option value="'Henny Penny', cursive">Henny Penny</option>
+                        <option value="'Irish Grover', cursive">Irish Grover</option>
+                        <option value="'Arial', sans-serif">Arial</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                    </select>
+                    <div class="font-example" id="fontExample">Пример текста выбранным шрифтом</div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="fontSize">Размер шрифта (px):</label>
+                    <input type="text" id="fontSize" value="14">
+                </div>
+                
+                <button id="applyFont" class="wheel-button">Применить шрифт</button>
+            </div>
+        </div>
+        
+        <div class="url-section">
+            <h2 class="section-title">URL для встраивания в OBS</h2>
+            <textarea id="obsUrl" readonly></textarea>
+            <p class="obs-hint">Скопируйте эту ссылку и используйте в OBS как источник браузера.</p>
+            <div class="url-actions">
+                <button id="copyUrlBtn" class="wheel-button">Копировать URL</button>
+                <span id="copyStatus"></span>
+            </div>
+        </div>
+
+        <section class="section">
+		<h2><strong>Док-браузер OBS</strong></h2>
+        <p>Если вы встроили рулетку в OBS. И при Анимации возникают проблемы, попробуйте добавить в док-браузер OBS эту ссылку. <br>Далее крутить и настраивать рулетку уже в самой OBS: <textarea>https://mcpleh.github.io/PHGBALANCEDBD/Rulletobs.html</textarea></p>
+        </section>
+    </div>
+<p style="font-size: 8px;">Изначально рулетка была проидумана для шоу матчей по DBD - Lagerta_Seeman и Nestli_Exidaz</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const spinButton = document.getElementById('spinButton');
+        const addItemBtn = document.getElementById('addItemBtn');
+        const newItemInput = document.getElementById('newItem');
+        const itemsList = document.getElementById('itemsList');
+        const obsUrl = document.getElementById('obsUrl');
+        const copyUrlBtn = document.getElementById('copyUrlBtn');
+        const copyStatus = document.getElementById('copyStatus');
+        const clearItemsBtn = document.getElementById('clearItemsBtn');
+        const randomizeBtn = document.getElementById('randomizeBtn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const applyColorsBtn = document.getElementById('applyColors');
+        const fontSelect = document.getElementById('fontSelect');
+        const fontSizeInput = document.getElementById('fontSize');
+        const applyFontBtn = document.getElementById('applyFont');
+        const fontExample = document.getElementById('fontExample');
+        
+        // Настройки по умолчанию
+        let items = ['Выживший', 'Убийца', 'Снаряжение', 'Предмет', 'Донат'];
+        let isSpinning = false;
+        let currentRotation = 0;
+        let animationId = null;
+        let wheelColors = {
+            color1: '#000000',
+            color2: '#8b0000',
+            textColor1: '#ff0000',
+            textColor2: '#ffffff',
+            centerColor: '#000000',
+            centerBorderColor: '#ff0000'
+        };
+        let wheelFont = {
+            family: "'Roboto Mono', monospace",
+            size: 14
+        };
+        
+        // Инициализация
+        initColorInputs();
+        initFontSettings();
+        drawWheel();
+        updateItemsList();
+        updateObsUrl();
+        
+        // Инициализация цветовых input'ов
+        function initColorInputs() {
+            // Устанавливаем значения по умолчанию
+            document.getElementById('color1').value = wheelColors.color1;
+            document.getElementById('color1-text').value = wheelColors.color1;
+            document.getElementById('color2').value = wheelColors.color2;
+            document.getElementById('color2-text').value = wheelColors.color2;
+            document.getElementById('textColor1').value = wheelColors.textColor1;
+            document.getElementById('textColor1-text').value = wheelColors.textColor1;
+            document.getElementById('textColor2').value = wheelColors.textColor2;
+            document.getElementById('textColor2-text').value = wheelColors.textColor2;
+            document.getElementById('centerColor').value = wheelColors.centerColor;
+            document.getElementById('centerColor-text').value = wheelColors.centerColor;
+            document.getElementById('centerBorderColor').value = wheelColors.centerBorderColor;
+            document.getElementById('centerBorderColor-text').value = wheelColors.centerBorderColor;
+            
+            // Добавляем обработчики для синхронизации color picker и text input
+            const colorInputs = document.querySelectorAll('input[type="color"]');
+            colorInputs.forEach(input => {
+                const textInput = document.getElementById(`${input.id}-text`);
+                input.addEventListener('input', () => {
+                    textInput.value = input.value;
+                });
+                textInput.addEventListener('input', () => {
+                    input.value = textInput.value;
+                });
+            });
+        }
+        
+        // Инициализация настроек шрифта
+        function initFontSettings() {
+            fontSelect.value = wheelFont.family;
+            fontSizeInput.value = wheelFont.size;
+            updateFontExample();
+            
+            fontSelect.addEventListener('change', updateFontExample);
+            fontSizeInput.addEventListener('input', updateFontExample);
+        }
+        
+        // Обновление примера шрифта
+        function updateFontExample() {
+            fontExample.style.fontFamily = fontSelect.value;
+            fontExample.style.fontSize = `${fontSizeInput.value}px`;
+        }
+        
+        // Функция отрисовки рулетки
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (items.length === 0) {
+                ctx.font = `20px ${wheelFont.family}`;
+                ctx.fillStyle = wheelColors.textColor1;
+                ctx.textAlign = 'center';
+                ctx.fillText('Добавьте элементы', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            const anglePerItem = (2 * Math.PI) / items.length;
+            
+            // Рисуем сегменты
+            for (let i = 0; i < items.length; i++) {
+                const startAngle = i * anglePerItem;
+                const endAngle = (i + 1) * anglePerItem;
+                
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                
+                // Чередуем цвета
+                ctx.fillStyle = i % 2 === 0 ? wheelColors.color1 : wheelColors.color2;
+                ctx.fill();
+                
+                // Рисуем текст
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + anglePerItem / 2);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = i % 2 === 0 ? wheelColors.textColor1 : wheelColors.textColor2;
+                ctx.font = `${wheelFont.size}px ${wheelFont.family}`;
+                ctx.fillText(items[i], radius - 20, 5);
+                ctx.restore();
+            }
+            
+            // Рисуем центр рулетки
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.1, 0, 2 * Math.PI);
+            ctx.fillStyle = wheelColors.centerColor;
+            ctx.fill();
+            ctx.strokeStyle = wheelColors.centerBorderColor;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+        
+        // Функция вращения рулетки
+        function spinWheel() {
+            if (isSpinning || items.length === 0) return;
+            
+            isSpinning = true;
+            spinButton.disabled = true;
+            
+            const spinDuration = 3000 + Math.random() * 2000; // 3-5 секунд
+            const startTime = performance.now();
+            const startRotation = currentRotation;
+            
+            // Случайный конечный угол (минимум 2 полных оборота)
+            const targetRotation = startRotation + 4 * Math.PI + Math.random() * 2 * Math.PI;
+            
+            function animate(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / spinDuration, 1);
+                
+                // Замедление в конце
+                const easing = 1 - Math.pow(1 - progress, 3);
+                currentRotation = startRotation + (targetRotation - startRotation) * easing;
+                
+                ctx.save();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(currentRotation);
+                ctx.translate(-canvas.width / 2, -canvas.height / 2);
+                drawWheel();
+                ctx.restore();
+                
+                if (progress < 1) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    isSpinning = false;
+                    spinButton.disabled = false;
+                    
+                    // Определяем выбранный элемент
+                    const finalAngle = (currentRotation % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                    const anglePerItem = (2 * Math.PI) / items.length;
+                    const selectedIndex = Math.floor(items.length - (finalAngle / anglePerItem)) % items.length;
+                    
+                    // Анимация выбранного элемента
+                    highlightSelectedItem(selectedIndex);
+                }
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        // Подсветка выбранного элемента
+        function highlightSelectedItem(index) {
+            const selectedItem = items[index];
+            //alert(`Выпало: ${selectedItem}`);
+        }
+        
+        // Обновление списка элементов
+        function updateItemsList() {
+            itemsList.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item';
+                itemElement.innerHTML = `
+                    <input type="text" value="${item}" data-index="${index}">
+                    <button class="remove-btn" data-index="${index}">Удалить</button>
+                `;
+                itemsList.appendChild(itemElement);
+            });
+            
+            // Добавляем обработчики для редактирования и удаления
+            document.querySelectorAll('.item input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    items[index] = e.target.value;
+                    drawWheel();
+                });
+            });
+            
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    items.splice(index, 1);
+                    updateItemsList();
+                    drawWheel();
+                    updateObsUrl();
+                });
+            });
+        }
+        
+        // Обновление URL для OBS
+        function updateObsUrl() {
+            const params = new URLSearchParams();
+            params.set('items', items.join('|'));
+            params.set('color1', encodeURIComponent(wheelColors.color1));
+            params.set('color2', encodeURIComponent(wheelColors.color2));
+            params.set('textColor1', encodeURIComponent(wheelColors.textColor1));
+            params.set('textColor2', encodeURIComponent(wheelColors.textColor2));
+            params.set('centerColor', encodeURIComponent(wheelColors.centerColor));
+            params.set('centerBorderColor', encodeURIComponent(wheelColors.centerBorderColor));
+            params.set('fontFamily', encodeURIComponent(wheelFont.family));
+            params.set('fontSize', wheelFont.size);
+            params.set('obs', 'true');
+            
+            const currentUrl = window.location.href.split('?')[0];
+            obsUrl.value = `${currentUrl}?${params.toString()}`;
+        }
+        
+        // Проверка параметров URL для OBS режима
+        function checkObsMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('obs') === 'true') {
+                document.body.classList.add('obs-mode');
+                
+                // Загружаем настройки из URL
+                if (urlParams.has('items')) {
+                    items = urlParams.get('items').split('|');
+                }
+                if (urlParams.has('color1')) {
+                    wheelColors.color1 = decodeURIComponent(urlParams.get('color1'));
+                }
+                if (urlParams.has('color2')) {
+                    wheelColors.color2 = decodeURIComponent(urlParams.get('color2'));
+                }
+                if (urlParams.has('textColor1')) {
+                    wheelColors.textColor1 = decodeURIComponent(urlParams.get('textColor1'));
+                }
+                if (urlParams.has('textColor2')) {
+                    wheelColors.textColor2 = decodeURIComponent(urlParams.get('textColor2'));
+                }
+                if (urlParams.has('centerColor')) {
+                    wheelColors.centerColor = decodeURIComponent(urlParams.get('centerColor'));
+                }
+                if (urlParams.has('centerBorderColor')) {
+                    wheelColors.centerBorderColor = decodeURIComponent(urlParams.get('centerBorderColor'));
+                }
+                if (urlParams.has('fontFamily')) {
+                    wheelFont.family = decodeURIComponent(urlParams.get('fontFamily'));
+                }
+                if (urlParams.has('fontSize')) {
+                    wheelFont.size = parseInt(urlParams.get('fontSize'));
+                }
+                
+                drawWheel();
+            }
+        }
+        
+        // Обработчики событий
+        spinButton.addEventListener('click', spinWheel);
+        
+        addItemBtn.addEventListener('click', () => {
+            const newItem = newItemInput.value.trim();
+            if (newItem) {
+                items.push(newItem);
+                newItemInput.value = '';
+                updateItemsList();
+                drawWheel();
+                updateObsUrl();
+            }
+        });
+        
+        newItemInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addItemBtn.click();
+            }
+        });
+        
+        copyUrlBtn.addEventListener('click', () => {
+            obsUrl.select();
+            document.execCommand('copy');
+            copyStatus.textContent = 'Скопировано!';
+            setTimeout(() => {
+                copyStatus.textContent = '';
+            }, 2000);
+        });
+        
+        clearItemsBtn.addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите удалить все элементы?')) {
+                items = [];
+                updateItemsList();
+                drawWheel();
+                updateObsUrl();
+            }
+        });
+        
+        randomizeBtn.addEventListener('click', () => {
+            // Перемешиваем массив
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
+            }
+            updateItemsList();
+            drawWheel();
+            updateObsUrl();
+        });
+        
+        // Переключение вкладок
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+                
+                // Убираем активный класс у всех вкладок и контента
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Добавляем активный класс текущей вкладке и контенту
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Применение цветов
+        applyColorsBtn.addEventListener('click', () => {
+            wheelColors.color1 = document.getElementById('color1').value;
+            wheelColors.color2 = document.getElementById('color2').value;
+            wheelColors.textColor1 = document.getElementById('textColor1').value;
+            wheelColors.textColor2 = document.getElementById('textColor2').value;
+            wheelColors.centerColor = document.getElementById('centerColor').value;
+            wheelColors.centerBorderColor = document.getElementById('centerBorderColor').value;
+            
+            drawWheel();
+            updateObsUrl();
+        });
+        
+        // Применение шрифта
+        applyFontBtn.addEventListener('click', () => {
+            wheelFont.family = fontSelect.value;
+            wheelFont.size = parseInt(fontSizeInput.value);
+            
+            drawWheel();
+            updateObsUrl();
+        });
+        
+        // Проверяем режим OBS при загрузке
+        checkObsMode();
+    });
+    </script>
+</body>
+</html>
