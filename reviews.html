@@ -423,203 +423,317 @@
     </center>
 
     <script>
-        // ID вашей Google таблицы (нужно заменить на вашу)
-        const SPREADSHEET_ID = '106t9o0gJOdcueEA81n_uvNzUa-jbFKRiGUnuVnXbkT0';
-        // Ключ API для доступа к Google Sheets API (нужно получить в Google Cloud Console)
-        const API_KEY = 'AIzaSyBkiyDMUHOe2Mt6ZRsqXnW1HRqYoQYvZT0';
+    // Конфигурация Google Apps Script
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZPbM7t0ZrudMDW_kRCWoMi4MAR_g91pjDVon8SeY1yYUdUDj6muG9mKanmfCr-Tc/exec'; // Замените на URL вашего веб-приложения
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const reviewsList = document.getElementById('reviews-list');
+        const submitButton = document.getElementById('submit-review');
+        const ratingStars = document.querySelectorAll('.rating-stars i');
+        const loadMoreBtn = document.getElementById('load-more');
+        const notification = document.getElementById('notification');
+        const loginModeratorBtn = document.getElementById('login-moderator');
+        const moderatorTools = document.getElementById('moderator-tools');
+        const moderationList = document.getElementById('moderation-list');
         
-        document.addEventListener('DOMContentLoaded', function() {
-            const reviewsList = document.getElementById('reviews-list');
-            const submitButton = document.getElementById('submit-review');
-            const ratingStars = document.querySelectorAll('.rating-stars i');
-            const loadMoreBtn = document.getElementById('load-more');
-            const notification = document.getElementById('notification');
-            const loginModeratorBtn = document.getElementById('login-moderator');
-            const moderatorTools = document.getElementById('moderator-tools');
-            const moderationList = document.getElementById('moderation-list');
+        let currentRating = 0;
+        let allReviews = [];
+        let displayedReviews = 5;
+        const MODERATOR_PASSWORD = 'phgmod2025';
+
+        // Функция для показа уведомлений
+        function showNotification(message, isSuccess = true) {
+            notification.textContent = message;
+            notification.className = isSuccess ? 'notification success' : 'notification error';
+            notification.classList.add('show');
             
-            let currentRating = 0;
-            let allReviews = [];
-            let displayedReviews = 5;
-            const MODERATOR_PASSWORD = 'phgmod2025'; // Пароль для модератора
-            
-            // Функция для показа уведомлений
-            function showNotification(message, isSuccess = true) {
-                notification.textContent = message;
-                notification.className = isSuccess ? 'notification success' : 'notification error';
-                notification.classList.add('show');
-                
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-            
-            // Обновление отображения звезд рейтинга
-            function updateRatingStars() {
-                ratingStars.forEach(star => {
-                    const ratingValue = parseInt(star.dataset.rating);
-                    if (ratingValue <= currentRating) {
-                        star.classList.remove('far');
-                        star.classList.add('fas', 'active');
-                    } else {
-                        star.classList.remove('fas', 'active');
-                        star.classList.add('far');
-                    }
-                });
-            }
-            
-            // Обработчики для рейтинга звездами
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Обновление отображения звезд рейтинга
+        function updateRatingStars() {
             ratingStars.forEach(star => {
-                star.addEventListener('click', function() {
-                    currentRating = parseInt(this.dataset.rating);
-                    updateRatingStars();
+                const ratingValue = parseInt(star.dataset.rating);
+                if (ratingValue <= currentRating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas', 'active');
+                } else {
+                    star.classList.remove('fas', 'active');
+                    star.classList.add('far');
+                }
+            });
+        }
+
+        // Обработчики для рейтинга звездами
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = parseInt(this.dataset.rating);
+                updateRatingStars();
+            });
+        });
+
+        // Функция для загрузки отзывов через Google Apps Script
+        async function loadReviewsFromScript() {
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=get`);
+                const data = await response.json();
+                
+                if (data.success && data.reviews) {
+                    allReviews = data.reviews;
+                    displayReviews();
+                    showNotification('Отзывы успешно загружены');
+                } else {
+                    showNotification('Пока нет отзывов', false);
+                    allReviews = [];
+                    displayReviews();
+                }
+                
+            } catch (error) {
+                console.error('Ошибка загрузки отзывов:', error);
+                showNotification('Ошибка загрузки отзывов', false);
+                // Загрузка демо-данных при ошибке
+                loadMockReviews();
+            }
+        }
+
+        // Загрузка mock-отзывов (для демонстрации)
+        function loadMockReviews() {
+            const mockReviews = [
+                { id: 1, author: 'Игрок_1', rating: 5, content: 'Отличный проект! Очень помог улучшить мои навыки в DBD.', date: '2023-10-15' },
+                { id: 2, author: 'Игрок_2', rating: 4, content: 'Хорошая система перков, но иногда не хватает описаний некоторых механик.', date: '2023-10-10' }
+            ];
+            
+            allReviews = mockReviews;
+            displayReviews();
+        }
+
+        // Функция для отправки отзыва через Google Apps Script
+        async function submitReviewToScript(author, content, rating) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('author', author);
+                formData.append('rating', rating);
+                formData.append('content', content);
+                formData.append('action', 'add');
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
                 });
+                
+                const data = await response.json();
+                return data;
+                
+            } catch (error) {
+                console.error('Ошибка отправки отзыва:', error);
+                throw new Error('Не удалось отправить отзыв');
+            }
+        }
+
+        // Функция для отображения отзывов
+        function displayReviews() {
+            if (allReviews.length === 0) {
+                reviewsList.innerHTML = '<div class="empty-reviews">Пока нет отзывов. Будьте первым!</div>';
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+            
+            const reviewsToShow = allReviews.slice(0, displayedReviews);
+            
+            reviewsList.innerHTML = '';
+            reviewsToShow.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-card';
+                
+                // Создаем звезды рейтинга
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
+                }
+                
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-author">${review.author}</span>
+                        <span class="review-date">${review.date || review.timestamp}</span>
+                    </div>
+                    <div class="review-content">${review.content}</div>
+                    <div class="review-rating">${starsHtml}</div>
+                `;
+                
+                reviewsList.appendChild(reviewElement);
             });
             
-            // Функция для загрузки отзывов из Google Sheets
-            async function loadReviewsFromSheets() {
-                try {
-                    // В реальном проекте здесь будет обращение к API Google Sheets
-                    // Для демонстрации используем заглушку
-                    
-                    // Имитация загрузки отзывов
-                    const mockReviews = [
-                        { id: 1, author: 'Extazy', rating: 5, content: 'Отличный проект!', date: '2025-08-24' },
-                        { id: 3, author: 'Эмиль', rating: 5, content: 'Лучший ресурс по DBD на русском языке. Спасибо за вашу работу!', date: '2025-08-25' },
-                        { id: 4, author: 'Katerina', rating: 3, content: 'Неплохо, но можно добавить больше гайдов по выживанию.', date: '2025-08-25' },
-                    ];
-                    
-                    allReviews = mockReviews;
-                    displayReviews();
-                    
-                } catch (error) {
-                    console.error('Ошибка загрузки отзывов:', error);
-                    showNotification('Ошибка загрузки отзывов', false);
-                }
+            // Скрываем кнопку "Загрузить еще", если все отзывы показаны
+            if (displayedReviews >= allReviews.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Обработчик отправки отзыва
+        submitButton.addEventListener('click', async function() {
+            const author = document.getElementById('review-author').value;
+            const content = document.getElementById('review-content').value;
+            
+            if (!author || !content || currentRating === 0) {
+                showNotification('Пожалуйста, заполните все поля и поставьте оценку', false);
+                return;
             }
             
-            // Функция для отправки отзыва (в реальном проекте будет отправлять в Google Forms)
-            async function submitReviewToSheets(author, content, rating) {
-                try {
-                    // В реальном проекте здесь будет отправка данных в Google Forms
-                    // через Google Apps Script или напрямую через API
-                    
-                    // Имитация успешной отправки
-                    return new Promise(resolve => {
-                        setTimeout(() => {
-                            const newReview = {
-                                id: Date.now(),
-                                author: author,
-                                rating: rating,
-                                content: content,
-                                date: new Date().toISOString().split('T')[0]
-                            };
-                            
-                            allReviews.unshift(newReview);
-                            resolve(newReview);
-                        }, 1000);
-                    });
-                    
-                } catch (error) {
-                    console.error('Ошибка отправки отзыва:', error);
-                    throw new Error('Не удалось отправить отзыв');
-                }
+            if (author.length > 50) {
+                showNotification('Имя не должно превышать 50 символов', false);
+                return;
             }
             
-            // Функция для отображения отзывов
-            function displayReviews() {
-                if (allReviews.length === 0) {
-                    reviewsList.innerHTML = '<div class="empty-reviews">Пока нет отзывов. Будьте первым!</div>';
-                    return;
-                }
-                
-                const reviewsToShow = allReviews.slice(0, displayedReviews);
-                
-                reviewsList.innerHTML = '';
-                reviewsToShow.forEach(review => {
-                    const reviewElement = document.createElement('div');
-                    reviewElement.className = 'review-card';
-                    
-                    // Создаем звезды рейтинга
-                    let starsHtml = '';
-                    for (let i = 1; i <= 5; i++) {
-                        starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
-                    }
-                    
-                    reviewElement.innerHTML = `
-                        <div class="review-header">
-                            <span class="review-author">${review.author}</span>
-                            <span class="review-date">${review.date}</span>
-                        </div>
-                        <div class="review-content">${review.content}</div>
-                        <div class="review-rating">${starsHtml}</div>
-                    `;
-                    
-                    reviewsList.appendChild(reviewElement);
-                });
-                
-                // Скрываем кнопку "Загрузить еще", если все отзывы показаны
-                if (displayedReviews >= allReviews.length) {
-                    loadMoreBtn.style.display = 'none';
-                } else {
-                    loadMoreBtn.style.display = 'inline-block';
-                }
+            if (content.length > 500) {
+                showNotification('Отзыв не должен превышать 500 символов', false);
+                return;
             }
             
-            // Обработчик отправки отзыва
-            submitButton.addEventListener('click', async function() {
-                const author = document.getElementById('review-author').value;
-                const content = document.getElementById('review-content').value;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Отправка...';
+            
+            try {
+                const result = await submitReviewToScript(author, content, currentRating);
                 
-                if (!author || !content || currentRating === 0) {
-                    showNotification('Пожалуйста, заполните все поля и поставьте оценку', false);
-                    return;
-                }
-                
-                submitButton.disabled = true;
-                submitButton.textContent = 'Отправка...';
-                
-                try {
-                    await submitReviewToSheets(author, content, currentRating);
-                    
+                if (result.success) {
                     // Сбрасываем форму
                     document.getElementById('review-author').value = '';
                     document.getElementById('review-content').value = '';
                     currentRating = 0;
                     updateRatingStars();
                     
-                    displayReviews();
                     showNotification('Спасибо за ваш отзыв! Он будет опубликован после проверки.');
                     
-                } catch (error) {
-                    showNotification('Ошибка при отправке отзыва', false);
-                } finally {
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Отправить отзыв';
-                }
-            });
-            
-            // Обработчик кнопки "Загрузить еще"
-            loadMoreBtn.addEventListener('click', function() {
-                displayedReviews += 5;
-                displayReviews();
-            });
-            
-            // Функции для модератора
-            loginModeratorBtn.addEventListener('click', function() {
-                const password = document.getElementById('moderator-password').value;
-                
-                if (password === MODERATOR_PASSWORD) {
-                    moderatorTools.style.display = 'block';
-                    showNotification('Добро пожаловать в панель модератора!');
+                    // Обновляем отзывы через несколько секунд
+                    setTimeout(() => {
+                        loadReviewsFromScript();
+                    }, 2000);
                 } else {
-                    showNotification('Неверный пароль', false);
+                    showNotification('Ошибка при отправке отзыва: ' + result.message, false);
                 }
-            });
-            
-            // Загружаем отзывы при загрузке страницы
-            loadReviewsFromSheets();
+                
+            } catch (error) {
+                showNotification('Ошибка при отправке отзыва', false);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Отправить отзыв';
+            }
         });
-    </script>
+
+        // Обработчик кнопки "Загрузить еще"
+        loadMoreBtn.addEventListener('click', function() {
+            displayedReviews += 5;
+            displayReviews();
+        });
+
+        // Функции для модератора
+        loginModeratorBtn.addEventListener('click', function() {
+            const password = document.getElementById('moderator-password').value;
+            
+            if (password === MODERATOR_PASSWORD) {
+                moderatorTools.style.display = 'block';
+                loadModerationReviews();
+                showNotification('Добро пожаловать в панель модератора!');
+            } else {
+                showNotification('Неверный пароль', false);
+            }
+        });
+
+        // Загружаем отзывы при загрузке страницы
+        loadReviewsFromScript();
+        
+        // Обновляем отзывы каждые 2 минуты
+        setInterval(loadReviewsFromScript, 120000);
+    });
+	// Функция для загрузки отзывов на модерацию
+async function loadModerationReviews() {
+    try {
+        const response = await fetch(`${SCRIPT_URL}?action=getModeration`);
+        const data = await response.json();
+        
+        if (data.success && data.reviews) {
+            displayModerationReviews(data.reviews);
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки отзывов для модерации:', error);
+    }
+}
+
+// Функция для отображения отзывов на модерации
+function displayModerationReviews(reviews) {
+    if (reviews.length === 0) {
+        moderationList.innerHTML = '<div class="empty-reviews">Нет отзывов для модерации</div>';
+        return;
+    }
+    
+    moderationList.innerHTML = '';
+    reviews.forEach(review => {
+        const reviewElement = document.createElement('div');
+        reviewElement.className = 'review-card';
+        reviewElement.dataset.id = review.id;
+        
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
+        }
+        
+        reviewElement.innerHTML = `
+            <div class="review-header">
+                <span class="review-author">${review.author}</span>
+                <span class="review-date">${review.date}</span>
+            </div>
+            <div class="review-content">${review.content}</div>
+            <div class="review-rating">${starsHtml}</div>
+            <div class="moderator-controls">
+                <button class="btn btn-small approve-btn">Одобрить</button>
+                <button class="btn btn-small btn-danger reject-btn">Удалить</button>
+            </div>
+        `;
+        
+        moderationList.appendChild(reviewElement);
+    });
+    
+    // Добавляем обработчики для кнопок модерации
+    document.querySelectorAll('.approve-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const reviewId = this.closest('.review-card').dataset.id;
+            await moderateReview(reviewId, 'approve');
+            loadModerationReviews();
+            loadReviewsFromScript();
+        });
+    });
+    
+    document.querySelectorAll('.reject-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const reviewId = this.closest('.review-card').dataset.id;
+            await moderateReview(reviewId, 'reject');
+            loadModerationReviews();
+        });
+    });
+}
+
+// Функция для модерации отзыва
+async function moderateReview(reviewId, action) {
+    try {
+        const response = await fetch(`${SCRIPT_URL}?action=moderate&id=${reviewId}&action=${action}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            showNotification(`Отзыв ${action === 'approve' ? 'одобрен' : 'удален'}`);
+        } else {
+            showNotification('Ошибка модерации', false);
+        }
+    } catch (error) {
+        showNotification('Ошибка модерации', false);
+    }
+}
+</script>
 </body>
 </html>
