@@ -13,6 +13,8 @@
             --text-color: #f0f0f0;
             --accent-color: #3a3a3a;
             --highlight-color: #ff2a2a;
+            --card-bg: rgba(40, 40, 40, 0.7);
+            --main-red: #c21919;
         }
         
         * {
@@ -123,7 +125,7 @@
             font-weight: 500;
         }
         
-        .input-group input {
+        .input-group input, .input-group textarea {
             width: 100%;
             padding: 12px;
             border-radius: 5px;
@@ -133,7 +135,7 @@
             font-size: 1rem;
         }
         
-        .input-group input:focus {
+        .input-group input:focus, .input-group textarea:focus {
             outline: none;
             border-color: var(--primary-color);
         }
@@ -158,6 +160,19 @@
         
         .btn:active {
             transform: translateY(0);
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-danger {
+            background-color: #d9534f;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c9302c;
         }
         
         .result {
@@ -345,8 +360,95 @@
             background-color: rgba(194, 25, 25, 0.2);
         }
         
+        /* Стили для отзывов */
+        .reviews-container {
+            margin-top: 2rem;
+        }
+        
+        .review-form {
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .review-card {
+            background-color: rgba(35, 35, 35, 0.8);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .review-author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .review-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .review-content {
+            line-height: 1.6;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            margin-top: 0.5rem;
+        }
+        
+        .moderator-panel {
+            background-color: rgba(30, 30, 40, 0.9);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 1px solid #444;
+        }
+        
+        .moderator-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .empty-reviews {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-stars i {
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s;
+        }
+        
+        .rating-stars i.active {
+            color: #ffc107;
+        }
+        
         @media (max-width: 768px) {
             .points-columns {
+                flex-direction: column;
+            }
+            
+            .moderator-controls {
                 flex-direction: column;
             }
         }
@@ -372,16 +474,65 @@
         </div>
     </header>
 
-    
-
-    <section class="section">
+    <div class="container">
+        <section class="section">
             <center>
-            <h2><i class="fas fa-star"></i> Позже тут появяться отзывы пользователей PHG Community</h2>
-            
+                <h2><i class="fas fa-star"></i> Отзывы пользователей PHG Community</h2>
+                <p>Поделитесь своим мнением о нашем проекте</p>
+            </center>
+
+            <!-- Форма добавления отзыва -->
+            <div class="review-form">
+                <h3>Оставить отзыв</h3>
+                <div class="input-group">
+                    <label for="review-author">Ваше имя</label>
+                    <input type="text" id="review-author" placeholder="Как к вам обращаться?">
+                </div>
+                <div class="input-group">
+                    <label>Оценка</label>
+                    <div class="rating-stars" id="rating-stars">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="review-content">Ваш отзыв</label>
+                    <textarea id="review-content" rows="4" placeholder="Расскажите о вашем опыте..."></textarea>
+                </div>
+                <button class="btn" id="submit-review">Отправить отзыв</button>
+            </div>
+
+            <!-- Контейнер для отзывов -->
+            <div class="reviews-container" id="reviews-container">
+                <h3>Последние отзывы</h3>
+                <div id="reviews-list">
+                    <!-- Отзывы будут загружаться здесь -->
                 </div>
             </div>
-        </div>
-    </section>
+
+            <!-- Панель модератора (скрыта по умолчанию) -->
+            <div class="moderator-panel" id="moderator-panel" style="display: none;">
+                <h3><i class="fas fa-shield-alt"></i> Панель модератора</h3>
+                <p>Здесь вы можете управлять отзывами пользователей</p>
+                
+                <div class="moderator-controls">
+                    <input type="password" id="moderator-password" placeholder="Пароль модератора">
+                    <button class="btn btn-small" id="login-moderator">Войти</button>
+                    <button class="btn btn-small btn-danger" id="logout-moderator" style="display: none;">Выйти</button>
+                </div>
+                
+                <div id="moderator-tools" style="display: none;">
+                    <h4>Список отзывов для модерации</h4>
+                    <div id="moderation-list">
+                        <!-- Отзывы для модерации будут здесь -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <footer>
         <div class="container">
@@ -399,5 +550,238 @@
 			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
 			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
 			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Элементы DOM
+            const reviewsContainer = document.getElementById('reviews-list');
+            const submitButton = document.getElementById('submit-review');
+            const moderatorPanel = document.getElementById('moderator-panel');
+            const moderatorPassword = document.getElementById('moderator-password');
+            const loginModeratorBtn = document.getElementById('login-moderator');
+            const logoutModeratorBtn = document.getElementById('logout-moderator');
+            const moderatorTools = document.getElementById('moderator-tools');
+            const moderationList = document.getElementById('moderation-list');
+            const ratingStars = document.querySelectorAll('.rating-stars i');
+            
+            let currentRating = 0;
+            const MODERATOR_PASSWORD = 'phgmod2025'; // Пароль для модератора (в реальном проекте нужно хранить на сервере)
+            
+            // Инициализация отзывов из localStorage
+            let reviews = JSON.parse(localStorage.getItem('phg_reviews')) || [];
+            
+            // Функция для отображения отзывов
+            function displayReviews() {
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = '<div class="empty-reviews">Пока нет отзывов. Будьте первым!</div>';
+                    return;
+                }
+                
+                // Фильтруем отзывы: показываем только одобренные
+                const approvedReviews = reviews.filter(review => review.approved);
+                
+                if (approvedReviews.length === 0) {
+                    reviewsContainer.innerHTML = '<div class="empty-reviews">Отзывы на модерации. Скоро они появятся здесь!</div>';
+                    return;
+                }
+                
+                // Сортируем по дате (новые сначала)
+                approvedReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                reviewsContainer.innerHTML = '';
+                approvedReviews.forEach(review => {
+                    const reviewElement = document.createElement('div');
+                    reviewElement.className = 'review-card';
+                    reviewElement.dataset.id = review.id;
+                    
+                    // Создаем звезды рейтинга
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
+                    }
+                    
+                    reviewElement.innerHTML = `
+                        <div class="review-header">
+                            <span class="review-author">${review.author}</span>
+                            <span class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</span>
+                        </div>
+                        <div class="review-content">${review.content}</div>
+                        <div class="review-rating">${starsHtml}</div>
+                    `;
+                    
+                    reviewsContainer.appendChild(reviewElement);
+                });
+            }
+            
+            // Функция для отображения отзывов для модерации
+            function displayModerationReviews() {
+                // Получаем отзывы, ожидающие модерации
+                const moderationReviews = reviews.filter(review => !review.approved);
+                
+                if (moderationReviews.length === 0) {
+                    moderationList.innerHTML = '<div class="empty-reviews">Нет отзывов для модерации</div>';
+                    return;
+                }
+                
+                moderationList.innerHTML = '';
+                moderationReviews.forEach(review => {
+                    const reviewElement = document.createElement('div');
+                    reviewElement.className = 'review-card';
+                    reviewElement.dataset.id = review.id;
+                    
+                    // Создаем звезды рейтинга
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += `<i class="${i <= review.rating ? 'fas' : 'far'} fa-star"></i>`;
+                    }
+                    
+                    reviewElement.innerHTML = `
+                        <div class="review-header">
+                            <span class="review-author">${review.author}</span>
+                            <span class="review-date">${new Date(review.date).toLocaleDateString('ru-RU')}</span>
+                        </div>
+                        <div class="review-content">${review.content}</div>
+                        <div class="review-rating">${starsHtml}</div>
+                        <div class="moderator-controls">
+                            <button class="btn btn-small approve-btn">Одобрить</button>
+                            <button class="btn btn-small btn-danger reject-btn">Удалить</button>
+                        </div>
+                    `;
+                    
+                    moderationList.appendChild(reviewElement);
+                });
+                
+                // Добавляем обработчики событий для кнопок модерации
+                document.querySelectorAll('.approve-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const reviewId = this.closest('.review-card').dataset.id;
+                        approveReview(reviewId);
+                    });
+                });
+                
+                document.querySelectorAll('.reject-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const reviewId = this.closest('.review-card').dataset.id;
+                        deleteReview(reviewId);
+                    });
+                });
+            }
+            
+            // Функция для добавления нового отзыва
+            function addReview(author, content, rating) {
+                const newReview = {
+                    id: Date.now().toString(),
+                    author: author.trim(),
+                    content: content.trim(),
+                    rating: rating,
+                    date: new Date().toISOString(),
+                    approved: false // По умолчанию отзыв не одобрен
+                };
+                
+                reviews.push(newReview);
+                localStorage.setItem('phg_reviews', JSON.stringify(reviews));
+                
+                // Если модератор вошел в систему, обновляем список модерации
+                if (moderatorTools.style.display !== 'none') {
+                    displayModerationReviews();
+                }
+                
+                alert('Спасибо за ваш отзыв! Он будет опубликован после проверки модератором.');
+            }
+            
+            // Функция для одобрения отзыва
+            function approveReview(reviewId) {
+                reviews = reviews.map(review => {
+                    if (review.id === reviewId) {
+                        review.approved = true;
+                    }
+                    return review;
+                });
+                
+                localStorage.setItem('phg_reviews', JSON.stringify(reviews));
+                displayModerationReviews();
+                displayReviews(); // Обновляем основной список отзывов
+            }
+            
+            // Функция для удаления отзыва
+            function deleteReview(reviewId) {
+                if (confirm('Вы уверены, что хотите удалить этот отзыв?')) {
+                    reviews = reviews.filter(review => review.id !== reviewId);
+                    localStorage.setItem('phg_reviews', JSON.stringify(reviews));
+                    displayModerationReviews();
+                    displayReviews(); // Обновляем основной список отзывов
+                }
+            }
+            
+            // Обработчик отправки отзыва
+            submitButton.addEventListener('click', function() {
+                const author = document.getElementById('review-author').value;
+                const content = document.getElementById('review-content').value;
+                
+                if (!author || !content || currentRating === 0) {
+                    alert('Пожалуйста, заполните все поля и поставьте оценку');
+                    return;
+                }
+                
+                addReview(author, content, currentRating);
+                
+                // Сбрасываем форму
+                document.getElementById('review-author').value = '';
+                document.getElementById('review-content').value = '';
+                currentRating = 0;
+                updateRatingStars();
+            });
+            
+            // Обработчики для рейтинга звездами
+            ratingStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.dataset.rating);
+                    updateRatingStars();
+                });
+            });
+            
+            function updateRatingStars() {
+                ratingStars.forEach(star => {
+                    const ratingValue = parseInt(star.dataset.rating);
+                    if (ratingValue <= currentRating) {
+                        star.classList.remove('far');
+                        star.classList.add('fas', 'active');
+                    } else {
+                        star.classList.remove('fas', 'active');
+                        star.classList.add('far');
+                    }
+                });
+            }
+            
+            // Функции для модератора
+            loginModeratorBtn.addEventListener('click', function() {
+                if (moderatorPassword.value === MODERATOR_PASSWORD) {
+                    moderatorTools.style.display = 'block';
+                    logoutModeratorBtn.style.display = 'inline-block';
+                    loginModeratorBtn.style.display = 'none';
+                    moderatorPassword.style.display = 'none';
+                    moderatorPanel.style.display = 'block';
+                    
+                    displayModerationReviews();
+                } else {
+                    alert('Неверный пароль модератора');
+                }
+            });
+            
+            logoutModeratorBtn.addEventListener('click', function() {
+                moderatorTools.style.display = 'none';
+                logoutModeratorBtn.style.display = 'none';
+                loginModeratorBtn.style.display = 'inline-block';
+                moderatorPassword.style.display = 'inline-block';
+                moderatorPassword.value = '';
+            });
+            
+            // Показываем панель модератора всегда, но скрываем инструменты до входа
+            moderatorPanel.style.display = 'block';
+            
+            // Инициализация отображения отзывов при загрузке
+            displayReviews();
+        });
+    </script>
 </body>
 </html>
