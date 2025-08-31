@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | DBD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://assets.deadbydaylight.com/witheringblight_social_190359973d.jpg');
+    background-size: cover; /* Добавьте это для правильного отображения */
+    background-attachment: fixed; /* Добавьте это для фиксированного фона */
+}
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .perk-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--main-red);
+        }
+        
+        /* Стили для двух столбцов */
+        .points-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .points-column {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .points-column h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: rgba(194, 25, 25, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .points-columns {
+                flex-direction: column;
+            }
+        .news-container {
+            margin-top: 1.5rem;
+        }
+        .news-item {
+            background-color: rgba(40, 40, 40, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary-color);
+        }
+        .news-date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .news-item h3 {
+            margin: 0.3rem 0;
+        }
+        
+        /* Стили для скрытой кнопки */
+        .hidden-button {
+            position: fixed;
+            left: 10px;
+            bottom: 10px;
+            opacity: 0.1;
+            transition: opacity 0.3s;
+            z-index: 999;
+            background-color: #333;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .hidden-button:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">MCPLEH<span></span></a>
+                <nav>
+                    <ul>
+                        <li><a href="infottv.html">Назад</a></li>
+						<li><a href="index.html">Официальный Сайт</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <section class="section">
+        <center><h2><strong>ПРАЙСЫ И F.A.Q.</strong></h2></center>
+<br>
+<center><h2><strong>
+<center>- ЗАКАЗАТЬ ЧЕЛЛЕНДЖ 100Р.<br>
+НАГРАДА ОТ 500РУБ НА УСМОТРЕНИЯ ДОНАТЕРА</center>
+<br>
+<center>- ПРОЙДУ ВАШУ ИГРУ 1500Р + ИГРА ЕСЛИ НЕТУ</center>
+<br>
+<center>- ПОСМОТРЮ ВАШ ФИЛЬМ/МУЛЬТ 500Р<br>
+ЗАПРЕЩЕННЫЕ ФИЛЬМЫ HA VKPLAY ИЛИ DISCORD</center>
+<br>
+<center>- ЗВУКОВЫЕ ОПОВЕЩАНИЯ НА:
+55P 60P 100P 250P 300P 500P 1000P<br>
+СКРИМЕР 666Р РУЛЕТКА ОТ 133Р</center>
+<br>
+<center>- РАЗБАН 1 АККАУНТА В ЧАТЕ - 300Р (ЕДИНОРАЗОВЫМ ДОНАТОМ)</center>
+<br>
+<center>- ЗАКАЗ МАНА ЗА БАЛЛЫ КАНАЛА.
+КОГО НЕТУ ЗА БАЛЛЫ - ДОНАТ 100Р С БИЛДОМ 200Р<br>
+ЗАКАЗ СУРВА ЗА БАЛЛЫ КАНАЛА, С ВАШИМ БИЛДОМ 200Р</center>
+<br>
+<center>- ПОСМОТРЕТЬ ОЧЕРЕДЬ ЗАКАЗОВ - КОМАНДА !ОЧЕРЕДЬ</center>
+<br>
+<center>- ХАГА, СВИНКА, ГРЯЗЬ, НЮРСА: ОТДЕЛЬНО - 500Р
+<center>- ИГРАЮ В ПАТИ ЗА НАГРАДУ SWF ИЛИ ДОНАТ 💜 </center>
+<br>
+<center>- ВИПОМ, МОЖНО СТАТЬ ЗА ЩЕДРЫЙ ДОНАТ <br>ИЛИ ЗАСЛУЖИТЬ
+НАПРИМЕР АКТИВНОСТЬЮ В ЧАТЕ.<br>
+ВИПАМ ДОСТУПНЫ ЭКСКЛЮЗИВНЫЕ ФУНКЦИИ И "ПОБЛАЖКИ".</center>
+<br>
+<center>- У АФК КТО НЕ ЗАХОДИЛ БОЛЬШЕ ДВУХ НЕДЕЛЬ.<br>
+ПРИМЕР: "ПРИВЕТ, НУ Я ЗАШЕЛ ПОЗДОРОВАТЬСЯ - ВСЕМ ПОКА"<br>
+ИЛИ НЕ ПРОЯВЛЯЛ АКТИВНОСТЬ В ЧАТЕ
+ПРИМЕР:<br> "Я СМОТРЕЛ(А), ПРОСТО МОЛЧАЛ(А)" ВИП ОБНУЛЯЕТСЯ.</center>
+<br>
+<center>- СОТРУДНИЧЕСТВО:
+PLEHANRECORDS@GMAIL.COM</center>
+</strong></h2>
+		<br>
+        </div>
+    </section>
+	
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+</body>
+</html>
