@@ -4,7 +4,7 @@
     <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHG Баланс | DBD</title>
+    <title>PHG Баланс | DBD Рулетка</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
@@ -23,6 +23,8 @@
             --text-color: #f0f0f0;
             --accent-color: #3a3a3a;
             --highlight-color: #ff2a2a;
+            --pointer-color: #ff0000;
+            --border-color: #444;
         }
         
         * {
@@ -113,249 +115,6 @@
             color: #ccc;
         }
         
-        .checker-container {
-            background-color: rgba(26, 26, 26, 0.9);
-            border-radius: 10px;
-            padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-        }
-        
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background-color: #2a2a2a;
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .btn:hover {
-            background-color: var(--highlight-color);
-            transform: translateY(-2px);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .result {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background-color: #252525;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .result.visible {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .result h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .perks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .perk-card {
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            padding: 1rem;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid #333;
-        }
-        
-        .perk-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-        }
-        
-        .perk-icon {
-            width: 64px;
-            height: 64px;
-            background-color: #333;
-            border-radius: 50%;
-            margin: 0 auto 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .features {
-            padding: 4rem 0;
-            background-color: rgba(20, 20, 20, 0.9);
-        }
-        
-        .features h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.2rem;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: rgba(40, 40, 40, 0.7);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        footer {
-            background-color: rgba(10, 10, 10, 0.9);
-            padding: 2rem 0;
-            text-align: center;
-            border-top: 1px solid #333;
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .copyright {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0 0.5rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .section {
-            background-color: rgba(40, 40, 40, 0.7);
-            border-radius: 10px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        /* Стили для двух столбцов */
-        .points-columns {
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .points-column {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .points-column h3 {
-            text-align: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-            background-color: rgba(194, 25, 25, 0.2);
-        }
-        
-        /* Стили для рулетки */
         .wheel-section {
             display: flex;
             flex-direction: column;
@@ -383,15 +142,33 @@
             transform: translateX(-50%);
             width: 25px;
             height: 50px;
-            background-color: #ff0000;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            background-color: var(--pointer-color);
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
             z-index: 10;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
         
+        .result-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 20;
+            display: none;
+            text-align: center;
+            min-width: 150px;
+        }
+        
         .controls-section {
             background: rgba(20, 20, 20, 0.8);
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
@@ -412,7 +189,7 @@
         .tabs {
             display: flex;
             margin-bottom: 20px;
-            border-bottom: 1px solid #444;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .tab {
@@ -449,7 +226,7 @@
             width: 100%;
             padding: 10px;
             background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #444;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             color: #fff;
             font-family: 'Roboto Mono', monospace;
@@ -477,7 +254,7 @@
             margin: 15px 0;
             max-height: 200px;
             overflow-y: auto;
-            border: 1px solid #333;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 10px;
             background: rgba(0, 0, 0, 0.5);
@@ -490,13 +267,14 @@
             padding: 8px;
             background: rgba(30, 30, 30, 0.7);
             border-radius: 4px;
+            border: 1px solid var(--border-color);
         }
         
         .item input {
             flex: 1;
             margin-right: 10px;
             background: transparent;
-            border: 1px solid #444;
+            border: 1px solid var(--border-color);
             color: #fff;
             padding: 5px;
         }
@@ -550,7 +328,7 @@
         .url-section {
             width: 100%;
             background: rgba(20, 20, 20, 0.8);
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 30px;
@@ -563,7 +341,7 @@
             margin-bottom: 15px;
             padding: 15px;
             background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #444;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             color: #fff;
             resize: none;
@@ -616,23 +394,38 @@
 
         /* Стили для OBS режима */
         body.obs-mode {
-            background: transparent;
+            background: transparent !important;
             padding: 0;
             overflow: hidden;
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
         }
         
         body.obs-mode .container {
             max-width: 400px;
+            padding: 0;
+            background: transparent !important;
         }
         
         body.obs-mode .wheel-container {
             margin-bottom: 0;
+            width: 350px;
+            height: 350px;
+        }
+        
+        body.obs-mode #wheelCanvas {
+            width: 350px;
+            height: 350px;
         }
         
         body.obs-mode header,
         body.obs-mode .controls-section,
         body.obs-mode .url-section,
-        body.obs-mode .blood-splatter {
+        body.obs-mode .blood-splatter,
+        body.obs-mode footer,
+        body.obs-mode .hero,
+        body.obs-mode .section {
             display: none !important;
         }
         
@@ -640,10 +433,106 @@
             display: none;
         }
         
+        /* Стили для док-браузера OBS */
+        body.dock-mode {
+            padding: 20px;
+            overflow: auto;
+            background: #1a1a1a;
+            width: 100%;
+            height: 100%;
+        }
+        
+        body.dock-mode header,
+        body.dock-mode .hero,
+        body.dock-mode .blood-splatter,
+        body.dock-mode footer,
+        body.dock-mode .wheel-section,
+        body.dock-mode .url-section,
+        body.dock-mode .section {
+            display: none !important;
+        }
+        
+        body.dock-mode .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+        }
+        
+        .dock-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .dock-control-group {
+            background: rgba(40, 40, 40, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .dock-title {
+            color: #ff0000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .reset-button {
+            background: linear-gradient(135deg, #ff0000 0%, #990000 100%);
+            margin-top: 20px;
+        }
+
+        /* Новые стили для управления несколькими рулетками */
+        .wheels-management {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .wheels-list {
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .wheel-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .wheel-item span {
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .wheel-url {
+            width: 100%;
+            margin-top: 10px;
+        }
+
         @media (max-width: 900px) {
             .wheel-container {
                 width: 300px;
                 height: 300px;
+            }
+            
+            .dock-controls {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -684,6 +573,7 @@
             <div class="wheel-container">
                 <canvas id="wheelCanvas" width="400" height="400"></canvas>
                 <div class="pointer"></div>
+                <div class="result-display" id="resultDisplay"></div>
             </div>
             <button id="spinButton" class="wheel-button spin">Крутить рулетку</button>
         </div>
@@ -693,6 +583,8 @@
                 <div class="tab active" data-tab="items">Элементы</div>
                 <div class="tab" data-tab="colors">Цвета</div>
                 <div class="tab" data-tab="fonts">Шрифты</div>
+                <div class="tab" data-tab="advanced">Дополнительно</div>
+                <div class="tab" data-tab="wheels">Рулетки</div>
             </div>
             
             <div class="tab-content active" id="items-tab">
@@ -746,7 +638,7 @@
                     <label for="textColor2">Цвет текста для сегмента 2:</label>
                     <div class="color-group">
                         <input type="color" id="textColor2" value="#ffffff">
-                        <input type="text" id="textColor2-text" value="#ffffff">
+                        <input type="text" id="textTextColor2" value="#ffffff">
                     </div>
                 </div>
                 
@@ -798,55 +690,124 @@
                 
                 <button id="applyFont" class="wheel-button">Применить шрифт</button>
             </div>
+            
+            <div class="tab-content" id="advanced-tab">
+                <h2 class="section-title">Дополнительные настройки</h2>
+                
+                <div class="wheel-input-group">
+                    <label for="pointerColor">Цвет указателя:</label>
+                    <div class="color-group">
+                        <input type="color" id="pointerColor" value="#ff0000">
+                        <input type="text" id="pointerColor-text" value="#ff0000">
+                    </div>
+                </div>
+                
+                <div class="wheel-input-group">
+                    <label for="borderColor">Цвет границ полей:</label>
+                    <div class="color-group">
+                        <input type="color" id="borderColor" value="#444444">
+                        <input type="text" id="borderColor-text" value="#444444">
+                    </div>
+                </div>
+                
+                <button id="applyAdvanced" class="wheel-button">Применить настройки</button>
+            </div>
+            
+            <div class="tab-content" id="wheels-tab">
+                <h2 class="section-title">Управление рулетками</h2>
+                
+                <div class="wheel-input-group">
+                    <label for="wheelName">Название рулетки:</label>
+                    <input type="text" id="wheelName" placeholder="Введите название">
+                </div>
+                
+                <button id="saveWheelBtn" class="wheel-button">Сохранить текущую рулетку</button>
+                
+                <div class="wheels-list" id="wheelsList">
+                    <!-- Сохраненные рулетки будут здесь -->
+                </div>
+                
+                <div class="wheel-buttons">
+                    <button id="loadWheelBtn" class="wheel-button">Загрузить выбранную</button>
+                    <button id="deleteWheelBtn" class="wheel-button">Удалить выбранную</button>
+                </div>
+            </div>
         </div>
-        
+
         <div class="url-section">
-            <h2 class="section-title">URL для встраивания в OBS</h2>
+            <h2 class="section-title">URL для источника OBS</h2>
             <textarea id="obsUrl" readonly></textarea>
-            <p class="obs-hint">Скопируйте эту ссылку и используйте в OBS как источник браузера.</p>
             <div class="url-actions">
                 <button id="copyUrlBtn" class="wheel-button">Копировать URL</button>
                 <span id="copyStatus"></span>
             </div>
+            <h2 class="section-title">URL для Док-браузера OBS</h2>
+            <textarea id="dockUrl" readonly></textarea>
+            <div class="url-actions">
+                <button id="copyDockUrlBtn" class="wheel-button">Копировать URL для док-браузера</button>
+            </div>
+            <p class="obs-hint">Док-браузер позволит вам управлять рулеткой прямо из OBS</p>
         </div>
 
-        <section class="section">
-		<h2><strong>Док-браузер OBS</strong></h2>
-        <p>Если вы встроили рулетку в OBS. И при Анимации возникают проблемы, попробуйте добавить в док-браузер OBS эту ссылку. <br>Далее крутить и настраивать рулетку уже в самой OBS: <textarea>https://mcpleh.github.io/PHGBALANCEDBD/Rulletobs.html</textarea></p>
-        </section>
-    </div>
-<p style="font-size: 8px;">Изначально рулетка была проидумана для шоу матчей по DBD - Lagerta_Seeman и Nestli_Exidaz</p>
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">PHG | DBD Creator</div>
-                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+        <!-- Док-браузер интерфейс (скрыт по умолчанию) -->
+        <div id="dockInterface" style="display: none;">
+            <div class="dock-controls">
+                <div class="dock-control-group">
+                    <h3 class="dock-title">Управление рулеткой</h3>
+                    <button id="dockSpinButton" class="wheel-button spin">Крутить рулетку</button>
+                    <div class="wheel-input-group">
+                        <label for="dockNewItem">Новый элемент:</label>
+                        <input type="text" id="dockNewItem" placeholder="Введите текст элемента">
+                    </div>
+                    <button id="dockAddItemBtn" class="wheel-button">Добавить элемент</button>
+                </div>
+                
+                <div class="dock-control-group">
+                    <h3 class="dock-title">Текущие элементы</h3>
+                    <div class="item-list" id="dockItemsList">
+                        <!-- Элементы будут добавляться здесь -->
+                    </div>
+                    <div class="wheel-buttons">
+                        <button id="dockClearItemsBtn" class="wheel-button">Очистить все</button>
+                        <button id="dockRandomizeBtn" class="wheel-button">Случайный порядок</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
-    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
-    <center>
-        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
-        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
-        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
-        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
-        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
-        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
-    </center>
+    </div>
+    <div class="section">
+    <p style="font-size: 8px;">Изначально рулетка была придумана по заказу Lagerta_Seeman для шоу матчей по DBD</p>
+    
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+    </center></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const canvas = document.getElementById('wheelCanvas');
         const ctx = canvas.getContext('2d');
         const spinButton = document.getElementById('spinButton');
+        const dockSpinButton = document.getElementById('dockSpinButton');
         const addItemBtn = document.getElementById('addItemBtn');
+        const dockAddItemBtn = document.getElementById('dockAddItemBtn');
         const newItemInput = document.getElementById('newItem');
+        const dockNewItemInput = document.getElementById('dockNewItem');
         const itemsList = document.getElementById('itemsList');
+        const dockItemsList = document.getElementById('dockItemsList');
         const obsUrl = document.getElementById('obsUrl');
+        const dockUrl = document.getElementById('dockUrl');
         const copyUrlBtn = document.getElementById('copyUrlBtn');
+        const copyDockUrlBtn = document.getElementById('copyDockUrlBtn');
         const copyStatus = document.getElementById('copyStatus');
         const clearItemsBtn = document.getElementById('clearItemsBtn');
+        const dockClearItemsBtn = document.getElementById('dockClearItemsBtn');
         const randomizeBtn = document.getElementById('randomizeBtn');
+        const dockRandomizeBtn = document.getElementById('dockRandomizeBtn');
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         const applyColorsBtn = document.getElementById('applyColors');
@@ -854,6 +815,21 @@
         const fontSizeInput = document.getElementById('fontSize');
         const applyFontBtn = document.getElementById('applyFont');
         const fontExample = document.getElementById('fontExample');
+        const dockInterface = document.getElementById('dockInterface');
+        const applyAdvancedBtn = document.getElementById('applyAdvanced');
+        const pointerColorInput = document.getElementById('pointerColor');
+        const pointerColorTextInput = document.getElementById('pointerColor-text');
+        const borderColorInput = document.getElementById('borderColor');
+        const borderColorTextInput = document.getElementById('borderColor-text');
+        const pointerElement = document.querySelector('.pointer');
+        const resultDisplay = document.getElementById('resultDisplay');
+        
+        // Элементы для управления несколькими рулетками
+        const wheelNameInput = document.getElementById('wheelName');
+        const saveWheelBtn = document.getElementById('saveWheelBtn');
+        const wheelsList = document.getElementById('wheelsList');
+        const loadWheelBtn = document.getElementById('loadWheelBtn');
+        const deleteWheelBtn = document.getElementById('deleteWheelBtn');
         
         // Настройки по умолчанию
         let items = ['Выживший', 'Убийца', 'Снаряжение', 'Предмет', 'Донат'];
@@ -866,23 +842,362 @@
             textColor1: '#ff0000',
             textColor2: '#ffffff',
             centerColor: '#000000',
-            centerBorderColor: '#ff0000'
+            centerBorderColor: '#ff0000',
+            pointerColor: '#ff0000',
+            borderColor: '#444444'
         };
         let wheelFont = {
             family: "'Roboto Mono', monospace",
             size: 14
         };
         
-        // Инициализация
-        initColorInputs();
-        initFontSettings();
-        drawWheel();
-        updateItemsList();
-        updateObsUrl();
+        // Хранилище для нескольких рулеток
+        let savedWheels = {};
+        let currentWheelId = null;
         
-        // Инициализация цветовых input'ов
-        function initColorInputs() {
-            // Устанавливаем значения по умолчанию
+        // Флаг для автоматического вращения при загрузке в OBS
+        let autoSpinEnabled = false;
+        let isFirstLoad = true;
+        
+        // Загрузка сохраненных данных
+        function loadSavedData() {
+            const savedData = localStorage.getItem('wheelSettings');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                items = data.items || items;
+                wheelColors = data.colors || wheelColors;
+                wheelFont = data.font || wheelFont;
+                autoSpinEnabled = data.autoSpin || false;
+                
+                // Применяем сохраненные цвета
+                updatePointerColor();
+                updateBorderColor();
+            }
+            
+            // Загружаем сохраненные рулетки
+            const wheelsData = localStorage.getItem('savedWheels');
+            if (wheelsData) {
+                savedWheels = JSON.parse(wheelsData);
+                updateWheelsList();
+            }
+        }
+        
+        // Сохранение данных
+        function saveData() {
+            const data = {
+                items: items,
+                colors: wheelColors,
+                font: wheelFont,
+                autoSpin: autoSpinEnabled
+            };
+            localStorage.setItem('wheelSettings', JSON.stringify(data));
+            
+            // Синхронизируем с другими вкладками
+            localStorage.setItem('wheelSettingsSync', JSON.stringify(data));
+        }
+        
+        // Сохранение списка рулеток
+        function saveWheels() {
+            localStorage.setItem('savedWheels', JSON.stringify(savedWheels));
+        }
+        
+        // Синхронизация между вкладками
+        function setupSync() {
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'wheelSettingsSync' && e.newValue) {
+                    const data = JSON.parse(e.newValue);
+                    items = data.items;
+                    wheelColors = data.colors;
+                    wheelFont = data.font;
+                    autoSpinEnabled = data.autoSpin;
+                    
+                    updateItemsList();
+                    updatePointerColor();
+                    updateBorderColor();
+                    drawWheel();
+                }
+            });
+        }
+        
+        // Проверяем, находимся ли мы в OBS
+        function checkObsMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isObsMode = urlParams.get('obs') === 'true';
+            const isDockMode = urlParams.get('dock') === 'true';
+            
+            if (isObsMode) {
+                document.body.classList.add('obs-mode');
+                // Автоматическое вращение при загрузке в OBS
+                if (isFirstLoad) {
+                    isFirstLoad = false;
+                    setTimeout(() => {
+                        spinWheel();
+                    }, 1000);
+                }
+            } else if (isDockMode) {
+                document.body.classList.add('dock-mode');
+                dockInterface.style.display = 'block';
+            }
+        }
+        
+        // Обновление URL для OBS
+        function updateObsUrl() {
+            const baseUrl = window.location.href.split('?')[0];
+            const obsModeUrl = `${baseUrl}?obs=true`;
+            const dockModeUrl = `${baseUrl}?dock=true`;
+            
+            obsUrl.value = obsModeUrl;
+            dockUrl.value = dockModeUrl;
+        }
+        
+        // Обновление списка элементов
+        function updateItemsList() {
+            itemsList.innerHTML = '';
+            dockItemsList.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item';
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = item;
+                input.addEventListener('change', () => {
+                    items[index] = input.value;
+                    saveData();
+                    drawWheel();
+                });
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                removeBtn.addEventListener('click', () => {
+                    items.splice(index, 1);
+                    updateItemsList();
+                    saveData();
+                    drawWheel();
+                });
+                
+                itemElement.appendChild(input);
+                itemElement.appendChild(removeBtn);
+                itemsList.appendChild(itemElement);
+                
+                // Дублируем для док-интерфейса
+                const dockItemElement = itemElement.cloneNode(true);
+                dockItemElement.querySelector('input').addEventListener('change', (e) => {
+                    items[index] = e.target.value;
+                    saveData();
+                    drawWheel();
+                });
+                dockItemElement.querySelector('button').addEventListener('click', () => {
+                    items.splice(index, 1);
+                    updateItemsList();
+                    saveData();
+                    drawWheel();
+                });
+                dockItemsList.appendChild(dockItemElement);
+            });
+        }
+        
+        // Обновление списка рулеток
+        function updateWheelsList() {
+            wheelsList.innerHTML = '';
+            
+            for (const id in savedWheels) {
+                if (savedWheels.hasOwnProperty(id)) {
+                    const wheel = savedWheels[id];
+                    
+                    const wheelItem = document.createElement('div');
+                    wheelItem.className = 'wheel-item';
+                    wheelItem.dataset.id = id;
+                    
+                    const span = document.createElement('span');
+                    span.textContent = wheel.name || 'Без названия';
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'selectedWheel';
+                    radio.value = id;
+                    
+                    wheelItem.appendChild(radio);
+                    wheelItem.appendChild(span);
+                    wheelsList.appendChild(wheelItem);
+                }
+            }
+        }
+        
+        // Отрисовка рулетки
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (items.length === 0) return;
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+            
+            const anglePerItem = (Math.PI * 2) / items.length;
+            
+            // Рисуем сегменты
+            items.forEach((item, index) => {
+                const startAngle = index * anglePerItem + currentRotation;
+                const endAngle = (index + 1) * anglePerItem + currentRotation;
+                
+                // Выбираем цвет в зависимости от четности индекса
+                const color = index % 2 === 0 ? wheelColors.color1 : wheelColors.color2;
+                const textColor = index % 2 === 0 ? wheelColors.textColor1 : wheelColors.textColor2;
+                
+                // Рисуем сегмент
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = color;
+                ctx.fill();
+                
+                // Рисуем границу сегмента
+                ctx.strokeStyle = wheelColors.borderColor;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Рисуем текст
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + anglePerItem / 2);
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = textColor;
+                ctx.font = `${wheelFont.size}px ${wheelFont.family}`;
+                
+                // Максимальная ширина текста
+                const maxWidth = radius * 0.7;
+                let text = item;
+                let metrics = ctx.measureText(text);
+                
+                // Если текст слишком длинный, сокращаем его
+                if (metrics.width > maxWidth) {
+                    while (metrics.width > maxWidth && text.length > 0) {
+                        text = text.substring(0, text.length - 1);
+                        metrics = ctx.measureText(text + '...');
+                    }
+                    text += '...';
+                }
+                
+                ctx.fillText(text, radius - 20, 0);
+                ctx.restore();
+            });
+            
+            // Рисуем центр рулетки
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.1, 0, Math.PI * 2);
+            ctx.fillStyle = wheelColors.centerColor;
+            ctx.fill();
+            ctx.strokeStyle = wheelColors.centerBorderColor;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Добавляем надпись PHG в центре
+                ctx.font = `bold ${radius * 2}px`;
+                ctx.fillStyle = wheelColors.textColor2;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('PHG', centerX, centerY);
+        }
+        
+        // Вращение рулетки
+        function spinWheel() {
+            if (isSpinning || items.length === 0) return;
+            
+            isSpinning = true;
+            spinButton.disabled = true;
+            if (dockSpinButton) dockSpinButton.disabled = true;
+            
+            // Случайное замедление
+            const spinDuration = 3000 + Math.random() * 2000;
+            const targetRotation = currentRotation + Math.PI * 10 + Math.random() * Math.PI * 10;
+            
+            const startTime = performance.now();
+            const startRotation = currentRotation;
+            
+            resultDisplay.style.display = 'none';
+            
+            function animate(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / spinDuration, 1);
+                
+                // Эффект замедления (ease-out)
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                currentRotation = startRotation + (targetRotation - startRotation) * easeOut;
+                
+                drawWheel();
+                
+                if (progress < 1) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    // Анимация завершена
+                    finishSpin();
+                }
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        // Завершение вращения
+        function finishSpin() {
+            isSpinning = false;
+            spinButton.disabled = false;
+            if (dockSpinButton) dockSpinButton.disabled = false;
+            
+            // Определяем выбранный элемент
+            const normalizedRotation = (currentRotation % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+            const anglePerItem = (Math.PI * 2) / items.length;
+            const selectedIndex = Math.floor(items.length - (normalizedRotation / anglePerItem)) % items.length;
+            
+            const selectedItem = items[selectedIndex];
+            
+            // Показываем результат
+            //resultDisplay.textContent = selectedItem;
+            //resultDisplay.style.display = 'block';
+            
+            // Сохраняем результат для OBS
+            localStorage.setItem('lastSpinResult', selectedItem);
+            
+            // Отправляем сообщение, если мы в iframe (для OBS)
+            if (window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'wheelResult',
+                    result: selectedItem
+                }, '*');
+            }
+        }
+        
+        // Обновление цвета указателя
+        function updatePointerColor() {
+            pointerElement.style.backgroundColor = wheelColors.pointerColor;
+            pointerElement.style.boxShadow = `0 0 10px ${wheelColors.pointerColor}80`;
+        }
+        
+        // Обновление цвета границ
+        function updateBorderColor() {
+            // Применяем цвет границ к элементам интерфейса
+            document.querySelectorAll('.controls-section, .url-section, .item, .wheel-item').forEach(el => {
+                el.style.borderColor = wheelColors.borderColor;
+            });
+        }
+        
+        // Инициализация
+        function init() {
+            loadSavedData();
+            checkObsMode();
+            updateObsUrl();
+            updateItemsList();
+            updatePointerColor();
+            updateBorderColor();
+            drawWheel();
+            setupSync();
+            
+            // Устанавливаем начальные значения для цветовых полей
             document.getElementById('color1').value = wheelColors.color1;
             document.getElementById('color1-text').value = wheelColors.color1;
             document.getElementById('color2').value = wheelColors.color2;
@@ -890,241 +1205,28 @@
             document.getElementById('textColor1').value = wheelColors.textColor1;
             document.getElementById('textColor1-text').value = wheelColors.textColor1;
             document.getElementById('textColor2').value = wheelColors.textColor2;
-            document.getElementById('textColor2-text').value = wheelColors.textColor2;
+            document.getElementById('textTextColor2').value = wheelColors.textColor2;
             document.getElementById('centerColor').value = wheelColors.centerColor;
             document.getElementById('centerColor-text').value = wheelColors.centerColor;
             document.getElementById('centerBorderColor').value = wheelColors.centerBorderColor;
             document.getElementById('centerBorderColor-text').value = wheelColors.centerBorderColor;
+            document.getElementById('pointerColor').value = wheelColors.pointerColor;
+            document.getElementById('pointerColor-text').value = wheelColors.pointerColor;
+            document.getElementById('borderColor').value = wheelColors.borderColor;
+            document.getElementById('borderColor-text').value = wheelColors.borderColor;
             
-            // Добавляем обработчики для синхронизации color picker и text input
-            const colorInputs = document.querySelectorAll('input[type="color"]');
-            colorInputs.forEach(input => {
-                const textInput = document.getElementById(`${input.id}-text`);
-                input.addEventListener('input', () => {
-                    textInput.value = input.value;
-                });
-                textInput.addEventListener('input', () => {
-                    input.value = textInput.value;
-                });
-            });
-        }
-        
-        // Инициализация настроек шрифта
-        function initFontSettings() {
+            // Устанавливаем начальные значения для шрифта
             fontSelect.value = wheelFont.family;
             fontSizeInput.value = wheelFont.size;
-            updateFontExample();
-            
-            fontSelect.addEventListener('change', updateFontExample);
-            fontSizeInput.addEventListener('input', updateFontExample);
-        }
-        
-        // Обновление примера шрифта
-        function updateFontExample() {
-            fontExample.style.fontFamily = fontSelect.value;
-            fontExample.style.fontSize = `${fontSizeInput.value}px`;
-        }
-        
-        // Функция отрисовки рулетки
-        function drawWheel() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            if (items.length === 0) {
-                ctx.font = `20px ${wheelFont.family}`;
-                ctx.fillStyle = wheelColors.textColor1;
-                ctx.textAlign = 'center';
-                ctx.fillText('Добавьте элементы', canvas.width / 2, canvas.height / 2);
-                return;
-            }
-            
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = Math.min(centerX, centerY) - 10;
-            const anglePerItem = (2 * Math.PI) / items.length;
-            
-            // Рисуем сегменты
-            for (let i = 0; i < items.length; i++) {
-                const startAngle = i * anglePerItem;
-                const endAngle = (i + 1) * anglePerItem;
-                
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-                ctx.closePath();
-                
-                // Чередуем цвета
-                ctx.fillStyle = i % 2 === 0 ? wheelColors.color1 : wheelColors.color2;
-                ctx.fill();
-                
-                // Рисуем текст
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.rotate(startAngle + anglePerItem / 2);
-                ctx.textAlign = 'right';
-                ctx.fillStyle = i % 2 === 0 ? wheelColors.textColor1 : wheelColors.textColor2;
-                ctx.font = `${wheelFont.size}px ${wheelFont.family}`;
-                ctx.fillText(items[i], radius - 20, 5);
-                ctx.restore();
-            }
-            
-            // Рисуем центр рулетки
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, radius * 0.1, 0, 2 * Math.PI);
-            ctx.fillStyle = wheelColors.centerColor;
-            ctx.fill();
-            ctx.strokeStyle = wheelColors.centerBorderColor;
-            ctx.lineWidth = 3;
-            ctx.stroke();
-        }
-        
-        // Функция вращения рулетки
-        function spinWheel() {
-            if (isSpinning || items.length === 0) return;
-            
-            isSpinning = true;
-            spinButton.disabled = true;
-            
-            const spinDuration = 3000 + Math.random() * 2000; // 3-5 секунд
-            const startTime = performance.now();
-            const startRotation = currentRotation;
-            
-            // Случайный конечный угол (минимум 2 полных оборота)
-            const targetRotation = startRotation + 4 * Math.PI + Math.random() * 2 * Math.PI;
-            
-            function animate(currentTime) {
-                const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / spinDuration, 1);
-                
-                // Замедление в конце
-                const easing = 1 - Math.pow(1 - progress, 3);
-                currentRotation = startRotation + (targetRotation - startRotation) * easing;
-                
-                ctx.save();
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.rotate(currentRotation);
-                ctx.translate(-canvas.width / 2, -canvas.height / 2);
-                drawWheel();
-                ctx.restore();
-                
-                if (progress < 1) {
-                    animationId = requestAnimationFrame(animate);
-                } else {
-                    isSpinning = false;
-                    spinButton.disabled = false;
-                    
-                    // Определяем выбранный элемент
-                    const finalAngle = (currentRotation % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-                    const anglePerItem = (2 * Math.PI) / items.length;
-                    const selectedIndex = Math.floor(items.length - (finalAngle / anglePerItem)) % items.length;
-                    
-                    // Анимация выбранного элемента
-                    highlightSelectedItem(selectedIndex);
-                }
-            }
-            
-            animationId = requestAnimationFrame(animate);
-        }
-        
-        // Подсветка выбранного элемента
-        function highlightSelectedItem(index) {
-            const selectedItem = items[index];
-            //alert(`Выпало: ${selectedItem}`);
-        }
-        
-        // Обновление списка элементов
-        function updateItemsList() {
-            itemsList.innerHTML = '';
-            
-            items.forEach((item, index) => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'item';
-                itemElement.innerHTML = `
-                    <input type="text" value="${item}" data-index="${index}">
-                    <button class="remove-btn" data-index="${index}">Удалить</button>
-                `;
-                itemsList.appendChild(itemElement);
-            });
-            
-            // Добавляем обработчики для редактирования и удаления
-            document.querySelectorAll('.item input').forEach(input => {
-                input.addEventListener('change', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    items[index] = e.target.value;
-                    drawWheel();
-                });
-            });
-            
-            document.querySelectorAll('.remove-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index);
-                    items.splice(index, 1);
-                    updateItemsList();
-                    drawWheel();
-                    updateObsUrl();
-                });
-            });
-        }
-        
-        // Обновление URL для OBS
-        function updateObsUrl() {
-            const params = new URLSearchParams();
-            params.set('items', items.join('|'));
-            params.set('color1', encodeURIComponent(wheelColors.color1));
-            params.set('color2', encodeURIComponent(wheelColors.color2));
-            params.set('textColor1', encodeURIComponent(wheelColors.textColor1));
-            params.set('textColor2', encodeURIComponent(wheelColors.textColor2));
-            params.set('centerColor', encodeURIComponent(wheelColors.centerColor));
-            params.set('centerBorderColor', encodeURIComponent(wheelColors.centerBorderColor));
-            params.set('fontFamily', encodeURIComponent(wheelFont.family));
-            params.set('fontSize', wheelFont.size);
-            params.set('obs', 'true');
-            
-            const currentUrl = window.location.href.split('?')[0];
-            obsUrl.value = `${currentUrl}?${params.toString()}`;
-        }
-        
-        // Проверка параметров URL для OBS режима
-        function checkObsMode() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('obs') === 'true') {
-                document.body.classList.add('obs-mode');
-                
-                // Загружаем настройки из URL
-                if (urlParams.has('items')) {
-                    items = urlParams.get('items').split('|');
-                }
-                if (urlParams.has('color1')) {
-                    wheelColors.color1 = decodeURIComponent(urlParams.get('color1'));
-                }
-                if (urlParams.has('color2')) {
-                    wheelColors.color2 = decodeURIComponent(urlParams.get('color2'));
-                }
-                if (urlParams.has('textColor1')) {
-                    wheelColors.textColor1 = decodeURIComponent(urlParams.get('textColor1'));
-                }
-                if (urlParams.has('textColor2')) {
-                    wheelColors.textColor2 = decodeURIComponent(urlParams.get('textColor2'));
-                }
-                if (urlParams.has('centerColor')) {
-                    wheelColors.centerColor = decodeURIComponent(urlParams.get('centerColor'));
-                }
-                if (urlParams.has('centerBorderColor')) {
-                    wheelColors.centerBorderColor = decodeURIComponent(urlParams.get('centerBorderColor'));
-                }
-                if (urlParams.has('fontFamily')) {
-                    wheelFont.family = decodeURIComponent(urlParams.get('fontFamily'));
-                }
-                if (urlParams.has('fontSize')) {
-                    wheelFont.size = parseInt(urlParams.get('fontSize'));
-                }
-                
-                drawWheel();
-            }
+            fontExample.style.fontFamily = wheelFont.family;
+            fontExample.style.fontSize = `${wheelFont.size}px`;
         }
         
         // Обработчики событий
         spinButton.addEventListener('click', spinWheel);
+        if (dockSpinButton) {
+            dockSpinButton.addEventListener('click', spinWheel);
+        }
         
         addItemBtn.addEventListener('click', () => {
             const newItem = newItemInput.value.trim();
@@ -1132,16 +1234,66 @@
                 items.push(newItem);
                 newItemInput.value = '';
                 updateItemsList();
+                saveData();
                 drawWheel();
-                updateObsUrl();
             }
         });
         
-        newItemInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addItemBtn.click();
+        if (dockAddItemBtn) {
+            dockAddItemBtn.addEventListener('click', () => {
+                const newItem = dockNewItemInput.value.trim();
+                if (newItem) {
+                    items.push(newItem);
+                    dockNewItemInput.value = '';
+                    updateItemsList();
+                    saveData();
+                    drawWheel();
+                }
+            });
+        }
+        
+        clearItemsBtn.addEventListener('click', () => {
+            if (confirm('Очистить все элементы?')) {
+                items = [];
+                updateItemsList();
+                saveData();
+                drawWheel();
             }
         });
+        
+        if (dockClearItemsBtn) {
+            dockClearItemsBtn.addEventListener('click', () => {
+                if (confirm('Очистить все элементы?')) {
+                    items = [];
+                    updateItemsList();
+                    saveData();
+                    drawWheel();
+                }
+            });
+        }
+        
+        randomizeBtn.addEventListener('click', () => {
+            // Перемешиваем элементы случайным образом
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
+            }
+            updateItemsList();
+            saveData();
+            drawWheel();
+        });
+        
+        if (dockRandomizeBtn) {
+            dockRandomizeBtn.addEventListener('click', () => {
+                for (let i = items.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [items[i], items[j]] = [items[j], items[i]];
+                }
+                updateItemsList();
+                saveData();
+                drawWheel();
+            });
+        }
         
         copyUrlBtn.addEventListener('click', () => {
             obsUrl.select();
@@ -1152,38 +1304,47 @@
             }, 2000);
         });
         
-        clearItemsBtn.addEventListener('click', () => {
-            if (confirm('Вы уверены, что хотите удалить все элементы?')) {
-                items = [];
-                updateItemsList();
-                drawWheel();
-                updateObsUrl();
-            }
-        });
-        
-        randomizeBtn.addEventListener('click', () => {
-            // Перемешиваем массив
-            for (let i = items.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [items[i], items[j]] = [items[j], items[i]];
-            }
-            updateItemsList();
-            drawWheel();
-            updateObsUrl();
+        copyDockUrlBtn.addEventListener('click', () => {
+            dockUrl.select();
+            document.execCommand('copy');
+            copyStatus.textContent = 'URL для док-браузера скопирован!';
+            setTimeout(() => {
+                copyStatus.textContent = '';
+            }, 2000);
         });
         
         // Переключение вкладок
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                const tabId = tab.dataset.tab;
+                const tabId = tab.getAttribute('data-tab');
                 
-                // Убираем активный класс у всех вкладок и контента
                 tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
                 
-                // Добавляем активный класс текущей вкладке и контенту
                 tab.classList.add('active');
                 document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Обновление текстовых полей цветов при изменении color picker
+        const colorInputs = document.querySelectorAll('input[type="color"]');
+        colorInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const textInput = document.getElementById(`${input.id}-text`);
+                if (textInput) {
+                    textInput.value = input.value;
+                }
+            });
+        });
+        
+        // Обновление color picker при изменении текстового поля
+        const colorTextInputs = document.querySelectorAll('input[type="text"][id$="-text"]');
+        colorTextInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const colorInput = document.getElementById(input.id.replace('-text', ''));
+                if (colorInput && /^#([0-9A-F]{3}){1,2}$/i.test(input.value)) {
+                    colorInput.value = input.value;
+                }
             });
         });
         
@@ -1196,21 +1357,124 @@
             wheelColors.centerColor = document.getElementById('centerColor').value;
             wheelColors.centerBorderColor = document.getElementById('centerBorderColor').value;
             
+            saveData();
             drawWheel();
-            updateObsUrl();
+        });
+        
+        // Обновление примера шрифта
+        fontSelect.addEventListener('change', () => {
+            fontExample.style.fontFamily = fontSelect.value;
+        });
+        
+        fontSizeInput.addEventListener('input', () => {
+            const size = parseInt(fontSizeInput.value);
+            if (!isNaN(size) && size > 0) {
+                fontExample.style.fontSize = `${size}px`;
+            }
         });
         
         // Применение шрифта
         applyFontBtn.addEventListener('click', () => {
-            wheelFont.family = fontSelect.value;
-            wheelFont.size = parseInt(fontSizeInput.value);
-            
-            drawWheel();
-            updateObsUrl();
+            const size = parseInt(fontSizeInput.value);
+            if (!isNaN(size) && size > 0) {
+                wheelFont.family = fontSelect.value;
+                wheelFont.size = size;
+                
+                saveData();
+                drawWheel();
+            }
         });
         
-        // Проверяем режим OBS при загрузке
-        checkObsMode();
+        // Применение дополнительных настроек
+        applyAdvancedBtn.addEventListener('click', () => {
+            wheelColors.pointerColor = document.getElementById('pointerColor').value;
+            wheelColors.borderColor = document.getElementById('borderColor').value;
+            
+            updatePointerColor();
+            updateBorderColor();
+            saveData();
+            drawWheel();
+        });
+        
+        // Сохранение рулетки
+        saveWheelBtn.addEventListener('click', () => {
+            const name = wheelNameInput.value.trim() || `Рулетка ${Object.keys(savedWheels).length + 1}`;
+            const id = Date.now().toString();
+            
+            savedWheels[id] = {
+                name: name,
+                items: [...items],
+                colors: {...wheelColors},
+                font: {...wheelFont}
+            };
+            
+            saveWheels();
+            updateWheelsList();
+            wheelNameInput.value = '';
+        });
+        
+        // Загрузка рулетки
+        loadWheelBtn.addEventListener('click', () => {
+            const selected = document.querySelector('input[name="selectedWheel"]:checked');
+            if (selected) {
+                const wheelId = selected.value;
+                const wheel = savedWheels[wheelId];
+                
+                if (wheel) {
+                    items = [...wheel.items];
+                    wheelColors = {...wheel.colors};
+                    wheelFont = {...wheel.font};
+                    
+                    updateItemsList();
+                    updatePointerColor();
+                    updateBorderColor();
+                    drawWheel();
+                    saveData();
+                    
+                    // Обновляем UI с новыми значениями
+                    document.getElementById('color1').value = wheelColors.color1;
+                    document.getElementById('color1-text').value = wheelColors.color1;
+                    document.getElementById('color2').value = wheelColors.color2;
+                    document.getElementById('color2-text').value = wheelColors.color2;
+                    document.getElementById('textColor1').value = wheelColors.textColor1;
+                    document.getElementById('textColor1-text').value = wheelColors.textColor1;
+                    document.getElementById('textColor2').value = wheelColors.textColor2;
+                    document.getElementById('textTextColor2').value = wheelColors.textColor2;
+                    document.getElementById('centerColor').value = wheelColors.centerColor;
+                    document.getElementById('centerColor-text').value = wheelColors.centerColor;
+                    document.getElementById('centerBorderColor').value = wheelColors.centerBorderColor;
+                    document.getElementById('centerBorderColor-text').value = wheelColors.centerBorderColor;
+                    document.getElementById('pointerColor').value = wheelColors.pointerColor;
+                    document.getElementById('pointerColor-text').value = wheelColors.pointerColor;
+                    document.getElementById('borderColor').value = wheelColors.borderColor;
+                    document.getElementById('borderColor-text').value = wheelColors.borderColor;
+                    
+                    fontSelect.value = wheelFont.family;
+                    fontSizeInput.value = wheelFont.size;
+                    fontExample.style.fontFamily = wheelFont.family;
+                    fontExample.style.fontSize = `${wheelFont.size}px`;
+                }
+            }
+        });
+        
+        // Удаление рулетки
+        deleteWheelBtn.addEventListener('click', () => {
+            const selected = document.querySelector('input[name="selectedWheel"]:checked');
+            if (selected && confirm('Удалить выбранную рулетку?')) {
+                const wheelId = selected.value;
+                delete savedWheels[wheelId];
+                saveWheels();
+                updateWheelsList();
+            }
+        });
+        
+        // Обработка изменения размера окна
+        window.addEventListener('resize', () => {
+            drawWheel();
+        });
+        
+        // Инициализация при загрузке
+        init();
     });
     </script>
 </body>
