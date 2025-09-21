@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Randomizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .perk-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 0.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .perk-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .items-section {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .item-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .item-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .item-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 0.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .perks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Рандомайзер перков</h1>
+			<a href="randomS.html" class="btn" style="background-color: #2a7dc7;"><i class="fas fa-users"></i> Выжившие</a> <a href="random.html" class="btn" style="background-color: #ed071e;"><i class="fas fa-crosshairs"></i> Киллеры</a>
+            <br>
+            
+            <div class="checker-container">
+                <button class="btn" id="generateBuild">Сгенерировать сборку</button>
+                
+                <div class="result" id="result">
+                    
+                    
+                    <div class="perks-section">
+                        <h4 class="section-title">Перки для киллеров</h4>
+                        <div class="perks-grid" id="perksGrid">
+                            <!-- Перки будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="items-section">
+                        
+                        <div class="items-grid" id="itemsGrid">
+                            <!-- Предметы будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+            <center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+            <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+            <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+            <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+            <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+            <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateBuild');
+            const resultDiv = document.getElementById('result');
+            const perksGrid = document.getElementById('perksGrid');
+            const itemsGrid = document.getElementById('itemsGrid');
+            
+            // Базы данных с реальными значками из DBD
+            const survivorPerks = [
+                { name: "Нетерпимость", icon: "https://i.postimg.cc/kXHnzWDt/icon-Perks-Agitation.webp" },
+                { name: "Детище тьмы", icon: "https://i.postimg.cc/9FQdJHqQ/icon-Perks-Shadowborn.webp" },
+                { name: "Стойкий", icon: "https://i.postimg.cc/SKD11fNB/icon-Perks-Enduring.webp" },
+                { name: "Стридор", icon: "https://i.postimg.cc/ZqppCTXV/icon-Perks-Stridor.webp" },
+                { name: "Оставьте лучшее напоследок", icon: "https://i.postimg.cc/wv5Xb6V7/icon-Perks-Save-The-Best-For-Last.webp" },
+                { name: "Зверская сила", icon: "https://i.postimg.cc/Twk8mXDW/icon-Perks-Brutal-Strength.webp" },
+                { name: "Ищейка", icon: "https://i.postimg.cc/nh7tW566/icon-Perks-Bloodhound.webp" },
+                { name: "Детище света", icon: "https://i.postimg.cc/8C9XVPM4/icon-Perks-Lightborn.webp" },
+                { name: "Танатофобия", icon: "https://i.postimg.cc/CL58bCWZ/icon-Perks-Thatanophobia.webp" },
+                { name: "Угасающий свет", icon: "https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp" },
+                { name: "Пугающее присутствие", icon: "https://i.postimg.cc/8CSsXLnm/icon-Perks-Unnerving-Presence.webp" },
+                { name: "Хищник", icon: "https://i.postimg.cc/8zsbPg10/icon-Perks-Predator.webp" },
+                { name: "Умелец", icon: "https://i.postimg.cc/5tBQfsFr/icon-Perks-Tinkerer.webp" },
+                { name: "Зов Медсестры", icon: "https://i.postimg.cc/3w53J7X8/icon-Perks-ANurses-Calling.webp" },
+                { name: "Поиграть со своей жертвой", icon: "https://i.postimg.cc/tCq5wV8y/icon-Perks-Play-With-Your-Food.webp" },
+                { name: "Порча: погибель", icon: "https://i.postimg.cc/Hx102Jbq/icon-Perks-Ruin.webp" },
+                { name: "Слежка и наказание", icon: "https://i.postimg.cc/bwvmD2RL/icon-Perks-Monitor-And-Abuse.webp" },
+                { name: "Территориальный императив", icon: "https://i.postimg.cc/9XJT4gN5/icon-Perks-Territorial-Imperative.webp" },
+                { name: "Барбекю и чили", icon: "https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" },
+                { name: "Яркое пламя", icon: "https://i.postimg.cc/tTJSKnsY/icon-Perks-Fire-Up.webp" },
+                { name: "Порча: пожирание надежды", icon: "https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" },
+                { name: "Перегрузка", icon: "https://i.postimg.cc/g02b0JwP/icon-Perks-Generator-Overcharge.webp" },
+                { name: "Порча: колыбельная охотницы", icon: "https://i.postimg.cc/634S7GtF/icon-Perks-Huntress-Lullaby.webp" },
+                { name: "Гибель Франклина", icon: "https://i.postimg.cc/nVjZ7C3F/icon-Perks-Franklins-Loss.webp" },
+                { name: "Помни меня", icon: "https://i.postimg.cc/ZqdFpPvP/icon-Perks-Remember-Me.webp" },
+                { name: "Порча: третья печать", icon: "https://i.postimg.cc/X7PCLGbs/icon-Perks-The-Third-Seal.webp" },
+                { name: "Невыносимое присутствие", icon: "https://i.postimg.cc/ryCjf9nQ/icon-Perks-Overwhelming-Presence.webp" },
+                { name: "Хищный зверь", icon: "https://i.postimg.cc/c19ZtfR5/icon-Perks-Beast-Of-Prey.webp" },
+                { name: "Нокаут", icon: "https://i.postimg.cc/T324VsTV/icon-Perks-Knock-Out.webp" },
+                { name: "Кровавый смотритель", icon: "https://i.postimg.cc/CKgVp70d/icon-Perks-Blood-Warden.webp" },
+                { name: "Выбор за тобой", icon: "https://i.postimg.cc/Y21nJ79N/icon-Perks-Make-Your-Choice.webp" },
+                { name: "Чертик из табакерки", icon: "https://i.postimg.cc/9FLphQj9/icon-Perks-Pop-Goes-The-Weasel.webp" },
+                { name: "Ненависть", icon: "https://i.postimg.cc/XYYm9vWN/icon-Perks-Hatred.webp" },
+                { name: "Разлад", icon: "https://i.postimg.cc/mkcnH140/icon-Perks-Discordance.webp" },
+                { name: "Темная преданность", icon: "https://i.postimg.cc/43LJp0qq/icon-Perks-Dark-Devotion.webp" },
+                { name: "Наблюдение", icon: "https://i.postimg.cc/Gthy7vt5/icon-Perks-Surveillance.webp" },
+                { name: "Клоунофобия", icon: "https://i.postimg.cc/RhqkLb7p/icon-Perks-Coulrophobia.webp" },
+                { name: "Порча: проклятая земля", icon: "https://i.postimg.cc/k5VHhhDk/icon-Perks-Haunted-Ground.webp" },
+                { name: "Железная дева", icon: "https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp" },
+                { name: "Вмешательство скверны", icon: "https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" },
+                { name: "Секущий крюк: секрет палача", icon: "https://i.postimg.cc/ZR9krMF7/icon-Perks-Hangmans-Trick.webp" },
+                { name: "Розыгрыш", icon: "https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" },
+                { name: "Ярость духа", icon: "https://i.postimg.cc/T3j15CRv/icon-Perks-Spirit-Fury.webp" },
+                { name: "Безумное упорство", icon: "https://i.postimg.cc/mkNmMYqp/icon-Perks-Mad-Grit.webp" },
+                { name: "Заразительный ужас", icon: "https://i.postimg.cc/nr1SQywQ/icon-Perks-Infectious-Fright.webp" },
+                { name: "Скрытная погоня", icon: "https://i.postimg.cc/3J2TSzMz/icon-Perks-Furtive-Chase.webp" },
+                { name: "Жестокая изоляция", icon: "https://i.postimg.cc/wTRKtZT7/icon-Perks-Cruel-Confinement.webp" },
+                { name: "Тактика зансин", icon: "https://i.postimg.cc/BbXvPpX4/icon-Perks-Zanshin-Tactics.webp" },
+                { name: "Порча: кара", icon: "https://i.postimg.cc/vHwRVX1h/icon-Perks-Hex-Retribution.webp" },
+                { name: "Тропа терзаний", icon: "https://i.postimg.cc/PJxCzhFG/icon-Perks-Trail-Of-Torment.webp" },
+                { name: "Чуткий слух", icon: "https://i.postimg.cc/kGxps3Vc/icon-Perks-Im-All-Ears.webp" },
+                { name: "Разрушитель разума", icon: "https://i.postimg.cc/Wb89170h/icon-Perks-Mind-Breaker.webp" },
+                { name: "Отзвук крови", icon: "https://i.postimg.cc/SNHhDqt6/icon-Perks-Blood-Echo.webp" },
+                { name: "Аварийная кнопка", icon: "https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" },
+                { name: "Принудительная мера", icon: "https://i.postimg.cc/PNsSv62w/icon-Perks-Forced-Penance.webp" },
+                { name: "Пугающая тряска", icon: "https://i.postimg.cc/13NNjmRs/icon-Perks-Thrilling-Tremors.webp" },
+                { name: "Выброс", icon: "https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" },
+                { name: "Возмездие", icon: "https://i.postimg.cc/xdJggDhz/icon-Perks-Nemesis.webp" },
+                { name: "Знаток техники", icon: "https://i.postimg.cc/Hk2CH5k2/icon-Perks-Gear-Head.webp" },
+                { name: "Смертельные узы", icon: "https://i.postimg.cc/QMbvGrSn/icon-Perks-Deathbound.webp" },
+                { name: "Порча: благоволение крови", icon: "https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp" },
+                { name: "Добивание", icon: "https://i.postimg.cc/fyF62j5z/icon-Perks-Coup-De-Grace.webp" },
+                { name: "Фанатение", icon: "https://i.postimg.cc/dVzGs7Nh/icon-Perks-Starstruck.webp" },
+                { name: "Подрыв", icon: "https://i.postimg.cc/rmHnMy4g/icon-Perks-Eruption.webp" },
+                { name: "Мертвая хватка", icon: "https://i.postimg.cc/gkW5JJ5B/icon-Perks-Iron-Grasp.webp" },
+                { name: "Порча: не-смерть", icon: "https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp" },
+                { name: "Скопидом", icon: "https://i.postimg.cc/Vk4228KZ/icon-Perks-Hoarder.webp" },
+                { name: "Порча: контроль толпы", icon: "https://i.postimg.cc/d3dzfZfG/icon-Perks-Hex-Crowd-Control.webp" },
+                { name: "Истерия", icon: "https://i.postimg.cc/KjXWtvYj/icon-Perks-Hysteria.webp" },
+                { name: "Порча: игрушка", icon: "https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" },
+                { name: "Драконья хватка", icon: "https://i.postimg.cc/0y14zNBB/icon-Perks-Dragons-Grip.webp" },
+                { name: "Притеснение", icon: "https://i.postimg.cc/prZBy2hg/icon-Perks-Oppression.webp" },
+                { name: "Выхода нет", icon: "https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp" },
+                { name: "Преследователь-убийца", icon: "https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" },
+                { name: "Секущий крюк: дар боли", icon: "https://i.postimg.cc/6qYdtYFK/icon-Perks-Scourge-Hook-Gift-Of-Pain.webp" },
+                { name: "Мрачные объятья", icon: "https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" },
+                { name: "Соленое море", icon: "https://i.postimg.cc/W3pLh4hv/icon-Perks-Call-Of-Brine.webp" },
+                { name: "Растворение", icon: "https://i.postimg.cc/sf8qRm9y/icon-Perks-Dissolution.webp" },
+                { name: "Лучшая анатомия", icon: "https://i.postimg.cc/tTbP6Kjy/icon-Perks-Superior-Anatomy.webp" },
+                { name: "Им не укрыться", icon: "https://i.postimg.cc/L5RTHqXt/icon-Perks-Nowhere-To-Hide.webp" },
+                { name: "Секущий крюк: резонанс боли", icon: "https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" },
+                { name: "Секущий крюк: пучина ярости", icon: "https://i.postimg.cc/qqCmRfXr/icon-Perks-Flood-Of-Rage.webp" },
+                { name: "Явление мрака", icon: "https://i.postimg.cc/m2vv7jtV/icon-Perks-Darkness-Revelated.webp" },
+                { name: "Развитая внимательность", icon: "https://i.postimg.cc/nL4pX52v/icon-Perks-Awakened-Awarenesss.webp" },
+                { name: "Порча: лик мрака", icon: "https://i.postimg.cc/tT8KDNBX/icon-Perks-Hex-Face-The-Darkness.webp" },
+                { name: "Порча: пентименто", icon: "https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp" },
+                { name: "Безжалостный шторм", icon: "https://i.postimg.cc/qM4brFhP/icon-Perks-Merciless-Storm.webp" },
+                { name: "Тлетворное касание", icon: "https://i.postimg.cc/5935B2yr/icon-Perks-Septic-Touch.webp" },
+                { name: "Последний этап", icon: "https://i.postimg.cc/BbY1dt1Q/icon-Perks-Terminus.webpg" },
+                { name: "Свирепая гордыня", icon: "https://i.postimg.cc/bvJ4hBMy/icon-Perks-Hubris.webp" },
+                { name: "Бац!", icon: "https://i.postimg.cc/pTPhrKfL/icon-Perks-Thwack.webp" },
+                { name: "Генетические ограничения", icon: "https://i.postimg.cc/4NZrN5F9/Icon-Perks-Genetic-Limits.webp" },
+                { name: "Совершенное оружие", icon: "https://i.postimg.cc/tJMYBfLs/icon-Perks-Ultimate-Weapon.webp" },
+                { name: "Порча: игра для двоих", icon: "https://i.postimg.cc/G37838Hb/icon-Perks-two-Can-Play.webp" },
+                { name: "Свободное", icon: "https://i.postimg.cc/qMNtNJ3y/icon-Perks-Unbound.webp" },
+                { name: "Рычаг влияния", icon: "https://i.postimg.cc/nzmRVb1J/icon-Perks-Leverage.webp" },
+                { name: "Вынужденная нерешительность", icon: "https://i.postimg.cc/Gtn6DJL6/Icon-Perks-Forced-Hesitation.webp" },
+                { name: "Быстрая жестокость", icon: "https://i.postimg.cc/RZ8LWphV/icon-Perks-Rapid-Brutality.webp" },
+                { name: "Друзья до гроба", icon: "https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" },
+                { name: "Непредвиденное", icon: "https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp" },
+                { name: "Догонялки", icon: "https://i.postimg.cc/cLZNVT0C/icon-Perks-Game-Afoot.webp" },
+                { name: "Машинное обучение", icon: "https://i.postimg.cc/fTGS9Vmm/Icon-Perks-Self-Aware.webp" },
+                { name: "Инстинкт чужого", icon: "https://i.postimg.cc/L8ZHphZQ/icon-Perks-Alien-Instinct.webp" },
+                { name: "Батарейки в комплекте", icon: "https://i.postimg.cc/8c5SnCSH/icon-Perks-batteries-Included.webp" },
+                { name: "Незавершенное", icon: "https://i.postimg.cc/MKgnRC74/icon-Perks-Undone.webp" },
+                { name: "Связь с плетением", icon: "https://i.postimg.cc/SsQRkk4X/icon-Perks-Weave-Attunement.webp" },
+                { name: "Алчность", icon: "https://i.postimg.cc/6Qmg5hJd/icon-Perks-Human-Greed.webp" },
+                { name: "Оглушительный гром", icon: "https://i.postimg.cc/PrvxtSgM/T-UI-icon-Perks-All-Shaking-Thunder.webp" },
+                { name: "Порча: только отчаяние", icon: "https://i.postimg.cc/c12x5Qvt/T-UI-icon-Perks-Nothing-But-Misery.webp" },
+                { name: "Требуются работники", icon: "https://i.postimg.cc/QMmN6w7j/T-UI-icon-Perks-Help-Wanted.webp" },
+                { name: "Безжизненное касание", icon: "https://i.postimg.cc/W19fX74Q/icon-Perks-Languid-Touch.webp" },
+                { name: "Владычество", icon: "https://i.postimg.cc/3xjcmTMJ/icon-Perks-Dominance.webp" },
+                { name: "Секущий крюк: щербатый компас", icon: "https://i.postimg.cc/q7J4Cw5S/T-UI-icon-Perks-Scourge-Hook-Jagged-Compass.webp" },
+                { name: "Переплетенные навсегда", icon: "https://i.postimg.cc/4xzxcmN7/T-UI-icon-Perks-Forever-Entwined.webp" },
+                { name: "Фантомный страх", icon: "https://i.postimg.cc/vHnYRcnq/T-UI-icon-Perks-Phantom-Fear.webp" },
+                { name: "Темное высокомерие", icon: "https://i.postimg.cc/59Rd2bJh/icon-Perks-Dark-Arrogance.webp" },
+                { name: "Порча: горькая участь", icon: "https://i.postimg.cc/13yLWtrN/icon-Perks-Hex-Wretched-Fate.webp" },
+                { name: "Без пощады", icon: "https://i.postimg.cc/qqPphdPx/T-UI-icon-Perks-No-Quarter.webp" },
+                { name: "Все несвободны", icon: "https://i.postimg.cc/J0D1zh2h/T-UI-icon-Perks-None-Are-Free.webp" },
+                { name: "Неполадки", icon: "https://i.postimg.cc/wBgTQg7W/T-UI-icon-Perks-Haywire.webp" },
+                { name: "Тихий шорох", icon: "https://i.postimg.cc/4NYG6nw4/icon-Perks-Bitter-Murmur.webp" },
+                { name: "Охотник на оленей", icon: "https://i.postimg.cc/pTL4P16V/icon-Perks-Deerstalker.webp" },
+                { name: "Сеющий страх", icon: "https://i.postimg.cc/pd6HmFnt/icon-Perks-Distressing.webp" },
+                { name: "Коварство", icon: "https://i.postimg.cc/sfSqsSnh/icon-Perks-Insidious.webp" },
+                { name: "Все средства хороши", icon: "https://i.postimg.cc/y80wjRRK/icon-Perks-Deadlock.webp" },
+                { name: "Секущий крюк: чудовищный храм", icon: "https://i.postimg.cc/Qdn0px4D/icon-Perks-Monstrous-Shrine.webp" },
+                { name: "Порча: никому не скрыться от смерти", icon: "https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" },
+                { name: "Небрежный мясник", icon: "https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" },
+                { name: "Сумеречные шпионы", icon: "https://i.postimg.cc/kgVxPNsr/icon-Perks-Spies-From-The-Shadows.webp" },
+                { name: "Порча: охотничий азарт", icon: "https://i.postimg.cc/6QJGskTR/icon-Perks-Thrill-Of-The-Hunt.webp" },
+                { name: "Безжалостный", icon: "https://i.postimg.cc/XvkqRXRS/icon-Perks-Unrelenting.webp" },
+                { name: "Шепоты", icon: "https://i.postimg.cc/cHDHJ21F/icon-Perks-Whispers.webp" },
+                { name: "Разбитые надежды", icon: "https://i.postimg.cc/R0LxStCd/icon-Perks-Boon-Destroyer.webp" },
+				{ name: "Проклятие Рока", icon: "https://i.postimg.cc/DZzvR6QL/T-UI-icon-Perks-Hex-Overture-Of-Doom.webp" },
+				{ name: "Прожорливость", icon: "https://i.postimg.cc/MpbzTNd1/T-UI-icon-Perks-Ravenous.webp" },
+				{ name: "Блужлающий взгляд", icon: "https://i.postimg.cc/LsxRkfdX/T-UI-icon-Perks-Wandering-Eye.webp" }
+            ];
+            
+            generateBtn.addEventListener('click', function() {
+                // Очищаем предыдущие результаты
+                perksGrid.innerHTML = '';
+                itemsGrid.innerHTML = '';
+                
+                // Выбираем 4 случайных перка
+                const selectedPerks = getRandomItems(survivorPerks, 4);
+                
+                // Добавляем перки в сетку
+                selectedPerks.forEach(perk => {
+                    const perkElement = document.createElement('div');
+                    perkElement.className = 'perk-card';
+                    perkElement.innerHTML = `
+                        <div class="perk-icon">
+                            <img src="${perk.icon}" alt="${perk.name}">
+                        </div>
+                        <h4>${perk.name}</h4>
+                        
+                    `;
+                    perksGrid.appendChild(perkElement);
+                }); 
+                
+                // Показываем результат с анимацией
+                resultDiv.classList.add('visible');
+                
+                // Прокрутка к результатам
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Функция для получения случайных элементов из массива
+            function getRandomItems(array, count) {
+                const shuffled = [...array].sort(() => 0.5 - Math.random());
+                return shuffled.slice(0, count);
+            }
+        });
+    </script>
+</body>
+</html>

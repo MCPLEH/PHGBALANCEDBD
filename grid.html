@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Grid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 2rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .tournament-controls {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .bracket-container {
+            overflow-x: auto;
+            padding: 20px 0;
+            margin-bottom: 2rem;
+        }
+        
+        .tournament-bracket {
+            display: flex;
+            min-width: fit-content;
+            padding: 20px;
+        }
+        
+        .bracket-round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 0 30px;
+            min-width: 200px;
+        }
+        
+        .round-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .matchup {
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .match-team {
+            background-color: #2a2a2a;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+        
+        .match-team:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .match-team.winner {
+            background-color: #3a2a2a;
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .match-team.winner::after {
+            content: "✓";
+            position: absolute;
+            right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .connector {
+            position: absolute;
+            background-color: #444;
+        }
+        
+        .connector.horizontal {
+            height: 1px;
+            width: 30px;
+            top: 50%;
+            right: -30px;
+        }
+        
+        .connector.vertical {
+            width: 1px;
+            height: 50%;
+            right: -30px;
+        }
+        
+        .connector.vertical.top {
+            top: 0;
+        }
+        
+        .connector.vertical.bottom {
+            bottom: 0;
+        }
+        
+        .connector.vertical.middle {
+            top: 50%;
+            height: 100%;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Добавим стили для отображения счётчика */
+        .team-score {
+            margin-left: auto;
+            padding-left: 10px;
+            color: #888;
+            font-size: 0.9em;
+        }
+        
+        .match-team.winner .team-score {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Скрываем кнопку симуляции */
+        #simulateTournament {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .bracket-round {
+                margin: 0 15px;
+                min-width: 160px;
+            }
+            
+            .match-team {
+                min-width: 120px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tournament-controls">
+            <center>
+            <h2>Турнирная сетка</h2>
+            <br>
+            <button id="loadBracket" class="btn">Обновить сетку</button>
+            <!-- Кнопка скрыта через CSS -->
+            <button id="simulateTournament" class="btn">Симулировать турнир</button>
+            </center>
+        </div>
+
+        <div class="bracket-container">
+            <div id="bracket" class="tournament-bracket">
+                <div class="loading">Загрузка данных о командах...</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+
+    <script>
+        // ID вашей Google таблицы (нужно заменить на ваш)
+        const SPREADSHEET_ID = '1c09Y17OxWsHT3bDgeaQ28fv9wemU95HIVNTKnxknd4Q';
+        // URL для доступа к Google Apps Script (нужно заменить на ваш)
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbfFxiCUvQOZFgXJh7q8qKbA_rFNeFs0ssZKsL3LTNQmoq28U2XIPB8a4OU8gwQSh4/exec';
+        
+        // Функция для получения данных из Google Таблицы
+        async function fetchTeamsData() {
+            const bracketElement = document.getElementById('bracket');
+            bracketElement.innerHTML = '<div class="loading">Загрузка данных о командах...</div>';
+            
+            try {
+                // Если используется Google Apps Script
+                if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getBracketData`);
+                    const data = await response.json();
+                    
+                    if (data && data.teams && data.results) {
+                        generateBracket(data.teams, data.results);
+                    } else {
+                        throw new Error('Неверный формат данных');
+                    }
+                    return;
+                }
+                
+                // Заглушка с тестовыми данными (для демонстрации)
+                const mockTeams = [
+                    "Команда 1", "Команда 2", "Команда 3", "Команда 4"
+                ];
+                
+                const mockResults = [
+                    ["2:0", "2:1"],
+                    ["3:2"]
+                ];
+                
+                generateBracket(mockTeams, mockResults);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                bracketElement.innerHTML = '<div class="error">Ошибка загрузки данных. Проверьте подключение к интернету.</div>';
+            }
+        }
+        
+        // Функция для генерации турнирной сетки
+function generateBracket(teams, results) {
+    const bracketElement = document.getElementById('bracket');
+    bracketElement.innerHTML = '';
+    
+    // Определяем количество раундов на основе количества команд
+    const teamCount = teams.length;
+    const roundCount = Math.ceil(Math.log2(teamCount)) + 1;
+    
+    // Создаем раунды
+    for (let roundIndex = 0; roundIndex < roundCount; roundIndex++) {
+        const roundDiv = document.createElement('div');
+        roundDiv.className = 'bracket-round';
+        
+        const roundTitle = document.createElement('div');
+        roundTitle.className = 'round-title';
+        
+        // Названия раундов
+        const roundNames = {
+            2: ['Финал'],
+            3: ['1/2 финала', 'Финал'],
+            4: ['1/4 финала', '1/2 финала', 'Финал'],
+            5: ['1/8 финала', '1/4 финала', '1/2 финала', 'Финал'],
+            6: ['1/16 финала', '1/8 финала', '1/4 финала', '1/2 финала', 'Финал']
+        };
+        
+        if (roundNames[roundCount] && roundNames[roundCount][roundIndex]) {
+            roundTitle.textContent = roundNames[roundCount][roundIndex];
+        } else {
+            roundTitle.textContent = `Раунд ${roundIndex + 1}`;
+        }
+        
+        roundDiv.appendChild(roundTitle);
+        
+        // Количество матчей в раунде (делим на 2 с каждым раундом)
+        const matchesInRound = Math.floor(teamCount / Math.pow(2, roundIndex + 1));
+        
+        for (let matchIndex = 0; matchIndex < matchesInRound; matchIndex++) {
+            const matchupDiv = document.createElement('div');
+            matchupDiv.className = 'matchup';
+            
+            // Для первого раунда показываем команды из списка
+            if (roundIndex === 0) {
+                const team1Index = matchIndex * 2;
+                const team2Index = matchIndex * 2 + 1;
+                
+                const team1 = document.createElement('div');
+                team1.className = 'match-team';
+                team1.textContent = teams[team1Index] || 'TBD';
+                
+                const team2 = document.createElement('div');
+                team2.className = 'match-team';
+                team2.textContent = teams[team2Index] || 'TBD';
+                
+                // Добавляем счёт, если есть (УБРАНО ОТОБРАЖЕНИЕ СЧЕТА)
+                if (results[roundIndex] && results[roundIndex][matchIndex]) {
+                    // Помечаем победителя без отображения счета
+                    if (parseInt(results[roundIndex][matchIndex].split(':')[0]) > parseInt(results[roundIndex][matchIndex].split(':')[1])) {
+                        team1.classList.add('winner');
+                    } else {
+                        team2.classList.add('winner');
+                    }
+                }
+                
+                matchupDiv.appendChild(team1);
+                matchupDiv.appendChild(team2);
+            } else {
+                // Для последующих раундов показываем победителей из предыдущего раунда
+                const team1 = document.createElement('div');
+                team1.className = 'match-team';
+                
+                const team2 = document.createElement('div');
+                team2.className = 'match-team';
+                
+                // Получаем данные из results
+                if (results[roundIndex] && results[roundIndex][matchIndex]) {
+                    // Определяем победителей предыдущего раунда
+                    const prevRoundIndex = roundIndex - 1;
+                    const match1Index = matchIndex * 2;
+                    const match2Index = matchIndex * 2 + 1;
+                    
+                    if (results[prevRoundIndex] && results[prevRoundIndex][match1Index]) {
+                        const prevScore1 = results[prevRoundIndex][match1Index].split(':');
+                        team1.textContent = parseInt(prevScore1[0]) > parseInt(prevScore1[1]) ? 
+                                            getTeamName(teams, prevRoundIndex, match1Index, 0) : 
+                                            getTeamName(teams, prevRoundIndex, match1Index, 1);
+                    } else {
+                        team1.textContent = 'TBD';
+                    }
+                    
+                    if (results[prevRoundIndex] && results[prevRoundIndex][match2Index]) {
+                        const prevScore2 = results[prevRoundIndex][match2Index].split(':');
+                        team2.textContent = parseInt(prevScore2[0]) > parseInt(prevScore2[1]) ? 
+                                            getTeamName(teams, prevRoundIndex, match2Index, 0) : 
+                                            getTeamName(teams, prevRoundIndex, match2Index, 1);
+                    } else {
+                        team2.textContent = 'TBD';
+                    }
+                    
+                    // Помечаем победителя без отображения счета
+                    if (parseInt(results[roundIndex][matchIndex].split(':')[0]) > parseInt(results[roundIndex][matchIndex].split(':')[1])) {
+                        team1.classList.add('winner');
+                    } else {
+                        team2.classList.add('winner');
+                    }
+                } else {
+                    team1.textContent = 'TBD';
+                    team2.textContent = 'TBD';
+                }
+                
+                matchupDiv.appendChild(team1);
+                matchupDiv.appendChild(team2);
+            }
+            
+            roundDiv.appendChild(matchupDiv);
+        }
+        
+        bracketElement.appendChild(roundDiv);
+    }
+}
+
+// Вспомогательная функция для получения названия команды
+function getTeamName(teams, roundIndex, matchIndex, teamPosition) {
+    if (roundIndex === 0) {
+        // Для первого раунда - берем из массива teams
+        const teamIndex = matchIndex * 2 + teamPosition;
+        return teams[teamIndex] || 'TBD';
+    } else {
+        // Для последующих раундов - рекурсивно определяем победителя
+        const prevRoundIndex = roundIndex - 1;
+        const prevMatchIndex = matchIndex * 2 + teamPosition;
+        
+        if (prevRoundIndex === 0) {
+            // Для второго раунда - берем из первого раунда
+            const teamIndex = prevMatchIndex * 2;
+            const teamIndex2 = prevMatchIndex * 2 + 1;
+            return teams[teamIndex] || teams[teamIndex2] || 'TBD';
+        } else {
+            // Для более глубоких раундов - используем рекурсию
+            return getTeamName(teams, prevRoundIndex, prevMatchIndex, 
+                             parseInt(results[prevRoundIndex][prevMatchIndex].split(':')[0]) > 
+                             parseInt(results[prevRoundIndex][prevMatchIndex].split(':')[1]) ? 0 : 1);
+        }
+    }
+}
+        // Обработчики событий
+        document.getElementById('loadBracket').addEventListener('click', fetchTeamsData);
+        
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', fetchTeamsData);
+    </script>
+</body>
+</html>

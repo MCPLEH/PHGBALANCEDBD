@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Buildings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .perk-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Стили для галереи */
+        .gallery-section {
+            padding: 2rem 0;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        .gallery-thumb {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-thumb {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-caption {
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(194, 25, 25, 0.5);
+        }
+        
+        .modal-caption {
+            text-align: center;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .nav-btn {
+            color: white;
+            font-size: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        /* Кнопка добавления новых фото (для будущего использования) */
+        .add-photo-btn {
+            display: block;
+            margin: 2rem auto;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .add-photo-btn:hover {
+            background-color: var(--highlight-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="gallery-title">Название Конструкций</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #ccc;">Нажмите на изображение для просмотра в полном размере</p>
+            
+            <div class="gallery-grid" id="gallery-container">
+                <!-- Изображения будут добавлены через JavaScript -->
+            </div>
+            
+            <!-- Кнопка для добавления новых фото (может быть скрыта или использоваться администратором) -->
+            <button class="add-photo-btn" id="add-photo-btn" style="display: none;">Добавить фото</button>
+        </div>
+    </section>
+
+    <!-- Модальное окно для просмотра изображений -->
+    <div class="modal" id="image-modal">
+        <span class="close" id="close-modal">&times;</span>
+        <div class="modal-nav">
+            <div class="nav-btn" id="prev-btn">&lt;</div>
+            <div class="nav-btn" id="next-btn">&gt;</div>
+        </div>
+        <img class="modal-content" id="modal-image">
+        <div class="modal-caption" id="modal-caption"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+
+    <script>
+        // Массив с данными изображений
+        const galleryImages = [
+            {
+                src: "https://i.postimg.cc/nr4Zx7VT/photo-2025-08-04-09-15-36.jpg",
+                caption: "Лачуга - Shack"
+            },
+            {
+        src: "https://i.postimg.cc/QMZLqmQt/photo-2025-08-04-09-15-49.jpg",
+        caption: "Ормонд - Ormond"
+    },
+    {
+        src: "https://i.postimg.cc/PrNkfPft/photo-2025-08-04-09-15-05.jpg",
+        caption: "Лабиринт - Maze"
+    },
+    {
+        src: "https://i.postimg.cc/hvZWbqsW/photo-2025-08-04-09-14-26.jpg",
+        caption: "Коробка - Box"
+    },
+    {
+        src: "https://i.postimg.cc/3J6QkYW2/photo-2025-08-04-09-14-44.jpg",
+        caption: "Коробка 2 - Box 2"
+    },
+    // Добавьте новые изображения здесь:
+    {
+        src: "https://i.postimg.cc/tg3Kv6kz/photo-2025-08-04-09-16-18.jpg",
+        caption: "Двойка (Тшка) - Pair"
+    },
+	{
+        src: "https://i.postimg.cc/gj2bZ0vH/photo-2025-08-04-09-13-05.jpg",
+        caption: "Четверка - Two Pairs"
+    },
+	{
+        src: "https://i.postimg.cc/44WgTzgL/photo-2025-08-04-09-13-56.jpg",
+        caption: "Четверка 2 - Two Pairs 2"
+    },
+	{
+        src: "https://i.postimg.cc/d1Jzb0Sc/photo-2025-08-05-08-12-41.jpg",
+        caption: "Пятак - Five"
+    },
+	{
+        src: "https://i.postimg.cc/PxKBTkBp/photo-2025-08-05-08-13-04.jpg",
+        caption: "Камни - Rock"
+    },
+	{
+        src: "https://i.postimg.cc/RhF20DBP/photo-2025-08-05-08-13-27.jpg",
+        caption: "Филлер - God Rock"
+    },
+	{
+        src: "https://i.postimg.cc/d3xpZjQJ/photo-2025-08-05-08-13-53.jpg",
+        caption: "Тройка (ТИэль) - Three"
+    },
+	{
+        src: "https://i.postimg.cc/sf6tLsYb/photo-2025-08-05-08-14-27.jpg",
+        caption: "Зи Волт - Zi Voult"
+    },
+    {
+        src: "https://i.postimg.cc/YqvJKZ80/photo-2025-08-05-08-14-56.jpg",
+        caption: "Единичка - One"
+    }
+];
+        
+        // Переменные для управления модальным окном
+        let currentImageIndex = 0;
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
+        const closeModal = document.getElementById('close-modal');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        // Функция для создания галереи
+        function createGallery() {
+            const galleryContainer = document.getElementById('gallery-container');
+            
+            galleryImages.forEach((image, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => openModal(index);
+                
+                const img = document.createElement('img');
+                img.src = image.src;
+                img.alt = image.caption;
+                img.className = 'gallery-thumb';
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'gallery-overlay';
+                
+                const caption = document.createElement('div');
+                caption.className = 'gallery-caption';
+                caption.textContent = image.caption;
+                
+                overlay.appendChild(caption);
+                galleryItem.appendChild(img);
+                galleryItem.appendChild(overlay);
+                galleryContainer.appendChild(galleryItem);
+            });
+        }
+        
+        // Функция для открытия модального окна
+        function openModal(index) {
+            currentImageIndex = index;
+            updateModal();
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку фона
+        }
+        
+        // Функция для закрытия модального окна
+        function closeModalFunc() {
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Восстанавливаем прокрутку
+        }
+        
+        // Функция для обновления содержимого модального окна
+        function updateModal() {
+            const image = galleryImages[currentImageIndex];
+            modalImage.src = image.src;
+            modalCaption.textContent = image.caption;
+        }
+        
+        // Функция для перехода к следующему изображению
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateModal();
+        }
+        
+        // Функция для перехода к предыдущему изображению
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateModal();
+        }
+        
+        // Обработчики событий
+        closeModal.addEventListener('click', closeModalFunc);
+        prevBtn.addEventListener('click', prevImage);
+        nextBtn.addEventListener('click', nextImage);
+        
+        // Закрытие модального окна при клике вне изображения
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Навигация с помощью клавиатуры
+        document.addEventListener('keydown', (e) => {
+            if (modal.classList.contains('show')) {
+                if (e.key === 'Escape') closeModalFunc();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+        
+        // Инициализация галереи при загрузке страницы
+        window.onload = createGallery;
+    </script>
+</body>
+</html>

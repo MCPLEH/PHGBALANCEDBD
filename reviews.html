@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+            --card-bg: rgba(40, 40, 40, 0.7);
+            --main-red: #c21919;
+            
+            /* Цвета для тем отзывов */
+            --tournament-color: #d40b1b;
+            --store-color: #ff9800;
+            --merch-color: #9c07f2;
+            --lessons-color: #0885f2;
+            --site-color: #28c916;
+            --other-color: #6d6d6e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--main-red);
+        }
+        
+        /* Стили для отзывов */
+        .reviews-container {
+            margin-top: 2rem;
+        }
+        
+        .review-form {
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group textarea, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus, .input-group textarea:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-danger {
+            background-color: #d9534f;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c9302c;
+        }
+        
+        .review-card {
+            background-color: rgba(35, 35, 35, 0.8);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .review-author {
+            font-weight: bold;
+        }
+        
+        .review-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .review-content {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .review-rating {
+            color: #ffc107;
+            margin-top: 0.5rem;
+        }
+        
+        .review-topic {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .topic-tournament {
+            background-color: var(--tournament-color);
+        }
+        
+        .topic-store {
+            background-color: var(--store-color);
+        }
+        
+        .topic-merch {
+            background-color: var(--merch-color);
+        }
+        
+        .topic-lessons {
+            background-color: var(--lessons-color);
+        }
+        
+        .topic-site {
+            background-color: var(--site-color);
+        }
+        
+        .topic-other {
+            background-color: var(--other-color);
+        }
+        
+        .reply-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+        }
+        
+        .reply-form {
+            display: flex;
+            margin-top: 0.5rem;
+        }
+        
+        .reply-input {
+            flex-grow: 1;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            margin-right: 8px;
+        }
+        
+        .reply-btn {
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .replies-list {
+            margin-top: 1rem;
+        }
+        
+        .reply-item {
+            background-color: rgba(50, 50, 50, 0.6);
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+        }
+        
+        .reply-author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .reply-date {
+            color: #777;
+            font-size: 0.8rem;
+        }
+        
+        .empty-reviews {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-stars i {
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s;
+            font-size: 1.5rem;
+        }
+        
+        .rating-stars i.active {
+            color: #ffc107;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #2a2a2a;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .notification.success {
+            border-left: 4px solid #4caf50;
+        }
+        
+        .notification.error {
+            border-left: 4px solid #f44336;
+        }
+        
+        .load-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .reply-form {
+                flex-direction: column;
+            }
+            
+            .reply-input {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="section">
+            <center>
+                <h2><i class="fas fa-star"></i> Отзывы пользователей PHG Community</h2>
+                <p>Поделитесь своим мнением о нашем проекте</p>
+            </center>
+
+            <!-- Контейнер для отзывов -->
+            <div class="reviews-container">
+                <h3>Последние отзывы</h3>
+                <div id="reviews-list">
+                    <!-- Отзывы будут загружаться здесь -->
+                </div>
+                <div class="load-more">
+                    <button class="btn" id="load-more">Загрузить еще</button>
+                </div>
+            </div>
+
+            <!-- Форма добавления отзыва -->
+            <div class="review-form">
+                <h3>Оставить отзыв</h3>
+                <div class="input-group">
+                    <label for="review-author">Ваш Ник/Имя</label>
+                    <input type="text" id="review-author" placeholder="Напишите свой ник/имя">
+                </div>
+                <div class="input-group">
+                    <label for="review-topic">Тема отзыва</label>
+                    <select id="review-topic">
+                        <option value="tournament">О турнире</option>
+                        <option value="store">Игровой магазин</option>
+                        <option value="merch">Мерч по DBD</option>
+                        <option value="lessons">Уроки DBD</option>
+                        <option value="site">О сайте</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Оценка</label>
+                    <div class="rating-stars" id="rating-stars">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="review-content">Ваш отзыв</label>
+                    <textarea id="review-content" rows="4" placeholder="Расскажите о вашем опыте..."></textarea>
+                </div>
+                <button class="btn" id="submit-review">Отправить отзыв</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div id="notification" class="notification"></div>
+    
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+    <script>
+    // Конфигурация Google Apps Script
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzockQcX2d6LdRubAGTcl2J7RfuhqTfcDp2wlP_DENeGaD-7L_Be460noYzvq_HGchdFw/exec';
+    
+    // DOM элементы
+    const reviewsList = document.getElementById('reviews-list');
+    const submitButton = document.getElementById('submit-review');
+    const notification = document.getElementById('notification');
+    const loadMoreButton = document.getElementById('load-more');
+    
+    // Переменные состояния
+    let currentRating = 0;
+    let allReviews = [];
+    let displayedReviews = 5;
+    
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        // Инициализация звезд рейтинга
+        initRatingStars();
+        
+        // Загрузка отзывов
+        loadReviewsFromScript();
+        
+        // Обработчик отправки формы
+        submitButton.addEventListener('click', submitReview);
+        
+        // Обработчик кнопки "Загрузить еще"
+        loadMoreButton.addEventListener('click', loadMoreReviews);
+    });
+    
+    // Инициализация звезд рейтинга
+    function initRatingStars() {
+        const stars = document.querySelectorAll('.rating-stars i');
+        stars.forEach(star => {
+            star.addEventListener('mouseover', hoverStar);
+            star.addEventListener('mouseout', resetStars);
+            star.addEventListener('click', setRating);
+        });
+    }
+    
+    function hoverStar(e) {
+        const rating = parseInt(e.target.getAttribute('data-rating'));
+        highlightStars(rating);
+    }
+    
+    function resetStars() {
+        highlightStars(currentRating);
+    }
+    
+    function setRating(e) {
+        currentRating = parseInt(e.target.getAttribute('data-rating'));
+        highlightStars(currentRating);
+    }
+    
+    function highlightStars(rating) {
+        const stars = document.querySelectorAll('.rating-stars i');
+        stars.forEach(star => {
+            const starRating = parseInt(star.getAttribute('data-rating'));
+            if (starRating <= rating) {
+                star.classList.add('active');
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('active');
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+    
+    // Загрузка отзывов
+    function loadReviewsFromScript() {
+        fetch(`${SCRIPT_URL}?action=getReviews`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Фильтруем только approved отзывы
+                    allReviews = data.reviews.filter(review => review.status === 'approved');
+                    
+                    // Сортируем по дате (сначала новые)
+                    allReviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    
+                    displayReviews();
+                    
+                    if (allReviews.length === 0) {
+                        reviewsList.innerHTML = `
+                            <div class="empty-reviews">
+                                <i class="fas fa-comments" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <p>Пока нет отзывов. Будьте первым!</p>
+                            </div>
+                        `;
+                        loadMoreButton.style.display = 'none';
+                    }
+                } else {
+                    showNotification('Ошибка при загрузке отзывов', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Ошибка при загрузке отзывов', 'error');
+            });
+    }
+    
+    function loadMoreReviews() {
+        displayedReviews += 5;
+        displayReviews();
+    }
+    
+    // Отображение отзывов
+    function displayReviews() {
+        const reviewsToShow = allReviews.slice(0, displayedReviews);
+        
+        if (reviewsToShow.length === 0) {
+            reviewsList.innerHTML = '<div class="empty-reviews">Пока нет отзывов. Будьте первым!</div>';
+            loadMoreButton.style.display = 'none';
+            return;
+        }
+        
+        reviewsList.innerHTML = '';
+        reviewsToShow.forEach(review => {
+            const reviewElement = createReviewElement(review);
+            reviewsList.appendChild(reviewElement);
+        });
+        
+        // Скрываем кнопку "Загрузить еще", если все отзывы показаны
+        if (displayedReviews >= allReviews.length) {
+            loadMoreButton.style.display = 'none';
+        } else {
+            loadMoreButton.style.display = 'inline-block';
+        }
+    }
+    
+    function createReviewElement(review) {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.className = 'review-card';
+        
+        // Определяем класс темы для цвета
+        let topicClass = '';
+        let topicText = '';
+        
+        switch(review.topic) {
+            case 'tournament':
+                topicClass = 'topic-tournament';
+                topicText = 'О турнире';
+                break;
+            case 'store':
+                topicClass = 'topic-store';
+                topicText = 'Игровой магазин';
+                break;
+            case 'merch':
+                topicClass = 'topic-merch';
+                topicText = 'Мерч по DBD';
+                break;
+            case 'lessons':
+                topicClass = 'topic-lessons';
+                topicText = 'Уроки DBD';
+                break;
+            case 'site':
+                topicClass = 'topic-site';
+                topicText = 'О сайте';
+                break;
+            default:
+                topicClass = 'topic-other';
+                topicText = 'Другое';
+        }
+        
+        // Создаем звезды рейтинга
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= review.rating) {
+                starsHtml += '<i class="fas fa-star"></i>';
+            } else {
+                starsHtml += '<i class="far fa-star"></i>';
+            }
+        }
+        
+        // Создаем ответы, если они есть
+        let repliesHtml = '';
+        if (review.replies && review.replies.length > 0) {
+            repliesHtml = review.replies.map(reply => `
+                <div class="reply-item">
+                    <div class="reply-header">
+                        <div class="reply-author">${escapeHtml(reply.author)}</div>
+                        <div class="reply-date">${formatDate(reply.timestamp)}</div>
+                    </div>
+                    <div class="reply-content">${escapeHtml(reply.content)}</div>
+                </div>
+            `).join('');
+        }
+        
+        reviewDiv.innerHTML = `
+            <div class="review-header">
+                <div class="review-author">${escapeHtml(review.author)}</div>
+                <div class="review-date">${formatDate(review.timestamp)}</div>
+            </div>
+            <div class="review-topic ${topicClass}">${topicText}</div>
+            <div class="review-content">${escapeHtml(review.content)}</div>
+            <div class="review-rating">${starsHtml}</div>
+            
+            <div class="reply-section">
+                <button class="btn btn-small reply-toggle">Ответить</button>
+                
+                <div class="replies-list">
+                    ${repliesHtml}
+                </div>
+                
+                <div class="reply-form" style="display: none;">
+                    <input type="text" class="reply-author-input" placeholder="Ваше имя">
+                    <input type="text" class="reply-input" placeholder="Ваш ответ...">
+                    <button class="btn btn-small submit-reply" data-review-id="${review.id}">Отправить</button>
+                </div>
+            </div>
+        `;
+        
+        // Добавляем обработчики для ответов
+        const replyToggle = reviewDiv.querySelector('.reply-toggle');
+        const replyForm = reviewDiv.querySelector('.reply-form');
+        const submitReply = reviewDiv.querySelector('.submit-reply');
+        const replyAuthorInput = reviewDiv.querySelector('.reply-author-input');
+        const replyInput = reviewDiv.querySelector('.reply-input');
+        
+        replyToggle.addEventListener('click', () => {
+            if (replyForm.style.display === 'none') {
+                replyForm.style.display = 'flex';
+                replyToggle.textContent = 'Отмена';
+            } else {
+                replyForm.style.display = 'none';
+                replyToggle.textContent = 'Ответить';
+            }
+        });
+        
+        submitReply.addEventListener('click', () => {
+            const author = replyAuthorInput.value.trim();
+            const content = replyInput.value.trim();
+            
+            if (!author) {
+                showNotification('Пожалуйста, укажите ваше имя', 'error');
+                return;
+            }
+            
+            if (!content) {
+                showNotification('Пожалуйста, напишите ответ', 'error');
+                return;
+            }
+            
+            submitReplyToReview(review.id, author, content);
+        });
+        
+        return reviewDiv;
+    }
+    
+    // Отправка отзыва
+    function submitReview() {
+        const author = document.getElementById('review-author').value.trim();
+        const content = document.getElementById('review-content').value.trim();
+        const topic = document.getElementById('review-topic').value;
+        
+        if (!author) {
+            showNotification('Пожалуйста, укажите ваше имя', 'error');
+            return;
+        }
+        
+        if (!content) {
+            showNotification('Пожалуйста, напишите отзыв', 'error');
+            return;
+        }
+        
+        if (currentRating === 0) {
+            showNotification('Пожалуйста, поставьте оценку', 'error');
+            return;
+        }
+        
+        // Проверяем, не оставлял ли уже этот пользователь отзыв (независимо от ника)
+      const hasUserSubmittedReview = localStorage.getItem('hasSubmittedReview');
+        if (hasUserSubmittedReview === 'true') {
+            showNotification('Вы уже оставляли отзыв ранее. Один пользователь может оставить только один отзыв.', 'error');
+      return;
+        }
+        
+        const reviewData = {
+            author: author,
+            content: content,
+            rating: currentRating,
+            topic: topic
+        };
+        
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=addReview&data=${encodeURIComponent(JSON.stringify(reviewData))}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Отзыв успешно отправлен на модерацию', 'success');
+                
+                // Сохраняем информацию о том, что пользователь оставил отзыв
+                localStorage.setItem('hasSubmittedReview', 'true');
+                
+                // Очищаем форму
+                document.getElementById('review-author').value = '';
+                document.getElementById('review-content').value = '';
+                currentRating = 0;
+                resetStars();
+                
+                // Перезагружаем отзывы
+                loadReviewsFromScript();
+            } else {
+                showNotification('Ошибка при отправке отзыва', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Ошибка при отправке отзыва', 'error');
+        });
+    }
+    
+    // Отправка ответа на отзыв
+    function submitReplyToReview(reviewId, author, content) {
+        const replyData = {
+            author: author,
+            content: content
+        };
+        
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=addReply&reviewId=${reviewId}&data=${encodeURIComponent(JSON.stringify(replyData))}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Ответ добавлен', 'success');
+                // Перезагружаем отзывы
+                loadReviewsFromScript();
+            } else {
+                showNotification('Ошибка при добавлении ответа', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Ошибка при добавлении ответа', 'error');
+        });
+    }
+    
+    // Вспомогательные функции
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString('ru-RU');
+    }
+    
+    function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 3000);
+    }
+    </script>
+</body>
+</html>

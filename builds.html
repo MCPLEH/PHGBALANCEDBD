@@ -1,0 +1,2932 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Builds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        //.hero {
+            padding: 3rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .filters {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-group label {
+            font-weight: 500;
+        }
+        
+        .filter-group select, .filter-group input {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+        }
+        
+        .builds-container {
+            padding: 2rem 0;
+        }
+        
+        .builds-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .build-row {
+            display: flex;
+            align-items: center;
+            background-color: rgba(40, 40, 40, 0.7);
+            border-radius: 50px;
+            padding: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .build-row:hover {
+            transform: translateY(-3px);
+        }
+        
+        .killer-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+            margin-right: 1.5rem;
+        }
+        
+        .killer-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 10%;
+            //background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .killer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .killer-name {
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .perks-section, .addons-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            min-width: 80px;
+        }
+        
+        .perks-container, .addons-container {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .perk-item, .addon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            //background-color: rgba(60, 60, 60, 0.5);
+            padding: 3.5rem;
+            border-radius: 50px;
+            width: 80px;
+        }
+        
+        .perk-icon, .addon-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            //background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .perk-icon img, .addon-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .perk-name, .addon-name {
+            font-size: 0.7rem;
+            text-align: center;
+            max-width: 1100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .build-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .killer-info {
+                flex-direction: row;
+                margin-right: 0;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            
+            .killer-image {
+                margin-right: 1rem;
+                margin-bottom: 0;
+            }
+            
+            .perks-container, .addons-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .perk-item, .addon-item {
+                width: 70px;
+            }
+            
+            .perk-icon, .addon-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .character-selection {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .character-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .character-btn.killer {
+            background: linear-gradient(to right, var(--killer-color), #701515);
+            color: white;
+        }
+        
+        .character-btn.survivor {
+            background: linear-gradient(to right, var(--survivor-color), #154a70);
+            color: white;
+        }
+        
+        .character-btn.active {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .character-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <br>
+            <center>
+            <p>Лучшие комбинации перков и аддонов для каждого киллера в Dead by Daylight</p>
+            </center>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="killer-filter">Киллер:</label>
+                    <select id="killer-filter">
+                        <option value="all">Все киллеры</option>
+                        <option value="Охотник">Охотник</option>
+                        <option value="Призрак">Призрак</option>
+                        <option value="Деревенщина">Деревенщина</option>
+                        <option value="Медсестра">Медсестра</option>
+                        <option value="Тень">Тень</option>
+                        <option value="Ведьма">Ведьма</option>
+                        <option value="Доктор">Доктор</option>
+                        <option value="Охотница">Охотница</option>
+                        <option value="Каннибал">Каннибал</option>
+                        <option value="Кошмар">Кошмар</option>
+                        <option value="Свинья">Свинья</option>
+                        <option value="Клоун">Клоун</option>
+                        <option value="Дух">Дух</option>
+                        <option value="Легион">Легион</option>
+                        <option value="Чума">Чума</option>
+                        <option value="Гоуст Фейс">Гоуст Фейс</option>
+                        <option value="Демогоргон">Демогоргон</option>
+                        <option value="Они">Они</option>
+                        <option value="Стрелок">Стрелок</option>
+                        <option value="Палач">Палач</option>
+                        <option value="Мор">Мор</option>
+                        <option value="Близнецы">Близнецы</option>
+                        <option value="Трюкач">Трюкач</option>
+                        <option value="Немезис">Немезис</option>
+                        <option value="Сенобит">Сенобит</option>
+                        <option value="Художница">Художница</option>
+                        <option value="Онрё">Онрё</option>
+                        <option value="Грязь">Грязь</option>
+                        <option value="Кукловод">Кукловод</option>
+                        <option value="Рыцарь">Рыцарь</option>
+                        <option value="Торговка черепами">Торговка черепами</option>
+                        <option value="Сингулярность">Сингулярность</option>
+                        <option value="Ксеноморф">Ксеноморф</option>
+                        <option value="Хороший Парень">Хороший Парень</option>
+                        <option value="Неведомое">Неведомое</option>
+                        <option value="Лич">Лич</option>
+                        <option value="Темный Властелин">Темный Властелин</option>
+                        <option value="Егерь">Егерь</option>
+                        <option value="Гуль">Гуль</option>
+                        <option value="Аниматроник">Аниматроник</option>
+                        <option value="Красу">Красу</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="builds-container">
+        <div class="container">
+            <div class="builds-list">
+                <!-- Охотник -->
+                <div class="build-row" data-killer="Охотник">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp" alt="Охотник">
+                        </div>
+                        <div class="killer-name">Охотник</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Twk8mXDW/icon-Perks-Brutal-Strength.webp" alt="Зверская сила">
+                                </div>
+                                <div class="perk-name">Зверская сила</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mkNmMYqp/icon-Perks-Mad-Grit.webp" alt="Безумное упорство">
+                                </div>
+                                <div class="perk-name">Безумное упорство</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/kXHnzWDt/icon-Perks-Agitation.webp" alt="Нетерпимость">
+                                </div>
+                                <div class="perk-name">Нетерпимость</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/8C9XVPM4/icon-Perks-Lightborn.webp" alt="Детище света">
+                                </div>
+                                <div class="perk-name">Детище света</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/hGDrc2mW/icon-Addon-honing-Stone.webp" alt="Точильный камень">
+                                </div>
+                                <div class="addon-name">Точильный камень</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Hs1bTSGZ/icon-Addon-oily-Coil.webp" alt="Маслянистая пружина">
+                                </div>
+                                <div class="addon-name">Маслянистая пружина</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- Призрак -->
+                <div class="build-row" data-killer="Призрак">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp" alt="Призрак">
+                        </div>
+                        <div class="killer-name">Призрак</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp" alt="Пентименто">
+                                </div>
+                                <div class="perk-name">Пентименто</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
+                                </div>
+                                <div class="perk-name">Пожирание надежды</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Hx102Jbq/icon-Perks-Ruin.webp" alt="Погибель">
+                                </div>
+                                <div class="perk-name">Погибель</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/m2dZmDSY/icon-Addon-white-Blind-Warrior.webp" alt="Слепой воин">
+                                </div>
+                                <div class="addon-name">Слепой воин</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/MHmH6mRN/icon-Addon-soot-The-Serpent.webp" alt="Змей">
+                                </div>
+                                <div class="addon-name">Змей</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Деревенщина -->
+                <div class="build-row" data-killer="Деревенщина">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp" alt="Деревенщина">
+                        </div>
+                        <div class="killer-name">Деревенщина</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" alt="Друзья до гроба">
+                                </div>
+                                <div class="perk-name">Друзья до гроба</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp" alt="Непредвиденное">
+                                </div>
+                                <div class="perk-name">Непредвиденное</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/3J2TSzMz/icon-Perks-Furtive-Chase.webp" alt="Скрытная погоня">
+                                </div>
+                                <div class="perk-name">Скрытная погоня</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/c1rFvkbd/icon-Addon-filthy-Slippers.webp" alt="Смоляная приманка">
+                                </div>
+                                <div class="addon-name">Грязные тапочки</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/NjhXdKMy/icon-Addon-apex-Muffler.webp" alt="Ржавые губки">
+                                </div>
+                                <div class="addon-name">Превосходный глушитель</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Медсестра -->
+                <div class="build-row" data-killer="Медсестра">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/gjntWXgS/K04-The-Nurse-Portrait.webp" alt="Медсестра">
+                        </div>
+                        <div class="killer-name">Медсестра</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" alt="Аварийная кнопка">
+                                </div>
+                                <div class="perk-name">Аварийная кнопка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/kGxps3Vc/icon-Perks-Im-All-Ears.webp" alt="Чуткий слух">
+                                </div>
+                                <div class="perk-name">Чуткий слух</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятия">
+                                </div>
+                                <div class="perk-name">Мрачные объятия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/bNSb0xzc/icon-Addon-ataxic-Respiration.webp" alt="Атактическое дыхание">
+                                </div>
+                                <div class="addon-name">Атактическое дыхание</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/52qXppTG/icon-Addon-catatonic-Treasure.webp" alt="Сокровище мальчика">
+                                </div>
+                                <div class="addon-name">Сокровище мальчика</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Тень -->
+                <div class="build-row" data-killer="Тень">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/Y2syxRSJ/K06-The-Shape-Portrait.webp" alt="Тень">
+                        </div>
+                        <div class="killer-name">Тень</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp" alt="Угасающий свет">
+                                </div>
+                                <div class="perk-name">Угасающий свет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" alt="Розыгрыш">
+                                </div>
+                                <div class="perk-name">Розыгрыш</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/tCq5wV8y/icon-Perks-Play-With-Your-Food.webp" alt="Паук">
+                                </div>
+                                <div class="perk-name">Паук</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/8C9XVPM4/icon-Perks-Lightborn.webp" alt="Детище света">
+                                </div>
+                                <div class="perk-name">Детище света</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/WpF7NFd3/icon-Addon-j-Myers-Memorial.webp" alt="В память о Дж. Майерс">
+                                </div>
+                                <div class="addon-name">В память о Дж. Майерс</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/6qvVYSkR/icon-Addon-jewelry.webp" alt="Бижутерия">
+                                </div>
+                                <div class="addon-name">Бижутерия</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ведьма -->
+                <div class="build-row" data-killer="Ведьма">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/d3pHtsXq/K05-The-Hag-Portrait.webp" alt="Ведьма">
+                        </div>
+                        <div class="killer-name">Ведьма</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp" alt="Угасающий свет">
+                                </div>
+                                <div class="perk-name">Угасающий свет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Hx102Jbq/icon-Perks-Ruin.webp" alt="Погибель">
+                                </div>
+                                <div class="perk-name">Погибель</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wv5Xb6V7/icon-Perks-Save-The-Best-For-Last.webp" alt="СБФЛ">
+                                </div>
+                                <div class="perk-name">СБФЛ</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/tCq5wV8y/icon-Perks-Play-With-Your-Food.webp" alt="Паук">
+                                </div>
+                                <div class="perk-name">Паук</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/sgDQ2qTc/icon-Addon-scarred-Hand.webp" alt="Рука со шрамом">
+                                </div>
+                                <div class="addon-name">Рука со шрамом</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/HnzWDs1C/icon-Addon-waterlogged-Shoe.webp" alt="Вымокший ботинок">
+                                </div>
+                                <div class="addon-name">Вымокший ботинок</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Доктор -->
+                <div class="build-row" data-killer="Доктор">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp" alt="Доктор">
+                        </div>
+                        <div class="killer-name">Доктор</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/qqPphdPx/T-UI-icon-Perks-No-Quarter.webp" alt="Без пощады">
+                                </div>
+                                <div class="perk-name">Без пощады</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/RhqkLb7p/icon-Perks-Coulrophobia.webp" alt="Клоунофобия">
+                                </div>
+                                <div class="perk-name">Клоунофобия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/3w53J7X8/icon-Perks-ANurses-Calling.webp" alt="Зов медсестры">
+                                </div>
+                                <div class="perk-name">Зов медсестры</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/pT7YQx6R/icon-Addon-iridescent-Queen.webp" alt="Радужный ферзь">
+                                </div>
+                                <div class="addon-name">Радужный ферзь</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/VkBRxxdW/icon-Addon-high-Stimulus-Electrode.webp" alt="Синий электрод">
+                                </div>
+                                <div class="addon-name">Синий электрод</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Охотница -->
+                <div class="build-row" data-killer="Охотница">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/rw6nBpxj/K08-The-Huntress-Portrait.webp" alt="Охотница">
+                        </div>
+                        <div class="killer-name">Охотница</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/m2vv7jtV/icon-Perks-Darkness-Revelated.webp" alt="Явление мрака">
+                                </div>
+                                <div class="perk-name">Явление мрака</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/tJMYBfLs/icon-Perks-Ultimate-Weapon.webp" alt="Совершенное оружие">
+                                </div>
+                                <div class="perk-name">Совершенное оружие</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp" alt="Железная дева">
+                                </div>
+                                <div class="perk-name">Железная дева</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/mkCMQ99y/icon-Addon-oak-Haft.webp" alt="Дубовое топорище">
+                                </div>
+                                <div class="addon-name">Дубовое топорище</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/bNnLTDPM/icon-Addon-flower-Babushka.webp" alt="Бабушкин платок">
+                                </div>
+                                <div class="addon-name">Бабушкин платок</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Каннибал -->
+                <div class="build-row" data-killer="Каннибал">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp" alt="Каннибал">
+                        </div>
+                        <div class="killer-name">Каннибал</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
+                                </div>
+                                <div class="perk-name">Барбекю и чили</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" alt="Розыгрыш">
+                                </div>
+                                <div class="perk-name">Розыгрыш</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/kXHnzWDt/icon-Perks-Agitation.webp" alt="Нетерпимость">
+                                </div>
+                                <div class="perk-name">Нетерпимость</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/y8bd8dg1/icon-Addon-the-Beasts-Mark.webp" alt="Метки зверя">
+                                </div>
+                                <div class="addon-name">Метки зверя</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/XvPymLcg/icon-Addon-primer-Bulb.webp" alt="Сжимной насос">
+                                </div>
+                                <div class="addon-name">Сжимной насос</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кошмар -->
+                <div class="build-row" data-killer="Кошмар">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp" alt="Кошмар">
+                        </div>
+                        <div class="killer-name">Кошмар</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp" alt="Выхода нет">
+                                </div>
+                                <div class="perk-name">Выхода нет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/CKgVp70d/icon-Perks-Blood-Warden.webp" alt="Кровавый смотритель">
+                                </div>
+                                <div class="perk-name">Кровавый смотритель</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Twk8mXDW/icon-Perks-Brutal-Strength.webp" alt="Зверская сила">
+                                </div>
+                                <div class="perk-name">Зверская сила</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="НОЕД">
+                                </div>
+                                <div class="perk-name">НОЕД</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/bNLr4Lq2/icon-Addon-swing-Chains.webp" alt="Цепь от качелей">
+                                </div>
+                                <div class="addon-name">Цепь от качелей</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/W3JJvZ5c/icon-Addon-red-Paint-Brush.webp" alt="Красная кисть">
+                                </div>
+                                <div class="addon-name">Красная кисть</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Свинья -->
+                <div class="build-row" data-killer="Свинья">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp" alt="Свинья">
+                        </div>
+                        <div class="killer-name">Свинья</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wv5Xb6V7/icon-Perks-Save-The-Best-For-Last.webp" alt="СБФЛ">
+                                </div>
+                                <div class="perk-name">СБФЛ</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/13tXS6z7/icon-Addon-tampered-Timer.webp" alt="Мод. таймер">
+                                </div>
+                                <div class="addon-name">Мод. таймер</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/MG6vLV8G/icon-Addon-crate-Of-Gears.webp" alt="Ящик с шестерёнками">
+                                </div>
+                                <div class="addon-name">Ящик с шестерёнками</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Клоун -->
+                <div class="build-row" data-killer="Клоун">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp" alt="Клоун">
+                        </div>
+                        <div class="killer-name">Клоун</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp" alt="Пентименто">
+                                </div>
+                                <div class="perk-name">Пентименто</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
+                                </div>
+                                <div class="perk-name">Пожирание надежды</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/6QJGskTR/icon-Perks-Thrill-Of-The-Hunt.webp" alt="Охотничий азарт">
+                                </div>
+                                <div class="perk-name">Охотничий азарт</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Gty2DjvX/icon-Addon-ether15.webp" alt="15-процентный эфир">
+                                </div>
+                                <div class="addon-name">15-процентный эфир</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/J7vPZ3fZ/icon-Addon-flask-Of-Bleach.webp" alt="Минзурка с отбеливателем">
+                                </div>
+                                <div class="addon-name">Минзурка с отбеливателем</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Дух -->
+                <div class="build-row" data-killer="Дух">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/0QHZc59p/K13-The-Spirit-Portrait.webp" alt="Дух">
+                        </div>
+                        <div class="killer-name">Дух</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp" alt="Благоволение крови">
+                                </div>
+                                <div class="perk-name">Благоволение крови</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/qMG644xq/icon-Addon-rusty-Flute.webp" alt="Ржавая флейта">
+                                </div>
+                                <div class="addon-name">Ржавая флейта</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/VsxWdftF/icon-Addon-katana-Tsuba.webp" alt="Цуба катаны">
+                                </div>
+                                <div class="addon-name">Цуба катаны</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Легион -->
+                <div class="build-row" data-killer="Легион">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/90RbS3fs/K14-The-Legion-Portrait.webp" alt="Легион">
+                        </div>
+                        <div class="killer-name">Легион</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/qM4brFhP/icon-Perks-Merciless-Storm.webp" alt="Безжалостный шторм">
+                                </div>
+                                <div class="perk-name">Безжалостный шторм</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp" alt="Угасающий свет">
+                                </div>
+                                <div class="perk-name">Угасающий свет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/CL58bCWZ/icon-Perks-Thatanophobia.webp" alt="Танатофобия">
+                                </div>
+                                <div class="perk-name">Танатофобия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Y9j7d9kx/T-UI-icon-Perks-Weeping-Wounds.webp" alt="Дар боли">
+                                </div>
+                                <div class="perk-name">Дар боли</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/ZR1pBHWq/icon-Addon-never-Sleep-Pills.webp" alt="Таблетки от сна">
+                                </div>
+                                <div class="addon-name">Таблетки от сна</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/0NKNMsDp/icon-Addon-the-Legion-Button.webp" alt="Значок легиона">
+                                </div>
+                                <div class="addon-name">Значок легиона</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Чума -->
+                <div class="build-row" data-killer="Чума">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/2ysGNHby/K15-The-Plague-Portrait.webp" alt="Чума">
+                        </div>
+                        <div class="killer-name">Чума</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="НОЕД">
+                                </div>
+                                <div class="perk-name">НОЕД</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Wb89170h/icon-Perks-Mind-Breaker.webp" alt="Разрушитель разума">
+                                </div>
+                                <div class="perk-name">Разрушитель разума</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/fby98pXL/icon-Addon-prayer-Apple.webp" alt="Освещенное яблоко">
+                                </div>
+                                <div class="addon-name">Освещенное яблоко</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/tCbnKYP8/icon-Addon-rubbing-Oil.webp" alt="Масло для растираний">
+                                </div>
+                                <div class="addon-name">Масло для растираний</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ГоустФейс -->
+                <div class="build-row" data-killer="Гоуст Фейс">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/nVXtZC9f/K16-The-Ghostface-Portrait.webp" alt="Гоуст Фейс">
+                        </div>
+                        <div class="killer-name">Гоуст Фейс</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Wb89170h/icon-Perks-Mind-Breaker.webp" alt="Разрушитель разума">
+                                </div>
+                                <div class="perk-name">Разрушитель разума</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/6p9RvypC/icon-Addon-philly.webp" alt="Филадельфия">
+                                </div>
+                                <div class="addon-name">Филадельфия</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/mgGcQKXC/icon-Addon-cheap-Cologne.webp" alt="Дешевый одеколон">
+                                </div>
+                                <div class="addon-name">Дешевый одеколон</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Демогоргон -->
+                <div class="build-row" data-killer="Демогоргон">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp" alt="Демогоргон">
+                        </div>
+                        <div class="killer-name">Демогоргон</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" alt="Аварийная кнопка">
+                                </div>
+                                <div class="perk-name">Аварийная кнопка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/nLpDtNqp/icon-Addon-barbs-Glasses.webp" alt="Очки Барб">
+                                </div>
+                                <div class="addon-name">Очки Барб</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/zf2n585K/icon-Addon-mews-Guts.webp" alt="Кишки Мяус">
+                                </div>
+                                <div class="addon-name">Кишки Мяуса</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Они -->
+                <div class="build-row" data-killer="Они">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/pX8bh4B0/K18-The-Oni-Portrait.webp" alt="Они">
+                        </div>
+                        <div class="killer-name">Они</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" alt="Розыгрыш">
+                                </div>
+                                <div class="perk-name">Розыгрыш</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/kgVxPNsr/icon-Perks-Spies-From-The-Shadows.webp" alt="Сумеречные шпионы">
+                                </div>
+                                <div class="perk-name">Сумеречные шпионы</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/nr1SQywQ/icon-Perks-Infectious-Fright.webp" alt="Заразительный ужас">
+                                </div>
+                                <div class="perk-name">Заразительный ужас</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/d1dDXY0q/icon-Addon-shattered-Wakizashi.webp" alt="Расколотый вакидзаси">
+                                </div>
+                                <div class="addon-name">Расколотый вакидзаси</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/6pYZLt8g/icon-Addon-polished-Maedate.webp" alt="Блестящий маэдатэ">
+                                </div>
+                                <div class="addon-name">Блестящий маэдатэ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Стрелок -->
+                <div class="build-row" data-killer="Стрелок">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/jSbVzcgR/K19-The-Deathslinger-Portrait.webp" alt="Стрелок">
+                        </div>
+                        <div class="killer-name">Стрелок</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/vHnYRcnq/T-UI-icon-Perks-Phantom-Fear.webp" alt="Фантомный страх">
+                                </div>
+                                <div class="perk-name">Фантомный страх</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятия">
+                                </div>
+                                <div class="perk-name">Мрачные объятия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/dVzGs7Nh/icon-Perks-Starstruck.webp" alt="Фанатение">
+                                </div>
+                                <div class="perk-name">Фанатение</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/W34qdr9y/icon-Addon-bayshores-Cigar.webp" alt="Сигара бейшора">
+                                </div>
+                                <div class="addon-name">Сигара бейшора</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/fLxTCfHy/icon-Addon-wardens-Keys.webp" alt="Ключи начальника трм">
+                                </div>
+                                <div class="addon-name">Ключи начальника трм</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Палач -->
+                <div class="build-row" data-killer="Палач">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp" alt="Палач">
+                        </div>
+                        <div class="killer-name">Палач</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp" alt="Не-смерть">
+                                </div>
+                                <div class="perk-name">Не-смерть</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp" alt="Нокаут">
+                                </div>
+                                <div class="perk-name">Пентименто</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
+                                </div>
+                                <div class="perk-name">Пожирание надежды</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/SQMW0BPY/icon-Addon-obsidian-Goblet.webp" alt="Обсидиановый кубок">
+                                </div>
+                                <div class="addon-name">Обсидиановый кубок</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/y6y8Sngr/icon-Addon-wax-Doll.webp" alt="Восковая кукл">
+                                </div>
+                                <div class="addon-name">Восковая кукла</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Мор -->
+                <div class="build-row" data-killer="Мор">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp" alt="Мор">
+                        </div>
+                        <div class="killer-name">Мор</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" alt="Аварийная кнопка">
+                                </div>
+                                <div class="perk-name">Аварийная кнопка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятия">
+                                </div>
+                                <div class="perk-name">Мрачные объятия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp" alt="Благоволение крови">
+                                </div>
+                                <div class="perk-name">Благоволение крови</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/pT1hzT4L/icon-Addon-blighted-Rat.webp" alt="Изуродованная крыса">
+                                </div>
+                                <div class="addon-name">Изуродованная крыса</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/R0dnCGTf/icon-Addon-blighted-Crow.webp" alt="Изуродованная ворона">
+                                </div>
+                                <div class="addon-name">Изуродованная ворона</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Близнецы -->
+                <div class="build-row" data-killer="Близнецы">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/3wtPQTKw/K22-The-Twins-Portrait.webp" alt="Близнецы">
+                        </div>
+                        <div class="killer-name">Близнецы</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясни">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/0y14zNBB/icon-Perks-Dragons-Grip.webp" alt="Драконья хватка">
+                                </div>
+                                <div class="perk-name">Драконья хватка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" alt="Друзья до гроба">
+                                </div>
+                                <div class="perk-name">Друзья до гроба</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/0252Gm75/icon-Addon-weighty-Rattle.webp" alt="Увесистая погремушка">
+                                </div>
+                                <div class="addon-name">Увесистая погремушка</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Twhhdx1M/icon-Addon-drop-Of-Perfume.webp" alt="Капля парфюма">
+                                </div>
+                                <div class="addon-name">Капля парфюма</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Трюкач -->
+                <div class="build-row" data-killer="Трюкач">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/QtVvXytJ/K23-The-Trickster-Portrait.webp" alt="Трюкач">
+                        </div>
+                        <div class="killer-name">Трюкач</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp" alt="Железная дева">
+                                </div>
+                                <div class="perk-name">Железная дева</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/m2vv7jtV/icon-Perks-Darkness-Revelated.webp" alt="Явление мрака">
+                                </div>
+                                <div class="perk-name">Явление мрака</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/tJMYBfLs/icon-Perks-Ultimate-Weapon.webp" alt="Совершенное оружие">
+                                </div>
+                                <div class="perk-name">Совершенное оружие</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/9QrmKhxv/icons-Addon-Trick-Blades.webp" alt="Трюковые ножи">
+                                </div>
+                                <div class="addon-name">Трюковые ножи</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/cL2xNb26/icons-Addon-Yumis-Murder.webp" alt="Мелодичное убийство">
+                                </div>
+                                <div class="addon-name">Мелодичное убийство</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Немезис -->
+                <div class="build-row" data-killer="Немезис">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/8539smfQ/K24-The-Nemesis-Portrait.webp" alt="Немезис">
+                        </div>
+                        <div class="killer-name">Немезис</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp" alt="Выхода нет">
+                                </div>
+                                <div class="perk-name">Выхода нет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/dVvRj54k/icon-Addon-licker-Tongue.webp" alt="Язык лизуна">
+                                </div>
+                                <div class="addon-name">Язык лизуна</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/P5mw9dpS/icon-Addon-adrenaline-Injector.webp" alt="Шприц с адреналином">
+                                </div>
+                                <div class="addon-name">Шприц с адреналином</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Сенобит -->
+                <div class="build-row" data-killer="Сенобит">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/XqCh5B9Z/K25-The-Cenobite-Portrait.webp" alt="Сенобит">
+                        </div>
+                        <div class="killer-name">Сенобит</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
+                                </div>
+                                <div class="perk-name">Пожирание надежды</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/k5VHhhDk/icon-Perks-Haunted-Ground.webp" alt="Проклятая земля">
+                                </div>
+                                <div class="perk-name">Проклятая земля</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/X7PCLGbs/icon-Perks-The-Third-Seal.webp" alt="Третья печать">
+                                </div>
+                                <div class="perk-name">Третья печать</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp" alt="Не-смерть">
+                                </div>
+                                <div class="perk-name">Не-смерть</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/m23CkQBb/icon-Addon-original-Pain.webp" alt="Исходная боль">
+                                </div>
+                                <div class="addon-name">Исходная боль</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/NMLkrLbd/icon-Addon-impaling-Wire.webp" alt="Пронзающая проволока">
+                                </div>
+                                <div class="addon-name">Пронзающая проволока</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Художница -->
+                <div class="build-row" data-killer="Художница">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/pVh34432/K26-The-Artist-Portrait.webp" alt="Художница">
+                        </div>
+                        <div class="killer-name">Художница</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
+                                </div>
+                                <div class="perk-name">Резонанс боли</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятия">
+                                </div>
+                                <div class="perk-name">Мрачные объятия</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp" alt="Железная дева">
+                                </div>
+                                <div class="perk-name">Железная дева</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/zf4V0B8t/icon-Addon-Severed-Hands.webp" alt="Отрубленные руки">
+                                </div>
+                                <div class="addon-name">Отрубленные руки</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/x1S5FfTd/icon-Addon-Gardenof-Rot.webp" alt="Сад гнили	">
+                                </div>
+                                <div class="addon-name">Сад гнили</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Онрё -->
+                <div class="build-row" data-killer="Онрё">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp" alt="Онрё">
+                        </div>
+                        <div class="killer-name">Онрё</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/KYbvGV1T/icon-Perks-Agitation.webp" alt="Пентименто">
+                                </div>
+                                <div class="perk-name">Пентименто</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
+                                </div>
+                                <div class="perk-name">Пожирание надежды</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp" alt="Не-смерть">
+                                </div>
+                                <div class="perk-name">Не-смерть</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/prb5XdSh/icon-Addon-Ring-Drawing.webp" alt="Рисунок кольца">
+                                </div>
+                                <div class="addon-name">Рисунок кольца</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/P53Lvyck/icon-Addon-Sea-Soaked-Cloth.webp" alt="Просоленная ткань">
+                                </div>
+                                <div class="addon-name">Просоленная ткань</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Грязь -->
+                <div class="build-row" data-killer="Грязь">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/RZ983FhF/K28-The-Dredge-Portrait.webp" alt="Грязь">
+                        </div>
+                        <div class="killer-name">Грязь</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/9FLphQj9/icon-Perks-Pop-Goes-The-Weasel.webp" alt="Чертик">
+                                </div>
+                                <div class="perk-name">Чертик</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/rmHnMy4g/icon-Perks-Eruption.webp" alt="Подрыв">
+                                </div>
+                                <div class="perk-name">Подрыв</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/x1RvxL4s/icon-Addon-Malthinkers-Skull.webp" alt="Череп плоходумца">
+                                </div>
+                                <div class="addon-name">Череп плоходумца</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/yxgJPKCX/icon-Addon-Broken-Doll.webp" alt="Сломанная кукла">
+                                </div>
+                                <div class="addon-name">Сломанная кукла</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кукловод -->
+                <div class="build-row" data-killer="Кукловод">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp" alt="Кукловод">
+                        </div>
+                        <div class="killer-name">Кукловод</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/L5RTHqXt/icon-Perks-Nowhere-To-Hide.webp" alt="Им не укрыться">
+                                </div>
+                                <div class="perk-name">Им не укрыться</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
+                                </div>
+                                <div class="perk-name">Барбекю и чили</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/9FLphQj9/icon-Perks-Pop-Goes-The-Weasel.webp" alt="Чертик">
+                                </div>
+                                <div class="perk-name">Чертик</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/fTYjdGjQ/icon-Addon-leather-Gloves.webp" alt="Кожаные перчатки">
+                                </div>
+                                <div class="addon-name">Кожаные перчатки</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/LXd8jb3G/icon-Addon-uroboros-Tendril.webp" alt="Ошметок уробороса">
+                                </div>
+                                <div class="addon-name">Ошметок уробороса</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Рыцарь -->
+                <div class="build-row" data-killer="Рыцарь">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/bwT51hSR/K30-The-Knight-Portrait.webp" alt="Рыцарь">
+                        </div>
+                        <div class="killer-name">Рыцарь</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
+                                </div>
+                                <div class="perk-name">Барбекю и чили</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/CKgVp70d/icon-Perks-Blood-Warden.webp" alt="Кровавый смотритель">
+                                </div>
+                                <div class="perk-name">Кровавый смотритель</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="НОЕД">
+                                </div>
+                                <div class="perk-name">НОЕД</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Ss5RjPYX/icon-Addon-Dried-Horsemeat.webp" alt="Вяленая конина">
+                                </div>
+                                <div class="addon-name">Вяленая конина</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/GpmkZH0b/icon-Addon-Mapofthe-Realms.webp" alt="Карта мира">
+                                </div>
+                                <div class="addon-name">Карта мира</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Торговка черепами -->
+                <div class="build-row" data-killer="Торговка черепами">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/QMdybypZ/K31-The-Skull-Merchant-Portrait.webp" alt="Торговка черепами">
+                        </div>
+                        <div class="killer-name">Торговка черепами</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/SsQRkk4X/icon-Perks-Weave-Attunement.webp" alt="Связь с сплетением">
+                                </div>
+                                <div class="perk-name">Связь с сплетением</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/nVjZ7C3F/icon-Perks-Franklins-Loss.webp" alt="Гибель Франклина">
+                                </div>
+                                <div class="perk-name">Гибель Франклина</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/Hx102Jbq/icon-Perks-Ruin.webp" alt="Погибель">
+                                </div>
+                                <div class="perk-name">Погибель</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/250x6ndq/icon-Addon-Iridescent-Unpublished-Manuscript.webp" alt="Радужная рукопись">
+                                </div>
+                                <div class="addon-name">Радужная рукопись</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/jqFPJgY4/icon-Addon-Adaptive-Lighting.webp" alt="Адаптивное освещение">
+                                </div>
+                                <div class="addon-name">Адаптивное освещение</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Сингулярность -->
+                <div class="build-row" data-killer="Сингулярность">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/q7DZZxLh/K32-The-Singularity-Portrait.webp" alt="Сингулярность">
+                        </div>
+                        <div class="killer-name">Сингулярность</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/4NYG6nw4/icon-Perks-Bitter-Murmur.webp" alt="Тихий шорох">
+                                </div>
+                                <div class="perk-name">Тихий шорох</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/kXHnzWDt/icon-Perks-Agitation.webp" alt="Нетерпимость">
+                                </div>
+                                <div class="perk-name">Нетерпимость</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gkW5JJ5B/icon-Perks-Iron-Grasp.webp" alt="Мертвая хватка">
+                                </div>
+                                <div class="perk-name">Мертвая хватка</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/MG9vJHWm/icon-Addon-diagnostic-Tool-Construction.webp" alt="Инструмент диагностики">
+                                </div>
+                                <div class="addon-name">Инструмент диагностики</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/kGmDPpVW/icon-Addon-spent-Oxygen-Tank.webp" alt="Кислородный баллон">
+                                </div>
+                                <div class="addon-name">Кислородный баллон</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ксеноморф -->
+                <div class="build-row" data-killer="Ксеноморф">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/hjJ3FQyC/K33-The-Xenomorph-Portrait.webp" alt="Ксеноморф">
+                        </div>
+                        <div class="killer-name">Ксеноморф</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/fTGS9Vmm/Icon-Perks-Self-Aware.webp" alt="Машинное обучение">
+                                </div>
+                                <div class="perk-name">Машинное обучение</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp" alt="Непредвиденное">
+                                </div>
+                                <div class="perk-name">Непредвиденное</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/5tBQfsFr/icon-Perks-Tinkerer.webp" alt="Умелец">
+                                </div>
+                                <div class="perk-name">Умелец</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
+                                </div>
+                                <div class="perk-name">Игрушка</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/G9npxsQd/icon-Addon-emergency-Helmet.webp" alt="Аварийный шлем">
+                                </div>
+                                <div class="addon-name">Аварийный шлем</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/QMFFQ5GK/icon-Addon-self-Destruct-Bolt.webp" alt="Болт самоуничтожения">
+                                </div>
+                                <div class="addon-name">Болт самоуничтожения</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Хороший Парень -->
+                <div class="build-row" data-killer="Хороший Парень">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/G2Zgb36b/K34-The-Yerkes-Portrait.webp" alt="Хороший Парень">
+                        </div>
+                        <div class="killer-name">Хороший Парень</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/8c5SnCSH/icon-Perks-batteries-Included.webp" alt="Батарейки">
+                                </div>
+                                <div class="perk-name">Батарейки</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" alt="Розыгрыш">
+                                </div>
+                                <div class="perk-name">Розыгрыш</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/wv5Xb6V7/icon-Perks-Save-The-Best-For-Last.webp" alt="СБФЛ">
+                                </div>
+                                <div class="perk-name">СБФЛ</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="НОЕД">
+                                </div>
+                                <div class="perk-name">НОЕД</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/9XdrYCSb/icon-Addon-straight-Razor.webp" alt="Опасная бритва">
+                                </div>
+                                <div class="addon-name">Опасная бритва</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/tT1F4wCf/icon-Addon-mirror-Shards.webp" alt="Осколки зеркала">
+                                </div>
+                                <div class="addon-name">Осколки зеркала</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Неведомое -->
+                <div class="build-row" data-killer="Неведомое">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp" alt="Неведомое">
+                        </div>
+                        <div class="killer-name">Неведомое</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
+                                </div>
+                                <div class="perk-name">Барбекю и чили</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятия">
+                                </div>
+                                <div class="perk-name">Мрачные объятия</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Kcw3Y1t9/icon-Addon-b-movie-Poster.webp" alt="Афиша фильма">
+                                </div>
+                                <div class="addon-name">Афиша фильма</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/CL8BnwNw/icon-Addon-captured-By-The-Dark.webp" alt="В ловушке мрака">
+                                </div>
+                                <div class="addon-name">В ловушке мрака</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Лич -->
+                <div class="build-row" data-killer="Лич">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp" alt="Лич">
+                        </div>
+                        <div class="killer-name">Лич</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" alt="Друзья до гроба">
+                                </div>
+                                <div class="perk-name">Друзья до гроба</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp" alt="Непредвиденное">
+                                </div>
+                                <div class="perk-name">Непредвиденное</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/4y67KgC8/icon-Addon-Robe-Of-Eyes.webp" alt="Глазастая мантия">
+                                </div>
+                                <div class="addon-name">Глазастая мантия</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/6qk8bP9s/icon-Addon-Boots-Of-Speed.webp" alt="Сапоги скорости">
+                                </div>
+                                <div class="addon-name">Сапоги скорости</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Темный Властелин -->
+                <div class="build-row" data-killer="Темный Властелин">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp" alt="Темный Властелин">
+                        </div>
+                        <div class="killer-name">Темный Властелин</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/nVjZ7C3F/icon-Perks-Franklins-Loss.webp" alt="Гибель Франклина">
+                                </div>
+                                <div class="perk-name">Гибель Франклина</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/SsQRkk4X/icon-Perks-Weave-Attunement.webp" alt="Связь с сплетением">
+                                </div>
+                                <div class="perk-name">Связь с сплетением</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/gkW5JJ5B/icon-Perks-Iron-Grasp.webp" alt="Мертвая хватка">
+                                </div>
+                                <div class="perk-name">Мертвая хватка</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/2jhB94q4/icon-Addon-Ruby-Circlet.webp" alt="Рубиновый венец">
+                                </div>
+                                <div class="addon-name">Рубиновый венец</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/Dy7mCR3T/icon-Addon-Sunglasses.webp" alt="Солнцезащитные очки">
+                                </div>
+                                <div class="addon-name">Солнцезащитные очки</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Егерь -->
+                <div class="build-row" data-killer="Егерь">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/ncKStJ2t/K38-The-Houndmaster-Portrait.webp" alt="Егерь">
+                        </div>
+                        <div class="killer-name">Егерь</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp" alt="Выхода нет">
+                                </div>
+                                <div class="perk-name">Выхода нет</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp" alt="Благоволение крови">
+                                </div>
+                                <div class="perk-name">Благоволение крови</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/cCFWk9fx/T-UI-icon-Addon-Spiked-Collar.webp" alt="Ошейник с шипами">
+                                </div>
+                                <div class="addon-name">Ошейник с шипами</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/4N3sHGTm/T-UI-icon-Addon-Unfinished-Map.webp" alt="Незаконченная карта">
+                                </div>
+                                <div class="addon-name">Незаконченная карта</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Гуль -->
+                <div class="build-row" data-killer="Гуль">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/CxFPhQrn/K39-The-Ghoul-Portrait.webp" alt="Гуль">
+                        </div>
+                        <div class="killer-name">Гуль</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
+                                </div>
+                                <div class="perk-name">Небрежный мясник</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" alt="Аварийная кнопка">
+                                </div>
+                                <div class="perk-name">Аварийная кнопка</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/qqPphdPx/T-UI-icon-Perks-No-Quarter.webp" alt="Без пощады">
+                                </div>
+                                <div class="perk-name">Без пощады</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/RhqkLb7p/icon-Perks-Coulrophobia.webp" alt="Клоунофобия">
+                                </div>
+                                <div class="perk-name">Клоунофобия</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/DyYFqN25/T-UI-icon-Addon-Yamoris-Mask.webp" alt="Маска Ямори">
+                                </div>
+                                <div class="addon-name">Маска Ямори</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/26fC1BzD/T-UI-icon-Addon-Hides-Headphones.webp" alt="Наушники Хидэ">
+                                </div>
+                                <div class="addon-name">Наушники Хидэ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Аниматроник -->
+                <div class="build-row" data-killer="Аниматроник">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/13JWfrbC/K40-The-Animatronic-Portrait.webp" alt="Аниматроник">
+                        </div>
+                        <div class="killer-name">Аниматроник</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/tCq5wV8y/icon-Perks-Play-With-Your-Food.webp" alt="Паук">
+                                </div>
+                                <div class="perk-name">Паук</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="НОЕД">
+                                </div>
+                                <div class="perk-name">НОЕД</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" alt="Друзья до гроба">
+                                </div>
+                                <div class="perk-name">Друзья до гроба</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/SK9yQGbd/T-UI-icon-Addon-Faz-Coin.webp" alt="Фаз-монета">
+                                </div>
+                                <div class="addon-name">Фаз-монета</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/NFsY4q9C/T-UI-icon-Addon-Restaurant-Menu.webp" alt="Меню ресторана">
+                                </div>
+                                <div class="addon-name">Меню ресторана</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Красу -->
+                <div class="build-row" data-killer="Красу">
+                    <div class="killer-info">
+                        <div class="killer-image">
+                            <img src="https://i.postimg.cc/bvrmb2hz/the-krasue.webp" alt="Красу">
+                        </div>
+                        <div class="killer-name">Красу</div>
+                    </div>
+                    
+                    <div class="perks-section">
+                        <div class="section-title">Перки:</div>
+                        <div class="perks-container">
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Корапт">
+                                </div>
+                                <div class="perk-name">Корапт</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
+                                </div>
+                                <div class="perk-name">Барбекю и чили</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
+                                </div>
+                                <div class="perk-name">Преследователь-убийца</div>
+                            </div>
+                            <div class="perk-item">
+                                <div class="perk-icon">
+                                    <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
+                                </div>
+                                <div class="perk-name">Выброс</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="addons-section">
+                        <div class="section-title">   Аддоны:</div>
+                        <div class="addons-container">
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/qBwp7RSP/T-UI-icon-Addon-Rotten-Swine.webp" alt="Гнилая свинья">
+                                </div>
+                                <div class="addon-name">Гнилая свинья</div>
+                            </div>
+                            <div class="addon-item">
+                                <div class="addon-icon">
+                                    <img src="https://i.postimg.cc/qRX4yMRC/T-UI-icon-Addon-Janjiras-Hand.webp" alt="Рука Джанджираса">
+                                </div>
+                                <div class="addon-name">Рука Джанджираса</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+            <center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+            <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+            <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+            <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+            <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+            <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const killerFilter = document.getElementById('killer-filter');
+            const buildRows = document.querySelectorAll('.build-row');
+            
+            // Функция для фильтрации билдов
+            function filterBuilds() {
+                const killerValue = killerFilter.value;
+                
+                buildRows.forEach(row => {
+                    const killer = row.getAttribute('data-killer');
+                    
+                    // Проверка фильтров
+                    const killerMatch = killerValue === 'all' || killer === killerValue;
+                    
+                    // Показываем или скрываем строку в зависимости от совпадения фильтров
+                    if (killerMatch) {
+                        row.style.display = 'flex';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Добавляем обработчики событий для фильтров
+            killerFilter.addEventListener('change', filterBuilds);
+        });
+    </script>
+</body>
+</html>

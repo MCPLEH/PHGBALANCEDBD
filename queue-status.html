@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Queue status</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+            --card-bg: rgba(26, 26, 26, 0.9);
+            --main-red: #c21919;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 2rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--main-red);
+            flex: 1;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .iframe-container {
+            width: 100%;
+            height: 70vh;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #444;
+            background-color: #000;
+        }
+        
+        .queue-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .iframe-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex-direction: column;
+        }
+        
+        .iframe-loading i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .refresh-btn {
+            display: block;
+            margin: 1rem auto;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .refresh-btn:hover {
+            background-color: var(--highlight-color);
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 0.5rem;
+        }
+        
+        .social-links img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .social-links img:hover {
+            transform: scale(1.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .iframe-container {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <div class="section">
+            <h2>Время ожидания матчей (BETA)</h2>
+            
+            <div class="iframe-container">
+                <div class="iframe-loading" id="iframe-loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Загрузка deadbyqueue.com...</p>
+                </div>
+                <iframe class="queue-iframe" id="queue-iframe" src="https://www.deadbyqueue.com/" style="display: none;" onload="iframeLoaded()"></iframe>
+            </div>
+            
+            <button class="refresh-btn" onclick="refreshIframe()">
+                <i class="fas fa-sync-alt"></i> Обновить данные
+            </button>
+        </div>
+        
+        <div class="section">
+            <h2>Описание</h2>
+            <p>1) <strong>Germany, Frankfurt</strong> - Европа и Московские регионы</p>
+            <p>2) <strong>Hong Kong, Japan, Tokyo, South Korea, Seoul, Singapore</strong> - Дальний восток и Новосибирский округ</p>
+            <br>
+            <p>пока использован чужой ресурс - скоро появиться наш.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        function iframeLoaded() {
+            document.getElementById('iframe-loading').style.display = 'none';
+            document.getElementById('queue-iframe').style.display = 'block';
+        }
+        
+        function refreshIframe() {
+            document.getElementById('iframe-loading').style.display = 'flex';
+            document.getElementById('queue-iframe').style.display = 'none';
+            
+            const iframe = document.getElementById('queue-iframe');
+            iframe.src = iframe.src;
+        }
+        
+        // Если iframe не загрузился в течение 10 секунд, показать сообщение
+        setTimeout(function() {
+            const iframe = document.getElementById('queue-iframe');
+            const loading = document.getElementById('iframe-loading');
+            
+            if (iframe.style.display === 'none') {
+                loading.innerHTML = '<p>Не удалось загрузить deadbyqueue.com. <a href="https://www.deadbyqueue.com/" target="_blank" style="color: var(--primary-color);">Перейти на сайт напрямую</a></p>';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Killerbase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        //.hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .guide-content {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        
+        .guide-image {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+        }
+        
+        .caption {
+            font-style: italic;
+            color: #999;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .tip-box {
+            background-color: rgba(40, 40, 40, 0.7);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .tip-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <br>
+            <center><h1>Основы игры за убийцу</h1>
+            <p>Узнайте ключевые стратегии и тактики для эффективной охоты на выживших в DBD</p>
+            </center>
+        </div>
+    </section>
+
+    <section class="guide-content">
+        <div class="container">
+            <div class="section">
+                <h2>Основные цели убийцы</h2>
+                <p>Как убийца, ваша основная задача - не дать выжившим починить 5 генераторов и сбежать через ворота. Для этого вам нужно находить, преследовать и жертвовать выживших Госпоже Паутине.</p>
+                
+                <p>Ключевые аспекты игры за убийцу:</p>
+                <ul>
+                    <li>Защита генераторов от починки</li>
+                    <li>Поиск и преследование выживших</li>
+                    <li>Нанесение ударов и попадание выживших на крюки</li>
+                    <li>Контроль территории и ключевых точек карты</li>
+                    <li>Использование уникальных способностей каждого убийцы</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Защита генераторов</h2>
+                <p>Генераторы - ключ к победе выживших. Ваша задача - максимально замедлить их починку.</p>
+                
+                <div class="tip-box">
+                    <h4>Совет профессионала</h4>
+                    <p>Создайте "тригенератор" - защищайте три близко расположенных генератора, чтобы контролировать небольшую территорию в конце игры.</p>
+                </div>
+                
+                <p>Методы защиты генераторов:</p>
+                <ul>
+                    <li>Патрулирование ключевых генераторов</li>
+                    <li>Использование перков, замедляющих починку (Ruin, Pop Goes the Weasel)</li>
+                    <li>Разрушение поврежденных генераторов для замедления прогресса</li>
+                    <li>Предсказание перемещений выживших между генераторами</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Поиск и преследование выживших</h2>
+                <p>Эффективный поиск выживших - основа успешной игры за убийцу.</p>
+                
+                <p>Методы поиска выживших:</p>
+                <ul>
+                    <li>Визуальный осмотр территории с возвышенностей</li>
+                    <li>Слежение за воронами, которые взлетают при приближении выживших</li>
+                    <li>Прослушивание звуков (шаги, крики боли, работа генераторов)</li>
+                    <li>Использование перков для отслеживания (Whispers, BBQ & Chili)</li>
+                    <li>Проверка генераторов на наличие признаков починки</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>Важно!</h4>
+                    <p>Научитесь распознавать звуковые подсказки: крики выживших при получении урона, звуки починки генераторов, хруст травы и веток при движении.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Техника погони и атаки</h2>
+                <p>Успешное преследование и быстрое попадание выживших на крюк - ключ к победе.</p>
+                
+                <p>Техники погони:</p>
+                <ul>
+                    <li>Предсказание движений выжившего в петлях</li>
+                    <li>Использование способностей убийцы для сокращения дистанции</li>
+                    <li>Обход петель для сокращения пути</li>
+                    <li>Сброс палетов до того, как выживший сможет их использовать</li>
+                    <li>Блокировка окон после многократного использования</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Управление крюками и жертвоприношения</h2>
+                <p>Правильное размещение выживших на крюках замедляет их команду и создает давление.</p>
+                
+                <p>Стратегии управления крюками:</p>
+                <ul>
+                    <li>Размещение выживших на крюках в разных частях карты</li>
+                    <li>Защита крюков от спасения (без кемпинга)</li>
+                    <li>Предсказание путей спасения и перехват спасателей</li>
+                    <li>Использование перков, связанных с крюками (Make Your Choice, Monstrous Shrine)</li>
+                    <li>Приоритетное нацеливание на уже раненых выживших</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>Продвинутая техника</h4>
+                    <p>Используйте "снежный ком" - после попадания одного выжившего на крюк, найдите следующую цель прежде чем его спасут. Это создает постоянное давление на команду выживших.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Философия и цель убийцы</h2>
+                <p><strong>Ваша главная цель</strong> — не дать выжившим починить генераторы и сбереть. Для этого нужно жертвовать выживших Госпоже Паутине, вешая их на крюки.</p>
+                
+                <p><strong>Вторичная цель</strong> — контролировать территорию, создавать давление на выживших и предсказывать их действия. Убийца должен диктовать темп игры.</p>
+            </div>
+
+            <div class="section">
+                <h2>Базовые действия и механики</h2>
+                
+                <ul>
+                    <li><strong>Атаки:</strong> Основная атака (обычная) и сильная атака (более длинная анимация, но больше дальность). Правильный выбор типа атаки важен в погоне.</li>
+                    <li><strong>Крюки:</strong> После попадания выжившего в состояние умирания, вы можете поднять его и повесить на крюк. Каждому выжившему нужно два попадания на крюк для жертвоприношения.</li>
+                    <li><strong>Генераторы:</strong> Ваша задача - мешать их починке. Вы можете повреждать генераторы, что откатывает их прогресс при покидании выжившими.</li>
+                    <li><strong>Слоты силы:</strong> Каждый убийца имеет уникальную способность, которая перезаряжается или имеет ограниченное использование.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2>Советы для новичков</h2>
+                
+                <ul>
+                    <li>Начните с более простых убийц (Trapper, Wraith, Hillbilly) чтобы освоить основы.</li>
+                    <li>Учитесь слушать: звуки шагов, крики боли, работающие генераторы — ваши лучшие союзники.</li>
+                    <li>Не фокусируйтесь на одном выжившем слишком долго (избегайте "туннелинга" в начале обучения).</li>
+                    <li>Патрулируйте генераторы, но не зацикливайтесь на защите только одного.</li>
+                    <li>Учитесь предсказывать движение выживших в петлях — иногда лучше обойти препятствие, чем следовать напрямую.</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>Важно!</h4>
+                    <p>Не занимайтесь кемпингом (охраной крюка в непосредственной близости) — это плохая тактика, которая не поможет вам развить навыки и вызывает негативную реакцию у выживших.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+</body>
+</html>

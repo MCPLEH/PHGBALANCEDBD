@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Rules1v1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 2rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .rules-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .rules-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .rules-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .rules-section h3 {
+            color: var(--highlight-color);
+            margin: 1.5rem 0 0.8rem;
+        }
+        
+        .rules-list {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rules-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .killer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .killer-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1.2rem;
+            border: 1px solid #444;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .killer-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+        }
+        
+        .killer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .killer-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .killer-name {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin: 0;
+        }
+        
+        .killer-rules {
+            padding-left: 1rem;
+        }
+        
+        .killer-rules li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .map-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+            margin: 10px 0;
+            object-fit: cover;
+            border: 2px solid #444;
+        }
+        
+        .note {
+            background-color: rgba(194, 25, 25, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 0.8rem 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .prohibited {
+            color: var(--highlight-color);
+            font-weight: 500;
+        }
+        
+        .allowed {
+            color: #4CAF50;
+            font-weight: 500;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .killer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .killer-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .killer-icon {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Правила 1v1 состязаний</h1>
+            <p>Официальные правила для 1 на 1 дуэлей в Dead by Daylight</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="rules-container">
+            <div class="rules-section">
+                <h2>Общие правила</h2>
+                <p>Эти правила применяются ко всем 1v1 состязаниям, организованным PHG.</p>
+            </div>
+            
+            <div class="rules-section">
+                <h2>Правила для выживших</h2>
+                <ul class="rules-list">
+                    <li>Разрешено брать до <span class="allowed">2 перков</span> на выбор</li>
+                    <li>Разрешено использовать <span class="allowed">фиолетовый фонарик (без дополнений)</span> или <span class="allowed">хлопушку</span> (кроме матчей против Охотника и Призрака)</li>
+                </ul>
+                
+                <h3>Запрещенные перки для выжиших:</h3>
+                <ul class="rules-list">
+                    <li>Тревога</li>
+                    <li>Потанцуй со мной</li>
+                    <li>Уловка</li>
+                    <li>Искажение</li>
+                    <li>Драматургия</li>
+                    <li>Легковес</li>
+                    <li>Ниже травы</li>
+                    <li>Везение</li>
+                    <li>Объект одержимости</li>
+                    <li>Преодоление</li>
+                    <li>Родительская забота</li>
+                    <li>Партнер по сцене</li>
+                    <li>Спринтер</li>
+                    <li>Ремонтник</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Примечание:</strong> Запрещено использовать любые перки и аддоны, раскрывающие ауру.
+                </div>
+            </div>
+            
+            <div class="rules-section">
+                <h2>Правила для убийц</h2>
+                <ul class="rules-list">
+                    <li>Разрешено использовать <span class="allowed">1 перк</span> на выбор (кроме запрещенных)</li>
+                </ul>
+                
+                <h3>Запрещенные перки для убийц:</h3>
+                <ul class="rules-list">
+                    <li>Растворение</li>
+                    <li>Порча: Благоволение крови</li>
+                    <li>Порча: Контроль толпы</li>
+                    <li>Порча: Не-смерть</li>
+                    <li>Чуткий слух</li>
+                    <li>Нокаут</li>
+                    <li>Безжизненное касание</li>
+                    <li>Поиграть со своей жертвой</li>
+                    <li>Хищник</li>
+                    <li>Лучшая анатомия</li>
+                    <li>Ярость духа</li>
+                    <li>Тактика Зансин</li>
+                </ul>
+            </div>
+            
+            <div class="rules-section">
+                <h2>Особые правила для убийц</h2>
+                <p>Каждый убийца имеет свои уникальные ограничения и разрешенные карты.</p>
+                
+                <div class="killer-grid">
+                    <!-- Мор -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp" alt="Мор" class="killer-icon">
+                            <h3 class="killer-name">Мор</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/kgzbhwyv/ydyshaika.webp" alt="Удушающая яма" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все радужные (красные), Состав 21, Флакон с адреналином</li>
+                            <li><span class="prohibited">Запрещенные перки:</span> Зверская сила</li>
+                            <li><span class="allowed">Карта:</span> Удушающая яма 1</li>
+                            <li><strong>Примечание:</strong> Должен использовать 1 рывок на месте при начале погони</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Клоун -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp" alt="Клоун" class="killer-icon">
+                            <h3 class="killer-name">Клоун</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Дракула -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp" alt="Дракула" class="killer-icon">
+                            <h3 class="killer-name">Дракула</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/pXVz9mTz/Magazin.webp" alt="Магазин барахольщика" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все радужные (красные), Ляпис-Лазурь, Волосы медузы</li>
+                            <li><span class="allowed">Карта:</span> Магазин барахольщика</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Демогоргон -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp" alt="Демогоргон" class="killer-icon">
+                            <h3 class="killer-name">Демогоргон</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Доктор -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp" alt="Доктор" class="killer-icon">
+                            <h3 class="killer-name">Доктор</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все аддоны на Усмирение</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Деревенщина -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp" alt="Деревенщина" class="killer-icon">
+                            <h3 class="killer-name">Деревенщина</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/44QpN6JX/krovavia-Lachyga.webp" alt="Кровавая лачуга" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Облегченные цепи</li>
+                            <li><span class="allowed">Карта:</span> Кровавая лачуга</li>
+                            <li><strong>Примечание:</strong> Должен начать погоню с 0% овердрайва</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Вескер -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp" alt="Вескер" class="killer-icon">
+                            <h3 class="killer-name">Вескер</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/26fBC6Mq/Ygolka.webp" alt="Угольная башня" class="map-image">
+                        <img src="https://i.postimg.cc/9f973T85/saloon.webp" alt="Салун" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все радужные (красные), Вирус "Уроборос"</li>
+                            <li><span class="allowed">Карта:</span> Угольная башня 1 или Салун</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Кошмар -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp" alt="Кошмар" class="killer-icon">
+                            <h3 class="killer-name">Кошмар</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все открывающие ауру, Все на ненастоящие паллеты</li>
+                            <li><span class="allowed">Карта:</span> Угольная башня 1 или Зона свалки</li>
+                            <li><span class="allowed">Подношение:</span> Чертеж Виго (люк в мейне)</li>
+                            <li><strong>Примечание:</strong> Выжившим разрешается использовать 'Дежавю' в качестве третьего перка</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Бубба -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp" alt="Бубба" class="killer-icon">
+                            <h3 class="killer-name">Бубба</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Облегченное шасси</li>
+                            <li><span class="prohibited">За запрещенные перки:</span> Стойкий</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Свинья -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp" alt="Свинья" class="killer-icon">
+                            <h3 class="killer-name">Свинья</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Письмо Аманды</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Охотник -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp" alt="Охотник" class="killer-icon">
+                            <h3 class="killer-name">Охотник</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/kgzbhwyv/ydyshaika.webp" alt="Удушающая яма" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Радужный камень</li>
+                            <li><span class="allowed">Карта:</span> Удушающая яма 1</li>
+                            <li><strong>Примечание:</strong> Установка ловушек запрещена. Скин медведя запрещен</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Неведомое -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp" alt="Неведомое" class="killer-icon">
+                            <h3 class="killer-name">Неведомое</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/bJHSrPfm/zona-Svalka.webp" alt="Зона свалки" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="prohibited">Запрещенные аддоны:</span> Все радужные (красные), Все на усталость</li>
+                            <li><span class="allowed">Карта:</span> Зона свалки</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Призрак -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp" alt="Призрак" class="killer-icon">
+                            <h3 class="killer-name">Призрак</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/26fBC6Mq/Ygolka.webp" alt="Угольная башня" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Угольная башня 1 или Салун</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Палач -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp" alt="Палач" class="killer-icon">
+                            <h3 class="killer-name">Палач</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/26fBC6Mq/Ygolka.webp" alt="Угольная башня" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Угольная башня 1</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Онрё -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp" alt="Онрё" class="killer-icon">
+                            <h3 class="killer-name">Онрё</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/kXj8W76Z/LaryInst.webp" alt="Институт Лери" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Институт Лери</li>
+                            <li><strong>Примечание:</strong> Разрешается использовать перки ‘стойкий’ в качестве второго перка</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Лич -->
+                    <div class="killer-card">
+                        <div class="killer-header">
+                            <img src="https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp" alt="Лич" class="killer-icon">
+                            <h3 class="killer-name">Лич</h3>
+                        </div>
+                        <img src="https://i.postimg.cc/9f973T85/saloon.webp" alt="Салун" class="map-image">
+                        <ul class="killer-rules">
+                            <li><span class="allowed">Запрещенные аддоны:</span> Нет запрещенных</li>
+                            <li><span class="allowed">Карта:</span> Салун</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+</body>
+</html>

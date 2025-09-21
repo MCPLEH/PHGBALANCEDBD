@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Balance | HeavenShop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff4500;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a2a2a;
+            --highlight-color: #ff8c00;
+            --card-bg: rgba(60, 40, 30, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23402020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23402020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #ff0000;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ff0000;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff4500;
+            text-decoration: none;
+            display: flex;
+            color: #ff0000;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: #ffffff;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        //.hero {
+            padding: 3rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(120, 60, 40, 0.2) 0%, rgba(26, 26, 26, 0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .merch-content {
+            padding: 2rem 0;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            background-color: rgba(40, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #633;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #644;
+            color: #e00909;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .merch-item {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .merch-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        .merch-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .merch-info {
+            padding: 1.5rem;
+        }
+        
+        .merch-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .merch-price {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .merch-description {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .buy-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .buy-btn:hover {
+            background-color: var(--highlight-color);
+        }
+        
+        .partner-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .partner-logo {
+            max-width: 200px;
+            border-radius: 8px;
+        }
+        
+        .shipping-info {
+            background-color: rgba(60, 40, 30, 0.7);
+            border-left: 4px solid #ff0000;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff0000;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .social-links a img {
+            transition: transform 0.3s;
+        }
+        
+        .social-links a:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--primary-color);
+            position: relative;
+            animation: modalopen 0.4s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+        
+        .close:hover {
+            color: var(--text-color);
+        }
+        
+        .modal-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #644;
+            border-radius: 4px;
+            background-color: rgba(40, 20, 20, 0.9);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--highlight-color);
+        }
+        
+        .submit-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        
+        .status-message {
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #2e7d32;
+            color: white;
+        }
+        
+        .error {
+            background-color: #d32f2f;
+            color: white;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .product-specific {
+            display: none;
+        }
+        
+        .info-text {
+            background-color: rgba(60, 40, 30, 0.7);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .partner-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .merch-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <br>
+            <center><h1>Товары по Dead by Daylight</h1></center>
+            <center><p>Для тех кто устал искать где купить, как пополнить, где дешего и где "не обманут".</p></center>
+        </div>
+    </section>
+
+    <section class="merch-content">
+        <div class="container">
+            <div class="section">
+                <h2>Наш официальный партнер - Pizza Heaven Store</h2>
+                
+                <div class="partner-info">
+                    <img src="https://i.postimg.cc/xTxVnddx/photo-2025-08-31-20-14-17.webp" alt="GeekTrick Logo" class="partner-logo">
+                    <div>
+                        <p>Все заказы обрабатываются и обслуживаються нашим официальным партнером - Pizza Heaven Store.<br>
+                           PHG Balance гарантирует качественное выполнение заказов.</p>
+                    </div>
+                </div>
+                
+                <div class="merch-grid">
+                    <div class="merch-item">
+                        <img src="https://i.postimg.cc/0QMSJS0V/photo-2025-09-16-22-07-53-2.webp" alt="Ауриты DBD" class="merch-image">
+                        <div class="merch-info">
+                            <h3 class="merch-title">Раздел "Золотые Клетки"</h3>
+                            <div class="merch-price" style="color: #e00909;">
+                            <span style="text-decoration: line-through; opacity: 0.7;">от 550 ₽</span>
+                            <span> от 300 ₽</span>
+                            </div>
+                            <p class="merch-description" >Описание: В данном разделе, Вы сможете приобрести любое количество Золотых Клеток на Ваш аккаунт.</p>
+                            <button class="buy-btn" data-product="Пополнение золотых клеток" data-type="auric-cells">Купить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="merch-item">
+                        <img src="https://i.postimg.cc/D01bxKDs/photo-2025-09-16-22-07-53-3.webp" alt="ДЛС DBD" class="merch-image">
+                        <div class="merch-info">
+                            <h3 class="merch-title">Раздел "DLC"</h3>
+                            <div class="merch-price" style="color: #e00909;">
+                            <span style="text-decoration: line-through; opacity: 0.7;">от 1250 ₽</span>
+                            <span> от 500 ₽</span>
+                            </div>
+                            <p class="merch-description">Описание: В данном разделе, Вы сможете приобрести любое DLC на Ваш аккаунт. Ваш регион не важен.</p>
+                            <button class="buy-btn" data-product="Покупка ДЛС" data-type="dlc">Купить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="merch-item">
+                        <img src="https://i.postimg.cc/v8n9YWBB/photo-2025-09-16-22-07-53.webp" alt="Смена региона DBD" class="merch-image">
+                        <div class="merch-info">
+                            <h3 class="merch-title">Раздел "Смена региона"</h3>
+                            <div class="merch-price" style="color: #e00909;">
+                            <span style="text-decoration: line-through; opacity: 0.7;">от 650 ₽</span>
+                            <span> от 350 ₽</span>
+                            </div>
+                            <p class="merch-description">Описание: В данном разделе, Вы сможете сменить регион Вашего аккаунт Steam|Epic например на Украину или Казахстан</p>
+                            <button class="buy-btn" data-product="Смена региона" data-type="region-change">Купить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Информация о доставке</h2>
+                <div class="shipping-info">
+                    <p><strong>Время обработки заказа:</strong> Обычно занимает 1 до 24 часов. В редких случаях может потребоваться больше времени.</p>
+                    <p><strong>Способы получения:</strong> После отправки заявки, вам напишет продавец в один из указаный вами источников и уточнит детали.</p>
+                </div>
+                
+                <h2>Часто задаваемые вопросы</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Как происходит пополнение?</h3>
+                        <p>После оплаты вы получите инструкцию на почту или любой другой источник уазыный при заявке. Вам нужно будет предоставить доступ к своему аккаунту для пополнения клеток.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Безопасно ли это?</h3>
+                        <p>Да, мы работаем с официальным партнером, который гарантирует безопасность вашего аккаунта. Все операции проводятся вручную.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Поддержка</h3>
+                        <p>Наша служба поддержки доступна 24/7. Свяжитесь с нами, если у вас есть вопросы или проблемы с заказом.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <center><a href="https://t.me/Uxspizza_Manager" target="_blank" class="btn" style="background-color: #0088cc;"><i class="fab fa-telegram"></i> Помощь</a> <a href="guarantees.html" target="_blank" class="btn" style="background-color: #0abf0a;"><i class="fas fa-exchange-alt"></i> Гарантии</a> <a href="reviews.html" class="btn"><i class="fas fa-comments"></i> Отзывы</a></center>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <!-- Модальное окно -->
+    <div id="buyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title" id="modalProductTitle">Заказ товара</h2>
+            
+            <div class="info-text">
+                После заполнения анкеты, она будет отправлена продавцу, и он свяжется с вами в течение 24 часов.
+            </div>
+            
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="name">Ваше имя/ник:</label>
+                    <input type="text" id="name" name="name" placeholder="укажите ваше имя или ник" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Email:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="укажите вашу почту или номер телефона" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telegram">Telegram:</label>
+                    <input type="text" id="telegram" name="telegram" placeholder="укажите ваш telegram через @">
+                </div>
+                
+                <div class="form-group">
+                    <label for="discord">Логин Discord (если есть):</label>
+                    <input type="text" id="discord" name="discord" placeholder="Укажите ваш логин discord">
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Комментарий к заказу:</label>
+                    <input type="text" id="comments" name="comments" placeholder="Напишите коментарий к заказу и укажите ссылку на свой Steam" required>
+                </div>
+                
+                <!-- Поля для пополнения золотых клеток -->
+                <div id="auric-cells-fields" class="product-specific">
+                    <div class="form-group">
+                        <label for="auric-amount">Количество клеток:</label>
+                        <select id="auric-amount" name="auric-amount">
+                            <option value="">Выберите количество</option>
+                            <option value="500">500 клеток - 300 рублей</option>
+                            <option value="1100">1100 клеток - 600 рублей</option>
+                            <option value="2250">2250 клеток - 1 200 рублей</option>
+                            <option value="4025">4025 клеток - 2 000 рублей</option>
+                            <option value="6000">6000 клеток - 2 800 рублей</option>
+                            <option value="12500">12500 клеток - 2000 рублей</option>
+                            <option value="12500">12500 клеток - 5700 рублей (3 раза в год)</option>
+                            <option value="25000">25000 клеток - 3900 рублей (1 раз в год)</option>
+                            <option value="37500">37500 клеток - 5600 рублей (1 раз в год)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Поля для покупки ДЛС -->
+                <div id="dlc-fields" class="product-specific">
+                    <div class="form-group">
+                        <label for="dlc-name">Название ДЛС:</label>
+                        <input type="text" id="dlc-name" name="dlc-name" placeholder="Укажите название DLC которое хотите приобрести">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="platform">Платформа:</label>
+                        <select id="platform" name="platform">
+                            <option value="">Выберите платформу</option>
+                            <option value="Steam">Steam</option>
+                            <option value="Epic Games">Epic Games</option>
+                            <option value="Microsoft">Microsoft</option>
+                            <option value="Other">Другая</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="platform-region">Регион платформы:</label>
+                        <select id="platform-region" name="platform-region">
+                            <option value="">Выберите регион</option>
+                            <option value="Казахстан">Казахстан</option>
+                            <option value="Украина">Украина</option>
+                            <option value="Россия">Россия</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Поля для смены региона -->
+                <div id="region-change-fields" class="product-specific">
+                    <div class="form-group">
+                        <label for="current-region">Регион сейчас:</label>
+                        <select id="current-region" name="current-region">
+                            <option value="">Выберите текущий регион</option>
+                            <option value="Казахстан">Казахстан</option>
+                            <option value="Украина">Украина</option>
+                            <option value="Россия">Россия</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-region">Нужный регион:</label>
+                        <select id="new-region" name="new-region">
+                            <option value="">Выберите нужный регион</option>
+                            <option value="Казахстан">Казахстан</option>
+                            <option value="Украина">Украина</option>
+                            <option value="Россия">Россия</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="platform-change">Платформа:</label>
+                        <select id="platform-change" name="platform-change">
+                            <option value="">Выберите платформу</option>
+                            <option value="Steam">Steam</option>
+                            <option value="Epic Games">Epic Games</option>
+                            <option value="Microsoft">Microsoft</option>
+                            <option value="Other">Другая</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Отправить заявку</button>
+            </form>
+            
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Получаем элементы модального окна
+        const modal = document.getElementById("buyModal");
+        const modalTitle = document.getElementById("modalProductTitle");
+        const orderForm = document.getElementById("orderForm");
+        const statusMessage = document.getElementById("statusMessage");
+        const closeBtn = document.querySelector(".close");
+        
+        // Получаем все кнопки "Купить сейчас"
+        const buyButtons = document.querySelectorAll(".buy-btn");
+        
+        // Переменная для хранения типа продукта
+        let currentProductType = '';
+        
+        // Показываем модальное окно при клике на кнопку
+        buyButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const productName = this.getAttribute("data-product");
+                currentProductType = this.getAttribute("data-type");
+                
+                modalTitle.textContent = `Заказ: ${productName}`;
+                
+                // Скрываем все специфические поля
+                document.querySelectorAll('.product-specific').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Показываем только нужные поля для выбранного товара
+                if (currentProductType) {
+                    const specificFields = document.getElementById(`${currentProductType}-fields`);
+                    if (specificFields) {
+                        specificFields.style.display = 'block';
+                    }
+                }
+                
+                modal.style.display = "block";
+            });
+        });
+        
+        // Закрываем модальное окно
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+            resetForm();
+        });
+        
+        window.addEventListener("click", function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                resetForm();
+            }
+        });
+        
+        // Функция для отправки данных в Google Sheets
+        function submitToGoogleSheet(formData) {
+            // URL вашего веб-приложения Google Apps Script
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxCDLBi82fo5dntz8zZe4ypIIj4EKlnfGd3JBAVS1RZ1wM2-TWe92Dh6KObNMr2AINW3g/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                console.log('Данные успешно отправлены в Google Sheets!');
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке данных:', error);
+            });
+        }
+        
+        // Обработка отправки формы
+        orderForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Отправка...";
+            
+            // Собираем данные формы
+            const formData = {
+                timestamp: new Date().toISOString(),
+                product: modalTitle.textContent.replace('Заказ: ', ''),
+                productType: currentProductType,
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                telegram: document.getElementById('telegram').value,
+                discord: document.getElementById('discord').value,
+                comments: document.getElementById('comments').value
+            };
+            
+            // Добавляем специфические данные в зависимости от типа товара
+            if (currentProductType === 'auric-cells') {
+                formData.auricAmount = document.getElementById('auric-amount').value;
+            } else if (currentProductType === 'dlc') {
+                formData.dlcName = document.getElementById('dlc-name').value;
+                formData.platform = document.getElementById('platform').value;
+                formData.platformRegion = document.getElementById('platform-region').value;
+            } else if (currentProductType === 'region-change') {
+                formData.currentRegion = document.getElementById('current-region').value;
+                formData.newRegion = document.getElementById('new-region').value;
+                formData.platformChange = document.getElementById('platform-change').value;
+            }
+            
+            // Отправляем данные в Google Sheets
+            submitToGoogleSheet(formData);
+            
+            // Показываем сообщение об успехе
+            statusMessage.textContent = "Ваша заявка успешно отправлена! Перенаправляем на страницу оплаты...";
+            statusMessage.className = "status-message success";
+            statusMessage.style.display = "block";
+            
+            // Закрываем модальное окно и перенаправляем на страницу оплаты через 2 секунды
+            setTimeout(() => {
+                modal.style.display = "none";
+                resetForm();
+                
+                // Перенаправление на страницу оплаты
+                redirectToPaymentPage(currentProductType);
+            }, 2000);
+        });
+        
+        // Функция сброса формы
+        function resetForm() {
+            orderForm.reset();
+            statusMessage.style.display = "none";
+            statusMessage.className = "";
+            document.querySelectorAll('.product-specific').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            const submitBtn = orderForm.querySelector('.submit-btn');
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Отправить заявку";
+        }
+        
+        // Функция перенаправления на страницу оплаты
+        function redirectToPaymentPage(productType) {
+            let paymentUrl = '';
+            
+            switch(productType) {
+                case 'auric-cells':
+                    paymentUrl = 'paymentphs.html';
+                    break;
+                case 'dlc':
+                    paymentUrl = 'paymentphs.html';
+                    break;
+                case 'region-change':
+                    paymentUrl = 'paymentphs.html';
+                    break;
+                default:
+                    paymentUrl = 'paymentphs.html';
+            }
+            
+            // Открываем в новом окне/вкладке
+            window.open(paymentUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

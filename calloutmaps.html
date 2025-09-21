@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Callouts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #252525;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .result h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .perk-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .perk-icon {
+            width: 64px;
+            height: 64px;
+            background-color: #333;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: rgba(20, 20, 20, 0.9);
+        }
+        
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Стили для галереи */
+        .gallery-section {
+            padding: 2rem 0;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        .gallery-thumb {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-thumb {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-caption {
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(194, 25, 25, 0.5);
+        }
+        
+        .modal-caption {
+            text-align: center;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: var(--primary-color);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .nav-btn {
+            color: white;
+            font-size: 2rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        /* Кнопка добавления новых фото (для будущего использования) */
+        .add-photo-btn {
+            display: block;
+            margin: 2rem auto;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .add-photo-btn:hover {
+            background-color: var(--highlight-color);
+        }
+        
+        /* Стили для списка карт */
+        .maps-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .maps-list {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .maps-category {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .maps-category-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .maps-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .maps-item:hover {
+            background-color: rgba(194, 25, 25, 0.1);
+        }
+        
+        .map-link {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .map-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .map-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+        
+        .map-name {
+            font-weight: 500;
+        }
+        
+        /* Адаптивность для двух колонок */
+        @media (max-width: 992px) {
+            .maps-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="gallery-title">Ориентировка на картах по часам</h2>
+            
+            <div class="maps-container">
+                <ul class="maps-list">
+                    <!-- Заросли Дварки -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">1. Заросли Дварки</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(1, 'Крушение Ностромо', 'https://i.postimg.cc/zGhqrW95/Nostromo20-Wreckage.webp')">
+                                <span class="map-number">1</span>
+                                <span class="map-name">Крушение "Ностромо"</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(2, 'Площадка Тоба', 'https://i.postimg.cc/QMjwyTDf/Toba20Landing.webp')">
+                                <span class="map-number">2</span>
+                                <span class="map-name">Площадка Тоба</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Разорённая деревушка-борго -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">2. Разорённая деревушка-борго</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(3, 'Забытые Руины', 'https://i.postimg.cc/52Dj5fM9/Borgo2-Ruins.webp')">
+                                <span class="map-number">3</span>
+                                <span class="map-name">Забытые Руины</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(4, 'Разрушенная площадь', 'https://i.postimg.cc/dVhLTLpS/Borgo1ploshad.webp')">
+                                <span class="map-number">4</span>
+                                <span class="map-name">Разрушенная площадь</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Зачахший остров -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">3. Зачахший остров</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(5, 'Павший приют', 'https://i.postimg.cc/4N7g6V4t/pavshi-Priyt.webp')">
+                                <span class="map-number">5</span>
+                                <span class="map-name">Павший приют</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(6, 'Пиццерия Фредди Фазбера', 'https://i.postimg.cc/7YFymhbR/Pizza-Fredy.webp')">
+                                <span class="map-number">6</span>
+                                <span class="map-name">Пиццерия Фредди Фазбера</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(7, 'Площадь Гринвилла', 'https://i.postimg.cc/RZwx8mHZ/Ploshad-Grinvel.webp')">
+                                <span class="map-number">7</span>
+                                <span class="map-name">Площадь Гринвилла</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(8, 'Зачахший остров', 'https://i.postimg.cc/NFLwPr13/ostrov-Zachah.webp')">
+                                <span class="map-number">8</span>
+                                <span class="map-name">Зачахший остров</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Заброшенное кладбище -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">4. Заброшенное кладбище</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(9, 'Бесплодные пески', 'https://i.postimg.cc/mDyDGM1h/deadsands.webp')">
+                                <span class="map-number">9</span>
+                                <span class="map-name">Бесплодные пески</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(10, 'Воронье гнездовье', 'https://i.postimg.cc/j28SDbXb/eyrie-OFcrows.webp')">
+                                <span class="map-number">10</span>
+                                <span class="map-name">Воронье гнездовье</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Раккун-Сити -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">5. Раккун-Сити</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(11, 'Восточное крыло полицейского участка Раккун-Сити', 'https://i.postimg.cc/QMsZZzQk/racooncity-EAST.webp')">
+                                <span class="map-number">11</span>
+                                <span class="map-name">Восточное крыло полицейского участка Раккун-Сити</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(12, 'Западное крыло полицейского участка Раккун-Сити', 'https://i.postimg.cc/hGrWD0MF/racooncity-WEST.webp')">
+                                <span class="map-number">12</span>
+                                <span class="map-name">Западное крыло полицейского участка Раккун-Сити</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Сайлент Хилл -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">6. Сайлент Хилл</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(13, 'Начальная школа Мидвича', 'https://i.postimg.cc/qMSpSQDj/midvich-School.webp')">
+                                <span class="map-number">13</span>
+                                <span class="map-name">Начальная школа Мидвича</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Могила в Гленвейле -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">7. Могила в Гленвейле</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(14, 'Салун Мертвяк вусмерть', 'https://i.postimg.cc/Dyb9Jh5P/Saloon-Death.webp')">
+                                <span class="map-number">14</span>
+                                <span class="map-name">Салун "Мертвяк вусмерть"</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Национальная лаборатория Хоукинса -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">8. Национальная лаборатория Хоукинса</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(15, 'Подземный комплекс', 'https://i.postimg.cc/KYncnLNQ/hawkins.webp')">
+                                <span class="map-number">15</span>
+                                <span class="map-name">Подземный комплекс</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Ормонд -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">9. Ормонд</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(16, 'Шахта у озера Ормонд', 'https://i.postimg.cc/QCPrLxmH/Ozero-Ormond.webp')">
+                                <span class="map-number">16</span>
+                                <span class="map-name">Шахта у озера Ормонд</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(17, 'Курорт Гора Ормонд', 'https://i.postimg.cc/3wC7yh8c/Ormond1.webp')">
+                                <span class="map-number">17</span>
+                                <span class="map-name">Курорт Гора Ормонд I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(18, 'Курорт Гора Ормонд', 'https://i.postimg.cc/85pGMYsP/Ormond2.webp')">
+                                <span class="map-number">18</span>
+                                <span class="map-name">Курорт Гора Ормонд II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(19, 'Курорт Гора Ормонд', 'https://i.postimg.cc/MT9SDYj0/Ormond3.webp')">
+                                <span class="map-number">19</span>
+                                <span class="map-name">Курорт Гора Ормонд III</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Поместье Ямаоки -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">10. Поместье Ямаоки</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(20, 'Прибежище гнева', 'https://i.postimg.cc/CLQKYw5C/Gnev-Yamakoka1.webp')">
+                                <span class="map-number">20</span>
+                                <span class="map-name">Прибежище гнева I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(21, 'Прибежище гнева', 'https://i.postimg.cc/sgGggbGk/Gnev-Yamakoka2.webp')">
+                                <span class="map-number">21</span>
+                                <span class="map-name">Прибежище гнева II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(22, 'Семейная Резиденция', 'https://i.postimg.cc/prmgBMvx/Resident-Yamakoka1.webp')">
+                                <span class="map-number">22</span>
+                                <span class="map-name">Семейная Резиденция I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(23, 'Семейная Резиденция', 'https://i.postimg.cc/yd8qkSrD/Resident-Yamakoka2.webp')">
+                                <span class="map-number">23</span>
+                                <span class="map-name">Семейная Резиденция II</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Мясокомбинат "Гидеон" -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">11. Мясокомбинат "Гидеон"</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(24, 'Игра', 'https://i.postimg.cc/VL6N3JfL/gideon-Game.webp')">
+                                <span class="map-number">24</span>
+                                <span class="map-name">Игра</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Спрингвуд -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">12. Спрингвуд</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(25, 'Детский сад Бэдхэм', 'https://i.postimg.cc/LsZYGnVZ/Badham1.webp')">
+                                <span class="map-number">25</span>
+                                <span class="map-name">Детский сад Бэдхэм I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(26, 'Детский сад Бэдхэм II', 'https://i.postimg.cc/RhvW3Gxc/Badham2.webp')">
+                                <span class="map-number">26</span>
+                                <span class="map-name">Детский сад Бэдхэм II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(27, 'Детский сад Бэдхэм IV', 'https://i.postimg.cc/k436CqjY/Badham3.webp')">
+                                <span class="map-number">27</span>
+                                <span class="map-name">Детский сад Бэдхэм III</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(28, 'Детский сад Бэдхэм III', 'https://i.postimg.cc/ydmJYtt1/Badham4.webp')">
+                                <span class="map-number">28</span>
+                                <span class="map-name">Детский сад Бэдхэм IV</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(29, 'Детский сад Бэдхэм V', 'https://i.postimg.cc/RhGNwfv2/Badham5.webp')">
+                                <span class="map-number">29</span>
+                                <span class="map-name">Детский сад Бэдхэм V</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Гнилое Болото -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">13. Гнилое Болото</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(30, 'Чудовищная кладовая', 'https://i.postimg.cc/WbbDT9nV/boloto-Kladovaia.webp')">
+                                <span class="map-number">30</span>
+                                <span class="map-name">Чудонищная кладовая</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(31, 'Бледная роза', 'https://i.postimg.cc/jdgD5zg7/Boloto-Rosa.webp')">
+                                <span class="map-number">31</span>
+                                <span class="map-name">Бледная роза</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Красный Лес -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">14. Красный Лес</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(32, 'Обитель Матери', 'https://i.postimg.cc/TPXfY16b/Obitel-Materi.webp')">
+                                <span class="map-number">32</span>
+                                <span class="map-name">Обитель Матери</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(33, 'Храм Очищения', 'https://i.postimg.cc/JnMrKnY8/Hram-Oteshenia.webp')">
+                                <span class="map-number">33</span>
+                                <span class="map-name">Храм Очищения</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Мемориальный Институт Лэри -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">15. Мемориальный Институт Лэри</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(34, 'Лечебный зал', 'https://i.postimg.cc/RFdMYB2H/institut-Lary.webp')">
+                                <span class="map-number">34</span>
+                                <span class="map-name">Лечебный зал</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Хэддонфилд -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">16. Хэддонфилд</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(35, 'Переулок Лэмпкин', 'https://i.postimg.cc/7LvYGXgf/hadonfild.webp')">
+                                <span class="map-number">35</span>
+                                <span class="map-name">Переулок Лэмпкин</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Психлечебница Кротус Пренн -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">17. Психлечебница Кротус Пренн</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(36, 'Отделение для Буйных', 'https://i.postimg.cc/qRTRYQR9/Crotys-Otdelenie.webp')">
+                                <span class="map-number">36</span>
+                                <span class="map-name">Отделение для Буйных</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(37, 'Часовня Отца Кэмпбелла', 'https://i.postimg.cc/nL7r0NH4/Crotys-Chasovnia.webp')">
+                                <span class="map-number">37</span>
+                                <span class="map-name">Часовня Отца Кэмпбелла</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Свалка Автохевен -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">18. Свалка Автохевен</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(38, 'Место Упокоения Азарова', 'https://i.postimg.cc/Cx2nvjbg/Azarov-Place.webp')">
+                                <span class="map-number">38</span>
+                                <span class="map-name">Место Упокоения Азарова</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(39, 'Магазин Барахольщика', 'https://i.postimg.cc/TYpRtB0K/Magazin-Barahlo.webp')">
+                                <span class="map-number">39</span>
+                                <span class="map-name">Магазин Барахольщика</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(40, 'Кровавая Лачуга', 'https://i.postimg.cc/c1cgqqfT/Blood-Lodge.webp')">
+                                <span class="map-number">40</span>
+                                <span class="map-name">Кровавая Лачуга</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(41, 'Зона Свалки', 'https://i.postimg.cc/QNB8bR0H/ZonaSvalka.webp')">
+                                <span class="map-number">41</span>
+                                <span class="map-name">Зона Свалки</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(42, 'Гэс Хевен', 'https://i.postimg.cc/MZtTP78F/GasHaven.webp')">
+                                <span class="map-number">42</span>
+                                <span class="map-name">Гэс Хевен</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Ферма Колдвинд -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">19. Ферма Колдвинд</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(43, 'Сгнившие Поля', 'https://i.postimg.cc/jq9VS26j/Sgnivshi-Pole.webp')">
+                                <span class="map-number">43</span>
+                                <span class="map-name">Сгнившие Поля</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(44, 'Дом Томпсонов', 'https://i.postimg.cc/NFG0GMRD/Dom-Tompson.webp')">
+                                <span class="map-number">44</span>
+                                <span class="map-name">Дом Томпсонов</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(45, 'Заброшеная скотобойня', 'https://i.postimg.cc/pdk4bLXR/SkotoBoina.webp')">
+                                <span class="map-number">45</span>
+                                <span class="map-name">Заброшеная скотобойня</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(46, 'Ручей Страданий', 'https://i.postimg.cc/90ss8gX9/Ruchey-Stradan.webp')">
+                                <span class="map-number">46</span>
+                                <span class="map-name">Ручей Страданий</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(47, 'Разрушенный Хлев', 'https://i.postimg.cc/k4108Xkf/Razrusheniy-Hlev.webp')">
+                                <span class="map-number">47</span>
+                                <span class="map-name">Разрушенный Хлев</span>
+                            </a>
+                        </div>
+                    </li>
+                    
+                    <!-- Поместье МакМилан -->
+                    <li class="maps-category">
+                        <h3 class="maps-category-title">20. Поместье МакМилан</h3>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(48, 'Стонущий Склад 1', 'https://i.postimg.cc/SxFwcPvF/Sklad1.webp')">
+                                <span class="map-number">48</span>
+                                <span class="map-name">Стонущий Склад I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(49, 'Стонущий Склад 2', 'https://i.postimg.cc/sgYbmJkB/Sklad2.webp')">
+                                <span class="map-number">49</span>
+                                <span class="map-name">Стонущий Склад II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(50, 'Лесная Опушка 1', 'https://i.postimg.cc/rsp8XHLY/Lesna-Opyshka1.webp')">
+                                <span class="map-number">50</span>
+                                <span class="map-name">Лесная Опушка I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(51, 'Лесная Опушка 2', 'https://i.postimg.cc/7hQqxNHP/Lesna-Opyshka2.webp')">
+                                <span class="map-number">51</span>
+                                <span class="map-name">Лесная Опушка II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(52, 'Удушающая Яма 1', 'https://i.postimg.cc/MTT4WJvR/YdushaAyma1.webp')">
+                                <span class="map-number">52</span>
+                                <span class="map-name">Удушающая Яма I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(53, 'Удушающая Яма 2', 'https://i.postimg.cc/HxhNnvyN/YdushaAyma2.webp')">
+                                <span class="map-number">53</span>
+                                <span class="map-name">Удушающая Яма II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(54, 'Угольная Башня 1', 'https://i.postimg.cc/c1Vs5XbT/СoolTower1.webp')">
+                                <span class="map-number">54</span>
+                                <span class="map-name">Угольная Башня I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(55, 'Угольная Башня 2', 'https://i.postimg.cc/15w9xDxS/СoolTower2.webp')">
+                                <span class="map-number">55</span>
+                                <span class="map-name">Угольная Башня II</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(56, 'Завод Страданий 1', 'https://i.postimg.cc/2yLKZddS/Zavod1.webp')">
+                                <span class="map-number">56</span>
+                                <span class="map-name">Завод Страданий I</span>
+                            </a>
+                        </div>
+                        <div class="maps-item">
+                            <a class="map-link" onclick="openMapImage(57, 'Завод Страданий 2', 'https://i.postimg.cc/Z0kDF9jF/Zavod2.webp')">
+                                <span class="map-number">57</span>
+                                <span class="map-name">Завод Страданий II</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для отображения изображений -->
+    <div id="mapModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+        <div class="modal-nav">
+            <div class="nav-btn" onclick="navigateMap(-1)">&#10094;</div>
+            <div class="nav-btn" onclick="navigateMap(1)">&#10095;</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        // Объект для хранения информации о всех картах
+        const mapsData = [];
+        
+        // Инициализация данных о картах
+        function initMapsData() {
+            const mapLinks = document.querySelectorAll('.map-link');
+            mapLinks.forEach(link => {
+                const mapNumber = parseInt(link.querySelector('.map-number').textContent);
+                const mapName = link.querySelector('.map-name').textContent;
+                
+                // Получаем URL изображения из атрибута onclick
+                const onclickAttr = link.getAttribute('onclick');
+                const urlMatch = onclickAttr.match(/'(https?:\/\/[^']+)'/);
+                const mapImageUrl = urlMatch ? urlMatch[1] : 
+                                   `https://via.placeholder.com/800x600/333333/ffffff?text=${encodeURIComponent(mapName)}`;
+                
+                mapsData.push({
+                    number: mapNumber,
+                    name: mapName,
+                    imageUrl: mapImageUrl
+                });
+            });
+        }
+        
+        // Функция для открытия модального окна с изображением карты
+        function openMapImage(mapNumber, mapName, imageUrl = null) {
+            // Если URL не предоставлен, используем placeholder
+            const finalImageUrl = imageUrl || `https://via.placeholder.com/800x600/333333/ffffff?text=${encodeURIComponent(mapName)}`;
+            
+            document.getElementById('modalImage').src = finalImageUrl;
+            document.getElementById('modalImage').alt = mapName;
+            document.getElementById('modalCaption').textContent = mapName;
+            
+            // Сохраняем информацию о текущей карте
+            currentMapIndex = mapNumber - 1;
+            
+            const modal = document.getElementById('mapModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы
+        }
+        
+        // Функция для закрытия модального окна
+        function closeModal() {
+            const modal = document.getElementById('mapModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = ''; // Разрешаем прокрутку страницы
+        }
+        
+        // Закрытие модального окна при клике вне изображения
+        window.onclick = function(event) {
+            const modal = document.getElementById('mapModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+        
+        // Навигация между картами
+        let currentMapIndex = 0;
+        
+        function navigateMap(direction) {
+            // Обновляем индекс текущей карты
+            currentMapIndex += direction;
+            
+            // Проверяем границы
+            if (currentMapIndex < 0) {
+                currentMapIndex = mapsData.length - 1; // Переход к последней карте
+            } else if (currentMapIndex >= mapsData.length) {
+                currentMapIndex = 0; // Переход к первой карте
+            }
+            
+            // Получаем данные о карте
+            const map = mapsData[currentMapIndex];
+            
+            // Обновляем модальное окно
+            document.getElementById('modalImage').src = map.imageUrl;
+            document.getElementById('modalImage').alt = map.name;
+            document.getElementById('modalCaption').textContent = map.name;
+        }
+        
+        // Закрытие модального окна по клавише Esc
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+            
+            // Навигация стрелками
+            if (event.key === 'ArrowLeft') {
+                navigateMap(-1);
+            } else if (event.key === 'ArrowRight') {
+                navigateMap(1);
+            }
+        });
+        
+        // Инициализация данных о картах при загрузке страницы
+        document.addEventListener('DOMContentLoaded', initMapsData);
+    </script>
+</body>
+</html>

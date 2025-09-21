@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/xTRBL6Zz/GIF-Geek-Trick.gif" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment GeekTrick</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0a1a 0%, #0f050f 100%);
+            color: #e6d4f7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(142, 36, 170, 0.5);
+            border: 4px solid #d1c4e9;
+        }
+        
+        .logo i {
+            font-size: 50px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, #ba68c8, #8e24aa, #6a1b9a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-subtitle {
+            font-size: 1.2rem;
+            color: #b39ddb;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .payment-card {
+            background: linear-gradient(135deg, #2e1b3a 0%, #24152e 100%);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(142, 36, 170, 0.25);
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            border: 1px solid #8e24aa;
+        }
+        
+        .payment-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #ba68c8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #d1c4e9;
+        }
+        
+        select {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #8e24aa;
+            border-radius: 12px;
+            font-size: 16px;
+            background-color: #2e1b3a;
+            transition: all 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ba68c8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 18px;
+            color: #d1c4e9;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #ba68c8;
+            box-shadow: 0 0 0 3px rgba(186, 104, 200, 0.3);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ba68c8 0%, #8e24aa 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(142, 36, 170, 0.5);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(142, 36, 170, 0.6);
+            background: linear-gradient(135deg, #ce93d8 0%, #9c27b0 100%);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #b39ddb;
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .footer-note {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #9575cd;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-info {
+            background: linear-gradient(135deg, #3e244e 0%, #2e1b3a 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+            color: #d1c4e9;
+            border: 1px solid #8e24aa;
+        }
+        
+        .product-info.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .payment-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="https://i.postimg.cc/xTRBL6Zz/GIF-Geek-Trick.gif" alt="GeekTrickShop" class="partner-logo" width="150px">
+            </div>
+            <h1>GeekTrick Shop</h1>
+            <p class="header-subtitle">Оплата вашего заказа</p>
+        </div>
+        
+        <div class="payment-card">
+            <h2 class="card-title"><i class="fas fa-credit-card"></i> Оплата</h2>
+            
+            <div class="form-group">
+                <label for="product-select">Выберите товар:</label>
+                <select id="product-select">
+                    <option value="">-- Выберите товар --</option>
+                    <option value="product1">Свитшот DBD - 3 500 руб.</option>
+                    <option value="product2">Сумка шоппер - 2 000 руб.</option>
+                    <option value="product3">Подарочный набор "Bubba" - 2 000 руб.</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="processPayment()">
+                Перейти к оплате <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        
+        <footer>
+            <p class="footer-note">Страница была создана на заказ магазина GeekTrickShop при поддержке by PHG community. <br>Но ответственности за эту страницу не несет.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Данные о продуктах
+        const products = {
+            product1: {
+                description: "Премиум решение с расширенными функциями и полной поддержкой",
+                delivery: "1-2 рабочих дня"
+            },
+            product2: {
+                description: "Бизнес пакет для корпоративных клиентов с приоритетной поддержкой",
+                delivery: "3-5 рабочих дней"
+            },
+            product3: {
+                description: "Эксклюзивный пакет с индивидуальной настройкой и персональным менеджером",
+                delivery: "5-7 рабочих дней"
+            },
+            product4: {
+                description: "Стандартное решение для повседневных задач",
+                delivery: "1-3 рабочих дня"
+            },
+            product5: {
+                description: "Расширенная версия с дополнительными возможностями",
+                delivery: "2-4 рабочих дня"
+            },
+            product6: {
+                description: "Базовый пакет для начинающих пользователей",
+                delivery: "1-2 рабочих дня"
+            },
+            product7: {
+                description: "Профессиональный набор для экспертов в области",
+                delivery: "3-6 рабочих дней"
+            },
+            product8: {
+                description: "Элит решение с эксклюзивными функциями и высшим приоритетом поддержки",
+                delivery: "7-10 рабочих дней"
+            },
+            product9: {
+                description: "Эконом вариант с основными функциями",
+                delivery: "1-2 рабочих дня"
+            },
+            product10: {
+                description: "Полный доступ ко всем возможностям платформы",
+                delivery: "2-3 рабочих дня"
+            }
+        };
+
+        // Обновление информации о продукте при выборе
+        document.getElementById('product-select').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const productInfo = document.getElementById('product-info');
+            const description = document.getElementById('product-description');
+            const delivery = document.getElementById('delivery-time');
+            
+            if (selectedValue && products[selectedValue]) {
+                description.textContent = products[selectedValue].description;
+                delivery.textContent = products[selectedValue].delivery;
+                productInfo.classList.add('active');
+            } else {
+                productInfo.classList.remove('active');
+            }
+        });
+        
+        function processPayment() {
+            const select = document.getElementById('product-select');
+            const selectedValue = select.value;
+            
+            if (!selectedValue) {
+                // Создаем временное уведомление вместо alert
+                const notification = document.createElement('div');
+                notification.textContent = 'Пожалуйста, выберите товар для оплаты';
+                notification.style.position = 'fixed';
+                notification.style.top = '20px';
+                notification.style.left = '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.backgroundColor = '#8e24aa';
+                notification.style.color = 'white';
+                notification.style.padding = '12px 20px';
+                notification.style.borderRadius = '8px';
+                notification.style.zIndex = '1000';
+                notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+                
+                document.body.appendChild(notification);
+                
+                // Удаляем уведомление через 3 секунды
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 3000);
+                
+                return;
+            }
+            
+            // Перенаправление на разные страницы в зависимости от выбора
+            const redirectUrls = {
+                'product1': 'https://yoomoney.ru/bill/pay/1CT58RRD6VL.250920',
+                'product2': 'https://yoomoney.ru/bill/pay/1CT5957AK3Q.250920',
+                'product3': 'https://yoomoney.ru/bill/pay/1CT59M2QUFV.250920',
+                'product4': 'https://payment.example.com/product4',
+                'product5': 'https://payment.example.com/product5',
+                'product6': 'https://payment.example.com/product6',
+                'product7': 'https://payment.example.com/product7',
+                'product8': 'https://payment.example.com/product8',
+                'product9': 'https://payment.example.com/product9',
+                'product10': 'https://payment.example.com/product10'
+            };
+            
+            // Перенаправляем на страницу оплаты
+            window.location.href = redirectUrls[selectedValue];
+        }
+    </script>
+</body>
+</html>
