@@ -13,6 +13,8 @@
             --text-color: #f0f0f0;
             --accent-color: #3a3a3a;
             --highlight-color: #ff2a2a;
+            --addon-color-1: #8910e0;  /* Оранжевый для первого аддона */
+            --addon-color-2: #8910e0;  /* Бирюзовый для второго аддона */
         }
         
         * {
@@ -40,7 +42,7 @@
         
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
         }
@@ -85,19 +87,19 @@
         }
         
         .hero {
-            padding: 4rem 0;
+            padding: 3rem 0;
             text-align: center;
             background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
         }
         
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             color: #ccc;
@@ -107,7 +109,7 @@
             background-color: rgba(26, 26, 26, 0.9);
             border-radius: 10px;
             padding: 2rem;
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             border: 1px solid #333;
@@ -124,7 +126,7 @@
             font-size: 1rem;
             font-weight: bold;
             transition: background-color 0.3s, transform 0.2s;
-            margin-bottom: 1.5rem;
+            margin: 0.5rem;
         }
         
         .btn:hover {
@@ -134,6 +136,18 @@
         
         .btn:active {
             transform: translateY(0);
+        }
+        
+        .btn-party {
+            background-color: #ed071e;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }
         
         .result {
@@ -154,38 +168,80 @@
             to { opacity: 1; }
         }
         
-        .result h3 {
+        .section-title {
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            font-size: 1.5rem;
         }
         
-        .perks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+        /* Стили для набора */
+        .build-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            border: 2px solid #444;
         }
         
-        .perk-card {
+        .killer-card {
             background-color: #2a2a2a;
             border-radius: 8px;
             padding: 1rem;
             text-align: center;
+            border: 2px solid var(--primary-color);
+            min-width: 100px;
+        }
+        
+        .killer-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 0.5rem;
+            border-radius: 0%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            //border: 2px solid var(--primary-color);
+        }
+        
+        .killer-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .perks-container {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            padding: 0.8rem;
+            text-align: center;
             transition: transform 0.3s;
             border: 1px solid #333;
+            min-width: 80px;
         }
         
         .perk-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             border-color: var(--primary-color);
         }
         
         .perk-icon {
             width: 80px;
             height: 80px;
-            margin: 0 auto 0.5rem;
-            border-radius: 8px;
+            margin: 0 auto 0.3rem;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -198,91 +254,91 @@
             object-fit: cover;
         }
         
-        .items-section {
-            margin-top: 2.5rem;
-            padding: 1.5rem;
-            background-color: #252525;
-            border-radius: 8px;
+        .addons-container {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
         }
         
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        
-        .item-card {
+        .addon-card {
             background-color: #2a2a2a;
-            border-radius: 8px;
-            padding: 1rem;
+            border-radius: 6px;
+            padding: 0.8rem;
             text-align: center;
             transition: transform 0.3s;
             border: 1px solid #333;
+            min-width: 80px;
+            position: relative;
         }
         
-        .item-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
+        .addon-card:hover {
+            transform: translateY(-2px);
         }
         
-        .item-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 0.5rem;
-            border-radius: 8px;
+        /* Цветные рамки для аддонов */
+        .addon-card.addon-1 {
+            border: 2px solid var(--addon-color-1);
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+        
+        .addon-card.addon-2 {
+            border: 2px solid var(--addon-color-2);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+        
+        /* Номера аддонов */
+        .addon-number {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .addon-1 .addon-number {
+            background: var(--addon-color-1);
+        }
+        
+        .addon-2 .addon-number {
+            background: var(--addon-color-2);
+        }
+        
+        .addon-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 0.3rem;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        .item-icon img {
+        .addon-icon img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        .section-title {
+        .item-label {
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-top: 0.3rem;
+            font-weight: bold;
+        }
+        
+        .killer-name {
+            font-size: 0.9rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-        
-        .features {
-            padding: 4rem 0;
-            background-color: rgba(20, 20, 20, 0.9);
-        }
-        
-        .features h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.2rem;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: rgba(40, 40, 40, 0.7);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
+            font-weight: bold;
+            margin-top: 0.2rem;
         }
         
         footer {
@@ -290,6 +346,7 @@
             padding: 2rem 0;
             text-align: center;
             border-top: 1px solid #333;
+            margin-top: 2rem;
         }
         
         .footer-content {
@@ -303,22 +360,6 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
         }
         
         .copyright {
@@ -342,19 +383,39 @@
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
-            .features-grid {
-                grid-template-columns: 1fr;
+            .build-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
             }
             
-            .perks-grid {
-                grid-template-columns: 1fr;
+            .perks-container, .addons-container {
+                flex-wrap: wrap;
             }
             
-            .items-grid {
-                grid-template-columns: 1fr;
+            .killer-card, .perk-card, .addon-card {
+                min-width: 70px;
+            }
+            
+            .killer-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .perk-icon, .addon-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .addon-number {
+                top: -5px;
+                right: -5px;
+                width: 18px;
+                height: 18px;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -380,28 +441,21 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Рандомайзер перков на киллеров</h1>
-			<a href="randomS.html" class="btn" style="background-color: #2a7dc7;"><i class="fas fa-users"></i> Выжившие</a> <a href="random.html" class="btn" style="background-color: #ed071e;"><i class="fas fa-crosshairs"></i> Киллеры</a>
+            <h1>Рандомайзер киллеров</h1>
+			<a href="randomS.html" class="btn btn-solo"><i class="fas fa-users"></i> Выжившие</a> 
+            <a href="random.html" class="btn btn-party"><i class="fas fa-crosshairs"></i> Киллеры</a>
             <br>
             
             <div class="checker-container">
-                <button class="btn" id="generateBuild">Сгенерировать сборку</button>
+                <div class="buttons-container">
+                    <button class="btn btn-party" id="generateBuild">
+                        <i class="fas fa-random"></i> Сгенерировать сборку
+                    </button>
+                </div>
                 
                 <div class="result" id="result">
-                    
-                    
-                    <div class="perks-section">
-                        <h4 class="section-title">Перки для киллеров</h4>
-                        <div class="perks-grid" id="perksGrid">
-                            <!-- Перки будут добавлены через JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="items-section">
-                        
-                        <div class="items-grid" id="itemsGrid">
-                            <!-- Предметы будут добавлены через JavaScript -->
-                        </div>
+                    <div id="buildsContainer">
+                        <!-- Сюда будут добавляться сборки через JavaScript -->
                     </div>
                 </div>
             </div>
@@ -412,28 +466,1140 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">PHG | DBD Creator</div>
-
                 <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
             </div>
         </div>
     </footer>
+    
     <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
-            <center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
-            <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
-            <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
-            <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
-            <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
-            <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const generateBtn = document.getElementById('generateBuild');
             const resultDiv = document.getElementById('result');
-            const perksGrid = document.getElementById('perksGrid');
-            const itemsGrid = document.getElementById('itemsGrid');
+            const buildsContainer = document.getElementById('buildsContainer');
             
-            // Базы данных с реальными значками из DBD
-            const survivorPerks = [
+            // База данных киллеров с ПРИВЯЗАННЫМИ аддонами
+            const killers = [
+                {
+                name: "Охотник", 
+                    icon: "https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp",
+                    addons: [
+                        { name: "Кровавая пружина", icon: "https://i.postimg.cc/PrXGNfF1/icon-Addon-fastening-Tools.webp" },
+                        { name: "Радужный камень", icon: "https://i.postimg.cc/59Fypgxs/icon-Addon-diamond-Stone.webp" },
+                        { name: "Маслянистая пружина", icon: "https://i.postimg.cc/bv9y4VGh/icon-Addon-oily-Coil.webp" },
+                        { name: "Натяжная пружина", icon: "https://i.postimg.cc/Hnxh4z8H/icon-Addon-tension-Spring.webp" },
+                        { name: "Охотничий мешок", icon: "https://i.postimg.cc/sfMFWfYW/icon-Addon-trapper-Sack.webp" },
+                        { name: "Точильный камень", icon: "https://i.postimg.cc/VNG99gYY/icon-Addon-honing-Stone.webp" },
+                        { name: "Дополнительная пружина", icon: "https://i.postimg.cc/ry3D1bxn/icon-Addon-secondary-Coil.webp" },
+                        { name: "Крепежные инструменты", icon: "https://i.postimg.cc/PrXGNfF1/icon-Addon-fastening-Tools.webp" },
+                        { name: "Охотничья сумка", icon: "https://i.postimg.cc/90RBQnq4/icon-Addon-trapper-Bag.webp" },
+                        { name: "Ржавые челюсти", icon: "https://i.postimg.cc/JnTkCzyM/icon-Addon-rusted-Jaws.webp" },
+                        { name: "Смоляная бутылка", icon: "https://i.postimg.cc/T2t8LL5f/icon-Addon-tar-Bottle.webp" },
+                        { name: "Зазубренные челюсти", icon: "https://i.postimg.cc/g0gJnBGK/icon-Addon-serrated-Jaws.webp" },
+                        { name: "Комплект 4х пружины", icon: "https://i.postimg.cc/NF0yjvhY/icon-Addon-coils-Kit4.webp" },
+                        { name: "Кофейная гуща", icon: "https://i.postimg.cc/63c2K5mY/icon-Addon-coffee-Grinds.webp" },
+                        { name: "Кусок воска", icon: "https://i.postimg.cc/ryN4Scq8/icon-Addon-wax-Brick.webp" },
+                        { name: "Удлинённая челюсть", icon: "https://i.postimg.cc/nzrkN5dj/icon-Addon-lengthened-Jaws.webp" },
+                        { name: "Медвежий жир", icon: "https://i.postimg.cc/0jrgNcch/icon-Addon-bear-Oil.webp" },
+                        { name: "Мягкие челюсти", icon: "https://i.postimg.cc/nhYfLjnK/icon-Addon-padded-Jaws.webp" },
+                        { name: "Охотничьи перчатки", icon: "https://i.postimg.cc/NF3k9k1d/icon-Addon-trapper-Gloves.webp" },
+                        { name: "Самодельный бандаж", icon: "https://i.postimg.cc/hP12z97G/icon-Addon-makeshift-Wrap.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Призрак", 
+                    icon: "https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp",
+                    addons: [
+                        { name: "«Всевидящий» - дух", icon: "https://i.postimg.cc/Wzw1g2Zx/icon-Addon-spirit-All-Seeing.webp" },
+                        { name: "Обмотанный язычок", icon: "https://i.postimg.cc/hj2jwZXY/icon-Addon-coxcombed-Clapper.webp" },
+                        { name: "«Всевидящий» - кровь", icon: "https://i.postimg.cc/k5whtW6C/icon-Addon-blood-Kra-Fabai.webp" },
+                        { name: "«Стремительная охотп» - кровь", icon: "https://i.postimg.cc/NMzJdYkP/icon-Addon-blood-Swift-Hunt.webp" },
+                        { name: "«Танец теней» - кровь", icon: "https://i.postimg.cc/fLLq7km9/icon-Addon-blood-Shadow-Dance.webp" },
+                        { name: "«Ураган» - кровь", icon: "https://i.postimg.cc/ZnvfggfY/icon-Addon-blood-Windstorm.webp" },
+                        { name: "«Скачок» - белая краска", icon: "https://i.postimg.cc/D0v8CJ77/icon-Addon-white-Blink.webp" },
+                        { name: "«Слепой воин» - белая краска", icon: "https://i.postimg.cc/76M5MM8B/icon-Addon-white-Blind-Warrior.webp" },
+                        { name: "«Стремительная охота» - белая краска", icon: "https://i.postimg.cc/pL9nbvxt/icon-Addon-mud-Swift-Hunt.webp" },
+                        { name: "«Танец теней» - белая краска", icon: "https://i.postimg.cc/3JbdBxVH/icon-Addon-white-Shadow-Dance.webp" },
+                        { name: "«Ураган» - белая краска", icon: "https://i.postimg.cc/K8k4syh3/icon-Addon-white-Windstorm.webp" },
+                        { name: "«Скачок» - грязь", icon: "https://i.postimg.cc/X7YCLFzq/icon-Addon-mud-Blink.webp" },
+                        { name: "«Слепой воин» - грязь", icon: "https://i.postimg.cc/v8zn5XXC/icon-Addon-mud-Baikra-Kaeug.webp" },
+                        { name: "«Стремительная охота» - грязь", icon: "https://i.postimg.cc/pL9nbvxt/icon-Addon-mud-Swift-Hunt.webp" },
+                        { name: "«Ураган» - грязь", icon: "https://i.postimg.cc/nh69nWc9/icon-Addon-mud-Windstorm.webp" },
+                        { name: "Костяной язычок", icon: "https://i.postimg.cc/mDPfLmdJ/icon-Addon-bone-Clapper.webp" },
+                        { name: "«Гоуст фейс» - сажа", icon: "https://i.postimg.cc/cH8KgyXN/icon-Addon-soot-The-Ghost.webp" },
+                        { name: "«Зверь» - сажа", icon: "https://i.postimg.cc/QMz9dxgb/icon-Addon-soot-The-Beast.webp" },
+                        { name: "«Змей» - сажа", icon: "https://i.postimg.cc/L5KJjCbg/icon-Addon-soot-The-Serpent.webp" },
+                        { name: "«Ищейка» - сажа", icon: "https://i.postimg.cc/BbTXpTrY/icon-Addon-soot-The-Hound.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Билли", 
+                    icon: "https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp",
+                    addons: [
+                        { name: "Раужный карбюратор", icon: "https://i.postimg.cc/6QMS7FTz/icon-Addon-tuned-Carburetor.webp" },
+                        { name: "Радужные метки", icon: "https://i.postimg.cc/s2qQDNjZ/icon-Addon-iridescent-Engravings.webp" },
+                        { name: "Грязные тапочки", icon: "https://i.postimg.cc/KYgwC1Rh/icon-Addon-filthy-Slippers.webp" },
+                        { name: "Облегченные цепи", icon: "https://i.postimg.cc/QMy4NhKk/icon-Addon-low-Pro-Chains.webp" },
+                        { name: "Превосходный глущитель", icon: "https://i.postimg.cc/sfKDDLDH/icon-Addon-apex-Muffler.webp" },
+                        { name: "Сапоги с шипами", icon: "https://i.postimg.cc/85W5kdzp/icon-Addon-spiked-Boots.webp" },
+                        { name: "Грязные цепи", icon: "https://i.postimg.cc/GmtjS69W/icon-Addon-chains-Bloody.webp" },
+                        { name: "Движок с перебоями", icon: "https://i.postimg.cc/65tDm6ry/icon-Addon-ragged-Engine.webp" },
+                        { name: "Папины ботинки", icon: "https://i.postimg.cc/5NC4q2ST/icon-Addon-dads-Boots.webp" },
+                        { name: "Смесь Томпсонов", icon: "https://i.postimg.cc/P5ZF4PJL/icon-Addon-the-Thompsons-Mix.webp" },
+                        { name: "Цепи с низкой отдачей", icon: "https://i.postimg.cc/pLkc7D2S/icon-Addon-low-Kickback-Chains.webp" },
+                        { name: "Винт", icon: "https://i.postimg.cc/QNRbnfcC/icon-Addon-high-Speed-Idler-Screw.webp" },
+                        { name: "Воздухозаборник", icon: "https://i.postimg.cc/k5rtFHSF/icon-Addon-clogged-Intake.webp" },
+                        { name: "Моторное масло", icon: "https://i.postimg.cc/QxFMVqzQ/icon-Addon-off-Brand-Motor-Oil.webp" },
+                        { name: "Смазанный дроссель", icon: "https://i.postimg.cc/WztMfk1M/icon-Addon-greased-Throttle.webp" },
+                        { name: "Теплоизолирующий корпус", icon: "https://i.postimg.cc/zXyQyd1F/icon-Addon-thermal-Casing.webp" },
+                        { name: "Ботинки с железными мысками", icon: "https://i.postimg.cc/HnzTj6Dg/icon-Addon-steel-Toe-Boots.webp" },
+                        { name: "Противовес", icon: "https://i.postimg.cc/6QLTVptt/icon-Addon-counterweight.webp" },
+                        { name: "Списанный фильтр", icon: "https://i.postimg.cc/fR5RkgKR/icon-Addon-discarded-Air-Filter.webp" },
+                        { name: "Сжимной насос", icon: "https://i.postimg.cc/Zn0RhP35/icon-Addon-cracked-Primer-Bulb.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Медсестра", 
+                    icon: "https://i.postimg.cc/gjntWXgS/K04-The-Nurse-Portrait.webp",
+                    addons: [
+                        { name: "Порванная закладка", icon: "https://i.postimg.cc/x1KtmhpM/icon-Addon-torn-Bookmark.webp" },
+                        { name: "Спичечный коробок", icon: "https://i.postimg.cc/0jd0Ssj4/icon-Addon-match-Box.webp" },
+                        { name: "Последний вздох «Плохиша»", icon: "https://i.postimg.cc/cC5S7Vvs/icon-Addon-bad-Mans-Last-Breath.webp" },
+                        { name: "Последний вздох Кэмпбелла", icon: "https://i.postimg.cc/d3RWwdKg/icon-Addon-campbells-Last-Breath.webp" },
+                        { name: "Последний вздох Дженнер", icon: "https://i.postimg.cc/MHWWW7QQ/icon-Addon-jenners-Last-Breath.webp" },
+                        { name: "Последний вздох Кавана", icon: "https://i.postimg.cc/gjB1f8qd/icon-Addon-kavanaghs-Last-Breath.webp" },
+                        { name: "Атактическое дыхание", icon: "https://i.postimg.cc/pL52CXQ3/icon-Addon-ataxic-Respiration.webp" },
+                        { name: "Судорожный вздох", icon: "https://i.postimg.cc/6pjTM5PX/icon-Addon-spasmodic-Breath.webp" },
+                        { name: "Тихий хрип", icon: "https://i.postimg.cc/J0Tps8GQ/icon-Addon-fragile-Wheeze.webp" },
+                        { name: "Тревожный вздох", icon: "https://i.postimg.cc/mkdbXP5W/icon-Addon-anxious-Gasp.webp" },
+                        { name: "Тяжелая одышка", icon: "https://i.postimg.cc/3xjD1BFs/icon-Addon-heavy-Panting.webp" },
+                        { name: "Карманные часы", icon: "https://i.postimg.cc/J0ZMcTCv/icon-Addon-pocket-Watch1.webp" },
+                        { name: "Памятный сувенир плохиша", icon: "https://i.postimg.cc/QCMDTXx4/icon-Addon-bad-Man-Keepsake.webp" },
+                        { name: "Потертый браслет", icon: "https://i.postimg.cc/NF7wS5Cj/icon-Addon-dull-Bracelet.webp" },
+                        { name: "Сокровище мальчика", icon: "https://i.postimg.cc/HkkS1VvP/icon-Addon-catatonic-Treasure.webp" },
+                        { name: "Веревочный пояс", icon: "https://i.postimg.cc/g2yGQt5K/icon-Addon-dark-Cincture.webp" },
+                        { name: "Гребень от паразитов", icon: "https://i.postimg.cc/4N3YV985/icon-Addon-white-Nit-Comb.webp" },
+                        { name: "Деревянная лошадь", icon: "https://i.postimg.cc/BbnnTrC6/icon-Addon-wooden-Horse.webp" },
+                        { name: "Клетчатая фланель", icon: "https://i.postimg.cc/q7vBVX26/icon-Addon-plaid-Flannel.webp" },
+                        { name: "Металлическая ложка", icon: "https://i.postimg.cc/dV0jhgYW/icon-Addon-metal-Spoon.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Тень", 
+                    icon: "https://i.postimg.cc/Y2syxRSJ/K06-The-Shape-Portrait.webp",
+                    addons: [
+                        { name: "Надгробие Джудит", icon: "https://i.postimg.cc/VsDwqbtK/icon-Addon-judiths-Tombstone.webp" },
+                        { name: "Поцарапанное зеркало", icon: "https://i.postimg.cc/XYdjGRGw/icon-Addon-scratched-Mirror-2.webp" },
+                        { name: "Дамское зеркало", icon: "https://i.postimg.cc/Wbm5FxHr/icon-Addon-vanity-Mirror.webp" },
+                        { name: "Кусок надгробия", icon: "https://i.postimg.cc/DwVx8n67/icon-Addon-tombstone-Piece.webp" },
+                        { name: "Прядь волос", icon: "https://i.postimg.cc/RhfbbyF1/icon-Addon-lock-Of-Hair.webp" },
+                        { name: "Светоотражающий осколок", icon: "https://i.postimg.cc/fytVNvHp/icon-Addon-reflective-Fragment.webp" },
+                        { name: "Бант для волос", icon: "https://i.postimg.cc/rpJxVJd1/icon-Addon-hair-Bow.webp" },
+                        { name: "В память от Дж. Майерс", icon: "https://i.postimg.cc/RFmmR7GD/icon-Addon-j-Myers-Memorial.webp" },
+                        { name: "Дневник Джудит", icon: "https://i.postimg.cc/7hsywp4F/icon-Addon-judiths-Journal.webp" },
+                        { name: "Коробка с бижутерией", icon: "https://i.postimg.cc/xTp02bTX/icon-Addon-jewelry-Box.webp" },
+                        { name: "Осколок зеркала", icon: "https://i.postimg.cc/nzq48J4L/icon-Addon-mirror-Shard.webp" },
+                        { name: "Ароматный клок волос", icon: "https://i.postimg.cc/rmfqHn9Q/icon-Addon-tuft-Of-Hair.webp" },
+                        { name: "Бижутерия", icon: "https://i.postimg.cc/sDgVqJyF/icon-Addon-jewelry.webp" },
+                        { name: "Мертвый кролик", icon: "https://i.postimg.cc/FzJ4ZT33/icon-Addon-dead-Rabbit.webp" },
+                        { name: "Осколок стекла", icon: "https://i.postimg.cc/NfSxSpTL/icon-Addon-glass-Fragment.webp" },
+                        { name: "Расческа для волос", icon: "https://i.postimg.cc/Qtd5HT5R/icon-Addon-hair-Brush.webp" },
+                        { name: "Безвкусные серьги", icon: "https://i.postimg.cc/Kz565497/icon-Addon-tacky-Earrings.webp" },
+                        { name: "Записка от парня", icon: "https://i.postimg.cc/HsDDm4bv/icon-Addon-boyfriends-Memo.webp" },
+                        { name: "Мемориальный цветок", icon: "https://i.postimg.cc/J4xQ4M9D/icon-Addon-memorial-Flower.webp" },
+                        { name: "Светлый волос", icon: "https://i.postimg.cc/BQ1yw8y5/icon-Addon-blonde-Hair.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Ведьма", 
+                    icon: "https://i.postimg.cc/d3pHtsXq/K05-The-Hag-Portrait.webp",
+                    addons: [
+                        { name: "Вымокший ботинок", icon: "https://i.postimg.cc/Hnz7H06J/icon-Addon-waterlogged-Shoe.webp" },
+                        { name: "Зеленая тряпка", icon: "https://i.postimg.cc/xdJGRHqM/icon-Addon-mint-Rag.webp" },
+                        { name: "Бабушкино сердце", icon: "https://i.postimg.cc/nz34kkpF/icon-Addon-granmas-Heart.webp" },
+                        { name: "Обезображенное ухо", icon: "https://i.postimg.cc/RFJSsCzW/icon-Addon-disfigured-Ear.webp" },
+                        { name: "Ржавые кандалы", icon: "https://i.postimg.cc/X7Byt3n6/icon-Addon-rusty-Shackles.webp" },
+                        { name: "Рука со шрамом", icon: "https://i.postimg.cc/PqyL15QY/icon-Addon-scarred-Hand.webp" },
+                        { name: "Ивовый венок", icon: "https://i.postimg.cc/MTxTTMM1/icon-Addon-willow-Wreath.webp" },
+                        { name: "Кровавая грязь", icon: "https://i.postimg.cc/dV2fwbJL/icon-Addon-bloodied-Mud.webp" },
+                        { name: "Ожерелье из орхидеи", icon: "https://i.postimg.cc/vHSdjgG3/icon-Addon-swamp-Orchid-Necklet.webp" },
+                        { name: "Разбитое яйцо черепахи", icon: "https://i.postimg.cc/ZKGq1dqJ/icon-Addon-cracked-Turtle-Egg.webp" },
+                        { name: "Сушеная цикада", icon: "https://i.postimg.cc/W1p2RwvL/icon-Addon-dried-Cicada.webp" },
+                        { name: "Кипарисовое ожерелье", icon: "https://i.postimg.cc/wxPxmmLD/icon-Addon-cypress-Necklet.webp" },
+                        { name: "Кровавая вода", icon: "https://i.postimg.cc/3w3cRtw9/icon-Addon-bloodied-Water.webp" },
+                        { name: "Крылья стрекозы", icon: "https://i.postimg.cc/SQ8QcKr5/icon-Addon-dragonfly-Wings.webp" },
+                        { name: "Половинка яичной скорлупы", icon: "https://i.postimg.cc/FRCScHV1/icon-Addon-half-Eggshell.webp" },
+                        { name: "Сережки из ивы", icon: "https://i.postimg.cc/2yfPmrg9/icon-Addon-pussy-Willow-Catkins.webp" },
+                        { name: "Болотная вода", icon: "https://i.postimg.cc/bvCff7R1/icon-Addon-bog-Water.webp" },
+                        { name: "Веревочное ожерелье", icon: "https://i.postimg.cc/WpXns2RD/icon-Addon-rope-Necklet.webp" },
+                        { name: "Грязь с мертвой мухой", icon: "https://i.postimg.cc/bJ5Pk7Dq/icon-Addon-dead-Fly-Mud.webp" },
+                        { name: "Измельченная яичная скорлупа", icon: "https://i.postimg.cc/cH8S0DCC/icon-Addon-powdered-Eggshell.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Доктор", 
+                    icon: "https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp",
+                    addons: [
+                        { name: "Радужный король", icon: "https://i.postimg.cc/DynWZsT5/icon-Addon-iridescent-King.webp" },
+                        { name: "Радужный ферзь", icon: "https://i.postimg.cc/Gp8tNxF3/icon-Addon-iridescent-Queen.webp" },
+                        { name: "«Дисципина» - IV", icon: "https://i.postimg.cc/Ghw2fDtd/icon-Addon-dicipline-Carters-Notes.webp" },
+                        { name: "«Порядок» - IV", icon: "https://i.postimg.cc/wTR69jtF/icon-Addon-order-Carters-Notes.webp" },
+                        { name: "«Спокойствие» - IV", icon: "https://i.postimg.cc/SK51rkr1/icon-Addon-calm-Carters-Notes.webp" },
+                        { name: "«Усмирение» - IV", icon: "https://i.postimg.cc/3NKnnRsh/icon-Addon-restraint-Carters-Notes.webp" },
+                        { name: "«Дисципина» - III", icon: "https://i.postimg.cc/g2G0zP37/icon-Addon-dicipline-Class-III.webp" },
+                        { name: "«Усмирение» - III", icon: "https://i.postimg.cc/NG4NL6Xj/icon-Addon-restraint-Class-III.webp" },
+                        { name: "Кассета с записью", icon: "https://i.postimg.cc/kM88DqtM/icon-Addon-interview-Tape.webp" },
+                        { name: "Сломанная кассета", icon: "https://i.postimg.cc/9MfDbHLS/icon-Addon-scrapped-Tape.webp" },
+                        { name: "Синий электрод", icon: "https://i.postimg.cc/RVKRrwTR/icon-Addon-high-Stimulus-Electrode.webp" },
+                        { name: "«Дисциплина» - II", icon: "https://i.postimg.cc/vHrBwmx9/icon-Addon-dicipline-Class-II.webp" },
+                        { name: "«Порядок» - II", icon: "https://i.postimg.cc/W1MTJYwk/icon-Addon-order-Class-II.webp" },
+                        { name: "«Спокойствие» - II", icon: "https://i.postimg.cc/Y0BX5RT1/icon-Addon-calm-Class-II.webp" },
+                        { name: "«Усмирение» - II»", icon: "https://i.postimg.cc/vT3XjyyV/icon-Addon-restraint-Class-II.webp" },
+                        { name: "Зеленый электрод", icon: "https://i.postimg.cc/Nfvgfw1c/icon-Addon-polished-Electrode.webp" },
+                        { name: "«Порядок» - I", icon: "https://i.postimg.cc/T38T1vgx/icon-Addon-order-Class-I.webp" },
+                        { name: "«Спокойствие» - I", icon: "https://i.postimg.cc/pTFGc4cW/icon-Addon-calm-Class-I.webp" },
+                        { name: "Серый электрод", icon: "https://i.postimg.cc/yYLFCnZ0/icon-Addon-moldy-Electrode.webp" },
+                        { name: "Кленовый конь", icon: "https://i.postimg.cc/xdh5D5B6/icon-Addon-maple-Knight.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Охотница", 
+                    icon: "https://i.postimg.cc/rw6nBpxj/K08-The-Huntress-Portrait.webp",
+                    addons: [
+                        { name: "Радужный топор", icon: "https://i.postimg.cc/2yFVGj44/icon-Addon-iridescent-Head.webp" },
+                        { name: "Солдатские портянки", icon: "https://i.postimg.cc/4xJh80Nz/icon-Addon-soldiers-Puttee.webp" },
+                        { name: "Деревянная лиса", icon: "https://i.postimg.cc/qRL7CJyS/icon-Addon-wooden-Fox.webp" },
+                        { name: "Испачканный топор", icon: "https://i.postimg.cc/8cY2fMYc/icon-Addon-begrimed-Head.webp" },
+                        { name: "Разгрузочный пояс", icon: "https://i.postimg.cc/jdHz3ts3/icon-Addon-infantry-Belt.webp" },
+                        { name: "Светящаяся смесь", icon: "https://i.postimg.cc/4xc1gVbP/icon-Addon-glowing-Concoction.webp" },
+                        { name: "Бабушкин платок", icon: "https://i.postimg.cc/tCCfpSY5/icon-Addon-flower-Babushka.webp" },
+                        { name: "Перчатки из оленевой кожи", icon: "https://i.postimg.cc/mhfG67yq/icon-Addon-deerskin-Gloves.webp" },
+                        { name: "Ржавый топор", icon: "https://i.postimg.cc/XqmBX1cP/icon-Addon-rusty-Head.webp" },
+                        { name: "Розовый корень", icon: "https://i.postimg.cc/YCmfNYvg/icon-Addon-rose-Root.webp" },
+                        { name: "Ядовитая смесь", icon: "https://i.postimg.cc/TPs0vxK8/icon-Addon-venomous-Concoction.webp" },
+                        { name: "Венок из манника", icon: "https://i.postimg.cc/3xrngdgF/icon-Addon-manna-Grass-Braid.webp" },
+                        { name: "Дубовое топорище", icon: "https://i.postimg.cc/vTBZr7Zd/icon-Addon-oak-Haft.webp" },
+                        { name: "Кожаная петля", icon: "https://i.postimg.cc/pd2kJyzB/icon-Addon-leather-Loop.webp" },
+                        { name: "Сияюшая брошь", icon: "https://i.postimg.cc/Ssj6gvdZ/icon-Addon-shiny-Pin.webp" },
+                        { name: "Утяжеленный топор", icon: "https://i.postimg.cc/pdjhyM0M/icon-Addon-weighted-Head.webp" },
+                        { name: "Грубый оселок", icon: "https://i.postimg.cc/HxdcF7Br/icon-Addon-coarse-Stone.webp" },
+                        { name: "Обмотанная рукоять", icon: "https://i.postimg.cc/pX4vmMNC/icon-Addon-bandaged-Haft.webp" },
+                        { name: "Пожелтевшая тряпка", icon: "https://i.postimg.cc/SQ1S0tr6/icon-Addon-yellowed-Cloth.webp" },
+                        { name: "Яд мухомора", icon: "https://i.postimg.cc/V6WstG96/icon-Addon-amanita-Toxin.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Бубба", 
+                    icon: "https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp",
+                    addons: [
+                        { name: "Переливчатая плоть", icon: "https://i.postimg.cc/J7bDMx9G/icon-Addon-iridescent-Flesh.webp" },
+                        { name: "Руководство карбюратора", icon: "https://i.postimg.cc/L6TyWzD1/icon-Addon-carburetor-Tuning-Guide.webp" },
+						{ name: "Ржавая цепь", icon: "https://i.postimg.cc/1RLkcctc/icon-Addon-light-Chassis.webp" },
+                        { name: "Облегченное шасси", icon: "https://i.postimg.cc/52m6Ltx1/icon-Addon-depth-Gauge-Rake.webp" },
+                        { name: "Ограничитель для заточки цепи", icon: "https://i.postimg.cc/rptNqW1g/icon-Addon-chains-Rusted.webp" },
+                        { name: "Чили-побелитель", icon: "https://i.postimg.cc/0QPP9Ggq/icon-Addon-awardwinning-Chili.webp" },
+                        { name: "Грязные цепи", icon: "https://i.postimg.cc/GmtjS69W/icon-Addon-chains-Bloody.webp" },
+                        { name: "Метки зверя", icon: "https://i.postimg.cc/nrPwdmqm/icon-Addon-the-Beasts-Mark.webp" },
+                        { name: "Производдственная смазка", icon: "https://i.postimg.cc/W3KMCwfs/icon-Addon-shop-Lubricant.webp" },
+                        { name: "Смазка", icon: "https://i.postimg.cc/3rS6rszw/icon-Addon-the-Grease.webp" },
+                        { name: "Ужасная цепь", icon: "https://i.postimg.cc/6pPhszvy/icon-Addon-chains-Grisly.webp" },
+                        { name: "Длинное реле", icon: "https://i.postimg.cc/MZj4TMDc/icon-Addon-long-Guide-Bar.webp" },
+                        { name: "Метки ножом", icon: "https://i.postimg.cc/0QV4wD4m/icon-Addon-knife-Scratches.webp" },
+                        { name: "Самодельный глушитель", icon: "https://i.postimg.cc/fbTj0pQ2/icon-Addon-homemade-Muffler.webp" },
+                        { name: "Сжимной насос", icon: "https://i.postimg.cc/m2SGL1LY/icon-Addon-primer-Bulb.webp" },
+                        { name: "Чили", icon: "https://i.postimg.cc/L8GjQXcP/icon-Addon-chili.webp" },
+                        { name: "Напильник для бензопилы", icon: "https://i.postimg.cc/yYvPj76h/icon-Addon-chainsaw-File.webp" },
+                        { name: "Ограничитель скорости", icon: "https://i.postimg.cc/251yMNpB/icon-Addon-speed-Limiter.webp" },
+                        { name: "Растительное масло", icon: "https://i.postimg.cc/kgfwwK9g/icon-Addon-vegetable-Oil.webp" },
+                        { name: "Свеча зажигания", icon: "https://i.postimg.cc/dt9hT9mD/icon-Addon-spark-Plug.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Кошмар", 
+                    icon: "https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp",
+                    addons: [
+                        { name: "Красная кисть", icon: "https://i.postimg.cc/rwzZBDKF/icon-Addon-red-Paint-Brush.webp" },
+                        { name: "Черная коробка", icon: "https://i.postimg.cc/VLxyY9MH/icon-Addon-black-Box.webp" },
+                        { name: "Групповое фото", icon: "https://i.postimg.cc/T1kDVYjp/icon-Addon-class-Photo.webp" },
+                        { name: "Кубик с буквой «Z»", icon: "https://i.postimg.cc/Dyt70JRm/icon-Addon-z-Block.webp" },
+                        { name: "Пузырек лекарства", icon: "https://i.postimg.cc/CLbxjKF5/icon-Addon-pill-Bottle.webp" },
+                        { name: "Цепь от качелей", icon: "https://i.postimg.cc/Gm811L2r/icon-Addon-swing-Chains.webp" },
+                        { name: "Голубое платье", icon: "https://i.postimg.cc/xTMQNF0S/icon-Addon-blue-Dress.webp" },
+                        { name: "Кубик с единорогом", icon: "https://i.postimg.cc/mgR6mTH8/icon-Addon-unicorn-Block.webp" },
+                        { name: "Растворитель для краски", icon: "https://i.postimg.cc/9fm5wmf6/icon-Addon-paint-Thinner.webp" },
+                        { name: "Скакалка", icon: "https://i.postimg.cc/qMFdYVjn/icon-Addon-jump-Rope.webp" },
+                        { name: "Шедевр Нэнси", icon: "https://i.postimg.cc/4yNm8kwq/icon-Addon-nancys-Masterpiece.webp" },
+                        { name: "Зеленое платье", icon: "https://i.postimg.cc/661V4YMz/icon-Addon-green-Dress.webp" },
+                        { name: "Крепкая веревка", icon: "https://i.postimg.cc/7hFr5SC9/icon-Addon-outdoor-Rope.webp" },
+                        { name: "Кубик с кошкой", icon: "https://i.postimg.cc/L8Qx92r4/icon-Addon-cat-Block.webp" },
+                        { name: "Прототип перчатки", icon: "https://i.postimg.cc/cJvqBDQh/icon-Addon-prototype-Claw.webp" },
+                        { name: "Эскиз Нэнси", icon: "https://i.postimg.cc/qqbgSb5R/icon-Addon-nancys-Sketch.webp" },
+                        { name: "Детский рисунок", icon: "https://i.postimg.cc/Sx9HvXXF/icon-Addon-kids-Drawing.webp" },
+                        { name: "Кубик с овцами", icon: "https://i.postimg.cc/8CpB656g/icon-Addon-sheep-Block.webp" },
+                        { name: "Садовые грабли", icon: "https://i.postimg.cc/MTq5tHBD/icon-Addon-garden-Rake.webp" },
+                        { name: "Шерстянная рубашка", icon: "https://i.postimg.cc/kXD5Bd4Y/icon-Addon-wool-Shirt.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Свинья", 
+                    icon: "https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp",
+                    addons: [
+                        { name: "Видеокассета", icon: "https://i.postimg.cc/6QFr1hPt/icon-Addon-video-Tape.webp" },
+                        { name: "Письмо Аманды", icon: "https://i.postimg.cc/rpWwVFK5/icon-Addon-amandas-Letter.webp" },
+                        { name: "Модифицированный таймер", icon: "https://i.postimg.cc/hvPHZgwk/icon-Addon-tampered-Timer.webp" },
+                        { name: "Набросок Пилы", icon: "https://i.postimg.cc/YCJM4KFk/icon-Addon-jigsaws-Sketch.webp" },
+                        { name: "Секрет Аманды", icon: "https://i.postimg.cc/RFBVN5Hy/icon-Addon-amandas-Secret.webp" },
+                        { name: "Ящик с шестеренками", icon: "https://i.postimg.cc/gkXJSDmM/icon-Addon-crate-Of-Gears.webp" },
+                        { name: "Мешок с шестеренками", icon: "https://i.postimg.cc/L4y2MZNr/icon-Addon-bag-Of-Gears.webp" },
+                        { name: "Набор правила №2", icon: "https://i.postimg.cc/4Njp3yW3/icon-Addon-rules-Set-N2.webp" },
+                        { name: "Подробный план Пилы", icon: "https://i.postimg.cc/W1DsbbhX/icon-Addon-jigsaws-Annotated-Plan.webp" },
+                        { name: "Ржавые клыки", icon: "https://i.postimg.cc/qqzCJHnn/icon-Addon-rusty-Attachments.webp" },
+                        { name: "Токсин медленного действия", icon: "https://i.postimg.cc/C5kftTq4/icon-Addon-slow-Release-Toxin.webp" },
+                        { name: "Завещания", icon: "https://i.postimg.cc/7hpm3VnC/icon-Addon-last-Will.webp" },
+                        { name: "Колючая проволока", icon: "https://i.postimg.cc/5y3kVvBj/icon-Addon-razer-Wire.webp" },
+                        { name: "Лезвия", icon: "https://i.postimg.cc/L5LNVW4c/icon-Addon-utility-Blades.webp" },
+                        { name: "Лицевая маска", icon: "https://i.postimg.cc/PJMBK0NL/icon-Addon-face-Mask.webp" },
+                        { name: "Рабочая смазка", icon: "https://i.postimg.cc/9FSQ9Nwm/icon-Addon-workshop-Grease.webp" },
+                        { name: "Боевые ремни", icon: "https://i.postimg.cc/NfSyBndq/icon-Addon-combat-Straps.webp" },
+                        { name: "Лезвия-ловушки", icon: "https://i.postimg.cc/C5yqJ69V/icon-Addon-interlocking-Razor.webp" },
+                        { name: "Медкарта Джона", icon: "https://i.postimg.cc/D0yTV79Q/icon-Addon-johns-Medical-File.webp" },
+                        { name: "Разбитый шприц", icon: "https://i.postimg.cc/52qSyvjm/icon-Addon-shattered-Syringe.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Клоун", 
+                    icon: "https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp",
+                    addons: [
+                        { name: "Мизинец девушки", icon: "https://i.postimg.cc/mZNnCxvR/icon-Addon-redheads-Pinky-Finger.webp" },
+                        { name: "Татуированный палец", icon: "https://i.postimg.cc/YCmTsdnC/icon-Addon-tattoos-Middle-Finger.webp" },
+                        { name: "15%-эфир", icon: "https://i.postimg.cc/hGkWG9HG/icon-Addon-ether15.webp" },
+                        { name: "Бутылка дешевого джина", icon: "https://i.postimg.cc/hvM920n4/icon-Addon-cheap-Gin-Bottle.webp" },
+                        { name: "Коробка из-под сигар", icon: "https://i.postimg.cc/rmNWp9KG/icon-Addon-cigar-Box.webp" },
+                        { name: "Набор яркого грима", icon: "https://i.postimg.cc/tTk5cbtH/icon-Addon-garish-Makeup-Kit.webp" },
+                        { name: "Бутылка хлороформа", icon: "https://i.postimg.cc/j5BVLym5/icon-Addon-bottle-Of-Chloroform.webp" },
+                        { name: "Вонючие стельки", icon: "https://i.postimg.cc/fW9XkXr0/icon-Addon-smelly-Inner-Soles.webp" },
+                        { name: "Минзурка с отбеливателем", icon: "https://i.postimg.cc/wvXPTnXW/icon-Addon-flask-Of-Bleach.webp" },
+                        { name: "Нашатырный спирт", icon: "https://i.postimg.cc/bYxJKR5L/icon-Addon-spirit-Of-Hartshorn.webp" },
+                        { name: "Пробирка с серной кислотой", icon: "https://i.postimg.cc/Vvf8yXSH/icon-Addon-sulfuric-Acid-Vial.webp" },
+                        { name: "Канистра керосина", icon: "https://i.postimg.cc/DfjVJ3VD/icon-Addon-kerosene-Can.webp" },
+                        { name: "Бутылка из-под газировки", icon: "https://i.postimg.cc/ZKYTXzpK/icon-Addon-sticky-Soda-Bottle.webp" },
+                        { name: "Перо скворца", icon: "https://i.postimg.cc/RFcSxMgq/icon-Addon-starling-Feather.webp" },
+                        { name: "Сосуд с растворителем", icon: "https://i.postimg.cc/K8J3C5RC/icon-Addon-solvent-Jug.webp" },
+                        { name: "Толстая пробка", icon: "https://i.postimg.cc/VN8ZHm0K/icon-Addon-thick-Cork-Stopper.webp" },
+                        { name: "Бутылка для вечеринок", icon: "https://i.postimg.cc/FR6260xv/icon-Addon-party-Bottle.webp" },
+                        { name: "Клоунские перчатки", icon: "https://i.postimg.cc/xCDhQ9zJ/icon-Addon-fingerless-Parade-Gloves.webp" },
+                        { name: "Перо малиновки", icon: "https://i.postimg.cc/X7PkyQY4/icon-Addon-robin-Feather.webp" },
+                        { name: "Порнуъа на кассете", icon: "https://i.postimg.cc/5yBSzFn1/icon-Addon-vhs-Porn.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Дух", 
+                    icon: "https://i.postimg.cc/0QHZc59p/K13-The-Spirit-Portrait.webp",
+                    addons: [
+                        { name: "Кольцо от мамы", icon: "https://i.postimg.cc/C1p8sQ3p/icon-Addon-mother-Daughter-Ring.webp" },
+                        { name: "Чашка кинцуги", icon: "https://i.postimg.cc/TPqFTZqt/icon-Addon-kintsugi-Teacup.webp" },
+                        { name: "Амулет Якуекэ", icon: "https://i.postimg.cc/SsDyxZpp/icon-Addon-yakuyoke-Amulet.webp" },
+                        { name: "Цветок вишни", icon: "https://i.postimg.cc/3JFKbbzF/icon-Addon-dried-Cherry-Blossom.webp" },
+                        { name: "Сая вакидзаси", icon: "https://i.postimg.cc/bwJ1yMcq/icon-Addon-wakizashi-Saya.webp" },
+                        { name: "Фурин", icon: "https://i.postimg.cc/MGytyVnH/icon-Addon-furin.webp" },
+                        { name: "Очки матери", icon: "https://i.postimg.cc/x80bWbjs/icon-Addon-mothers-Glasses.webp" },
+                        { name: "Ржавая флейта", icon: "https://i.postimg.cc/fWr9Hknv/icon-Addon-rusty-Flute.webp" },
+                        { name: "Сэнко Ханаби", icon: "https://i.postimg.cc/wBqMxdYv/icon-Addon-senko-Hanabi.webp" },
+                        { name: "Утива", icon: "https://i.postimg.cc/V6TVgMqC/icon-Addon-uchiwa.webp" },
+                        { name: "Цуба катаны", icon: "https://i.postimg.cc/wMBSf0N0/icon-Addon-katana-Tsuba.webp" },
+                        { name: "Белый бант", icon: "https://i.postimg.cc/MH9Xg6GV/icon-Addon-white-Hair-Ribbon.webp" },
+                        { name: "Грязная безболка", icon: "https://i.postimg.cc/DypbMZ9g/icon-Addon-muddy-Sport-Cap.webp" },
+                        { name: "Можжевеловый бонсай", icon: "https://i.postimg.cc/jj0Yx6VS/icon-Addon-juniper-Bonzai.webp" },
+                        { name: "Сломанные часы Рин", icon: "https://i.postimg.cc/Y9xxG7hs/icon-Addon-rins-Broken-Watch.webp" },
+                        { name: "Талисман Каиун", icon: "https://i.postimg.cc/jjH0LWKQ/icon-Addon-kaiun-Talisman.webp" },
+                        { name: "Амулет Сиавасэ", icon: "https://i.postimg.cc/hG28bBLz/icon-Addon-Shiawase-Amulet.webp" },
+                        { name: "Дзори", icon: "https://i.postimg.cc/YS7kfcrH/icon-Addon-zori.webp" },
+                        { name: "Журавль оригами", icon: "https://i.postimg.cc/6QtwVVM1/icon-Addon-origami-Crane.webp" },
+                        { name: "Бамбуковая расческа", icon: "https://i.postimg.cc/pV0CY2Lf/icon-Addon-gifted-Bamboo-Comb.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Легион", 
+                    icon: "https://i.postimg.cc/90RbS3fs/K14-The-Legion-Portrait.webp",
+                    addons: [
+                        { name: "Дымящаяся кассета", icon: "https://i.postimg.cc/y83L8wBF/icon-Addon-fuming-Mixtape.webp" },
+                        { name: "Радужная кнопка", icon: "https://i.postimg.cc/kgjRL5Ls/icon-Addon-iridescent-Button.webp" },
+                        { name: "Грязный нож", icon: "https://i.postimg.cc/2StgHQjx/icon-Addon-filthy-Blade.webp" },
+                        { name: "Дружба на века", icon: "https://i.postimg.cc/7hQ5CtDz/icon-Addon-cold-Dirt.webp" },
+                        { name: "Ислледование ран", icon: "https://i.postimg.cc/8z5zfgzn/icon-Addon-stab-Wounds-Study.webp" },
+                        { name: "Кассета Фрэнка", icon: "https://i.postimg.cc/ZKRf1WMs/icon-Addon-franks-Mixtape.webp" },
+                        { name: "Значок легиона", icon: "https://i.postimg.cc/Pr0RYmXs/icon-Addon-the-Legion-Button.webp" },
+                        { name: "Кассета Джо", icon: "https://i.postimg.cc/V6F8HJVL/icon-Addon-joeys-Mixtape.webp" },
+                        { name: "Кассета Сузи", icon: "https://i.postimg.cc/65QXYLx8/icon-Addon-suzies-Mixtape.webp" },
+                        { name: "Темные очки", icon: "https://i.postimg.cc/7Yh5045T/icon-Addon-nasty-Blade.webp" },
+                        { name: "Украденный альбом", icon: "https://i.postimg.cc/7ZdwCCcf/icon-Addon-stolen-Sketchbook.webp" },
+                        { name: "Безликий значок-смайлик", icon: "https://i.postimg.cc/MZcMNxYb/icon-Addon-defaced-Smiley-Button.webp" },
+                        { name: "Кассета Джули", icon: "https://i.postimg.cc/L65pN6B2/icon-Addon-julies-Mixtape.webp" },
+                        { name: "Линейка с гравировкой", icon: "https://i.postimg.cc/YSGBkXDV/icon-Addon-etched-Ruler.webp" },
+                        { name: "Рисунок на стене", icon: "https://i.postimg.cc/C10Zqf8F/icon-Addon-mural-Sketch.webp" },
+                        { name: "Таблетки от сна", icon: "https://i.postimg.cc/PqWJTrR0/icon-Addon-never-Sleep-Pills.webp" },
+                        { name: "Браслет дружбы", icon: "https://i.postimg.cc/DzVBJByR/icon-Addon-friendship-Bracelet.webp" },
+                        { name: "Значок-смайлик", icon: "https://i.postimg.cc/L6FPPXcQ/icon-Addon-smiley-Face-Button.webp" },
+                        { name: "Поцарапанная линейка", icon: "https://i.postimg.cc/2ybVpFR7/icon-Addon-scratched-Ruler.webp" },
+                        { name: "Список непослушных", icon: "https://i.postimg.cc/G3JFqb37/icon-Addon-mischief-List.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Чума", 
+                    icon: "https://i.postimg.cc/2ysGNHby/K15-The-Plague-Portrait.webp",
+                    addons: [
+                        { name: "Радужная печать", icon: "https://i.postimg.cc/tC3XgHyz/icon-Addon-Iridescent-Seal.webp" },
+                        { name: "Черный фимиам", icon: "https://i.postimg.cc/25YPWz0Q/icon-Addon-black-Incense.webp" },
+                        { name: "Амулет ревнителя", icon: "https://i.postimg.cc/FRYRMg0s/icon-Addon-devotees-Amulet.webp" },
+                        { name: "Зловещее рвотное", icon: "https://i.postimg.cc/hvB9KtgY/icon-Addon-vile-Emetic.webp" },
+                        { name: "Отрезанный палец", icon: "https://i.postimg.cc/SRMN1SCZ/icon-Addon-severed-Toe.webp" },
+                        { name: "Скрижаль поклонения", icon: "https://i.postimg.cc/rp2yn097/icon-Addon-worship-Tablet.webp" },
+                        { name: "Амулет экзорцизма", icon: "https://i.postimg.cc/NFt36QGq/icon-Addon-exorcism-Amulet.webp" },
+                        { name: "Благовонная мазь", icon: "https://i.postimg.cc/FHh028zr/icon-Addon-incensed-Ointment.webp" },
+                        { name: "Зараженное рвотное", icon: "https://i.postimg.cc/htMVgsQ9/icon-Addon-infected-Emetic.webp" },
+                        { name: "Масло для растираний", icon: "https://i.postimg.cc/RCscjXfK/icon-Addon-rubbing-Oil.webp" },
+                        { name: "Яблоко праха", icon: "https://i.postimg.cc/tCTR1zsq/icon-Addon-ashen-Apple.webp" },
+                        { name: "Амулет предотвращения", icon: "https://i.postimg.cc/g2SFR96r/icon-Addon-prophylactic-Amulet.webp" },
+                        { name: "Гематитовая пломба", icon: "https://i.postimg.cc/9Mk40Nc7/icon-Addon-hematite-Seal.webp" },
+                        { name: "Освещенное яблоко", icon: "https://i.postimg.cc/jqPb1kBk/icon-Addon-prayer-Apple.webp" },
+                        { name: "Рвотное", icon: "https://i.postimg.cc/RZ0zpC7v/icon-Addon-emetic-Potion.webp" },
+                        { name: "Сильная микстура", icon: "https://i.postimg.cc/5tyJk9Mw/icon-Addon-potent-Tincture.webp" },
+                        { name: "Пломба из песчанника", icon: "https://i.postimg.cc/Cx099hbR/icon-Addon-limestone-Seal.webp" },
+                        { name: "Смолистое благовоние", icon: "https://i.postimg.cc/k4MJCN8t/icon-Addon-olibanum-Incense.webp" },
+                        { name: "Фрагмент скрижали", icon: "https://i.postimg.cc/8PGSgmSk/icon-Addon-prayer-Tablet-Fragment.webp" },
+                        { name: "Целебный бальзам", icon: "https://i.postimg.cc/3xQv26mj/icon-Addon-healing-Salve.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Гоуст Фейс", 
+                    icon: "https://i.postimg.cc/nVXtZC9f/K16-The-Ghostface-Portrait.webp",
+                    addons: [
+                        { name: "Пойман на камеру", icon: "https://i.postimg.cc/1XSHCtNB/icon-Addon-caught-On-Tape.webp" },
+                        { name: "Наружная камера", icon: "https://i.postimg.cc/Kcw2ph9T/icon-Addon-outdoor-Security-Camera.webp" },
+                        { name: "Водительские права", icon: "https://i.postimg.cc/KYwFMXgx/icon-Addon-drivers-License.webp" },
+                        { name: "Монокуляр ночного видения", icon: "https://i.postimg.cc/50f00Wcy/icon-Addon-nightvision-Moncular.webp" },
+                        { name: "Распорядок дня жертвы", icon: "https://i.postimg.cc/QxDb30dM/icon-Addon-victims-Detailed-Routine.webp" },
+						{ name: "Набедренные ножны", icon: "https://i.postimg.cc/zv1rxnjQ/icon-Addon-drop-Leg-Knife-Sheath.webp" },
+                        { name: "Зажим для ремня", icon: "https://i.postimg.cc/XJjhqQs4/icon-Addon-knife-Belt-Clip.webp" },
+                        { name: "Кожаные ножны", icon: "https://i.postimg.cc/t4GB7Bgw/icon-Addon-leather-Knife-Sheath.webp" },
+                        { name: "Кошелек Олсона", icon: "https://i.postimg.cc/9Xnm37fr/icon-Addon-olsens-Wallet.webp" },
+                        { name: "Погрызенная ручка", icon: "https://i.postimg.cc/tRztR960/icon-Addon-chewed-Pen.webp" },
+                        { name: "Стойкий парфюм", icon: "https://i.postimg.cc/RFZs4q00/icon-Addon-lasting-Perfume.webp" },
+                        { name: "Адресная книга", icon: "https://i.postimg.cc/hvfKzS2D/icon-Addon-olsens-Address-Book.webp" },
+                        { name: "Дневник Олсона", icon: "https://i.postimg.cc/zv68T9Qn/icon-Addon-olsens-Journal.webp" },
+                        { name: "Карта с метками", icon: "https://i.postimg.cc/xCmR0H2n/icon-Addon-marked-Map.webp" },
+                        { name: "Ремешки", icon: "https://i.postimg.cc/Qxdf7Fgk/icon-Addon-reusuable-Cinch-Straps.webp" },
+                        { name: "Телеобъектив", icon: "https://i.postimg.cc/C1wtdSFR/icon-Addon-telephoto-Lens.webp" },
+                        { name: "Филадельфия", icon: "https://i.postimg.cc/CdT9hYt6/icon-Addon-philly.webp" },
+                        { name: "Вырезки с газет", icon: "https://i.postimg.cc/2jJvS35K/icon-Addon-headlines-Cutouts.webp" },
+                        { name: "Дешевый одеколон", icon: "https://i.postimg.cc/zvqCwc9P/icon-Addon-cheap-Cologne.webp" },
+                        { name: "Спичечный коробок", icon: "https://i.postimg.cc/RFrtTZ30/icon-Addon-walleyes-Matchbook.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Демогоргон", 
+                    icon: "https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp",
+                    addons: [
+                        { name: "Красный мох", icon: "https://i.postimg.cc/yYLrpm6b/icon-Addon-red-Moss.webp" },
+                        { name: "Чешуйчатый лишайник", icon: "https://i.postimg.cc/T1Wc3bvT/icon-Addon-leprose-Lichen.webp" },
+                        { name: "Киноварный паутинник", icon: "https://i.postimg.cc/MTjDWLBn/icon-Addon-vermillion-Webcap.webp" },
+                        { name: "Свисток спасителя", icon: "https://i.postimg.cc/gcX9ZBY2/icon-Addon-lifeguard-Whistle.webp" },
+                        { name: "Смола с изнанки", icon: "https://i.postimg.cc/jj3gqNkF/icon-Addon-upsidedown-Resin.webp" },
+                        { name: "Странное яйцо", icon: "https://i.postimg.cc/Gpmg1zzD/icon-Addon-unknown-Egg.webp" },
+                        { name: "Банка одиннадцатой", icon: "https://i.postimg.cc/65tKRfT2/icon-Addon-elevens-Soda.webp" },
+                        { name: "Легкое оленя", icon: "https://i.postimg.cc/BZdLGyYW/icon-Addon-deer-Lung.webp" },
+                        { name: "Медная зажигалка", icon: "https://i.postimg.cc/7PT8jQJT/icon-Addon-brass-Case-Lighter.webp" },
+                        { name: "Пурпурная влажноголовка", icon: "https://i.postimg.cc/gjH3jb22/icon-Addon-violet-Waxcap.webp" },
+                        { name: "Шипастые лозы", icon: "https://i.postimg.cc/JnTTnX6F/icon-Addon-thorny-Vines.webp" },
+                        { name: "Кишки Мяуса", icon: "https://i.postimg.cc/Z5DFpjYJ/icon-Addon-mews-Guts.webp" },
+                        { name: "Клейкая паутина", icon: "https://i.postimg.cc/3J3g6Nt4/icon-Addon-viscous-Webbing.webp" },
+                        { name: "Липкая слизь", icon: "https://i.postimg.cc/BQhq07B5/icon-Addon-sticky-Lining.webp" },
+                        { name: "Очки Барб", icon: "https://i.postimg.cc/zf11kwGR/icon-Addon-barbs-Glasses.webp" },
+                        { name: "Протухная требуха", icon: "https://i.postimg.cc/g0VVQpq2/icon-Addon-rotten-Green-Tripe.webp" },
+                        { name: "Гнилая тыква", icon: "https://i.postimg.cc/sX3YRLw9/icon-Addon-rotten-Pumpkin.webp" },
+                        { name: "Крысиная печенка", icon: "https://i.postimg.cc/vmgjV4sS/icon-Addon-rat-Liver.webp" },
+                        { name: "Крысиный хвост", icon: "https://i.postimg.cc/Hxbh6Fjw/icon-Addon-rat-Tail.webp" },
+                        { name: "Черное сердце", icon: "https://i.postimg.cc/9QZ6z4YX/icon-Addon-black-Heart.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Они", 
+                    icon: "https://i.postimg.cc/pX8bh4B0/K18-The-Oni-Portrait.webp",
+                    addons: [
+                        { name: "Перчатка Рендзиро", icon: "https://i.postimg.cc/XJKsfFDx/icon-Addon-reniros-Bloody-Glove.webp" },
+                        { name: "Семейный герб", icon: "https://i.postimg.cc/76zCCnht/icon-Addon-Iridescent-Family-Crest.webp" },
+                        { name: "Костыль Акито", icon: "https://i.postimg.cc/c49HTbpt/icon-Addon-akitos-Crutch.webp" },
+                        { name: "Львиный клык", icon: "https://i.postimg.cc/t4z8jKz2/icon-Addon-lion-Fang.webp" },
+                        { name: "Мокрое Тэнугуи", icon: "https://i.postimg.cc/rpX7X53C/icon-Addon-tear-Soaked-Tenugui.webp" },
+                        { name: "Разбитый корпус", icon: "https://i.postimg.cc/dtn00Vwy/icon-Addon-splintered-Hull.webp" },
+                        { name: "Маска Они", icon: "https://i.postimg.cc/WzYbX597/icon-Addon-wooden-Oni-Mask.webp" },
+                        { name: "Расколотый вакидзаси", icon: "https://i.postimg.cc/fRhvM5WL/icon-Addon-shattered-Wakizashi.webp" },
+                        { name: "Сасимоно Семьи Ямаока", icon: "https://i.postimg.cc/HxpYmqR2/icon-Addon-yamaoka-Sashimono.webp" },
+                        { name: "Скальп с пучком волос", icon: "https://i.postimg.cc/mgxFsqrz/icon-Addon-scalped-Topknot.webp" },
+                        { name: "Талисман Канай", icon: "https://i.postimg.cc/j5RVNsSV/icon-Addon-kanaianzen-Talisman.webp" },
+                        { name: "Блестящий маэдатэ", icon: "https://i.postimg.cc/tCd9sm5V/icon-Addon-polished-Maedate.webp" },
+                        { name: "Детский меч", icon: "https://i.postimg.cc/qMbsnQQj/icon-Addon-childs-Wooden-Sword.webp" },
+                        { name: "Лев нарисованный тушью", icon: "https://i.postimg.cc/cHt3RN9m/icon-Addon-ink-Lion.webp" },
+                        { name: "Окровавенная повязка", icon: "https://i.postimg.cc/Y2Jk9wB3/icon-Addon-bloody-Sash.webp" },
+                        { name: "Поцарапанный сайхай", icon: "https://i.postimg.cc/CxRj4DQY/icon-Addon-chipped-Monocle.webp" },
+                        { name: "Бумажный фонарик", icon: "https://i.postimg.cc/tgB0hKZY/icon-Addon-paper-Lantern.webp" },
+                        { name: "Почерневший ноготь", icon: "https://i.postimg.cc/HscDDvJy/icon-Addon-blackened-Toenail.webp" },
+                        { name: "Сгнившая веревка", icon: "https://i.postimg.cc/fL5xWvP4/icon-Addon-rotting-Rope.webp" },
+                        { name: "Треснувшая сакадзуки", icon: "https://i.postimg.cc/XNDqkhSG/icon-Addon-cracked-Sakazuki.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Стрелок", 
+                    icon: "https://i.postimg.cc/jSbVzcgR/K19-The-Deathslinger-Portrait.webp",
+                    addons: [
+                        { name: "Радужная монета", icon: "https://i.postimg.cc/ht47CmZh/icon-Addon-iridescent-Coin.webp" },
+                        { name: "Хелширское клеймо", icon: "https://i.postimg.cc/G2t8c1nR/icon-Addon-hellshire-Iron.webp" },
+                        { name: "Виски «Голд-Крик»", icon: "https://i.postimg.cc/8kwMQt8N/icon-Addon-clear-Creek-Whiskey.webp" },
+                        { name: "Колючая проволока", icon: "https://i.postimg.cc/g2hWRtmW/icon-Addon-barbed-Wire.webp" },
+                        { name: "Сигара Бейшора", icon: "https://i.postimg.cc/Qt8G2X58/icon-Addon-bayshores-Cigar.webp" },
+                        { name: "Тюремная цепь", icon: "https://i.postimg.cc/Jz4CG709/icon-Addon-prison-Chain.webp" },
+                        { name: "Жестяная масленка", icon: "https://i.postimg.cc/Y0ZbNHwf/icon-Addon-tin-Oil-Can.webp" },
+                        { name: "Золотой зуб", icon: "https://i.postimg.cc/pTsbxgYD/icon-Addon-bayshores-Gold-Tooth.webp" },
+                        { name: "Ключи начальника трм", icon: "https://i.postimg.cc/fbSXX9RF/icon-Addon-wardens-Keys.webp" },
+                        { name: "Колючки гледичии", icon: "https://i.postimg.cc/j5DHMf5y/icon-Addon-honey-Locust-Thorns.webp" },
+                        { name: "Плакат «В розыске»", icon: "https://i.postimg.cc/jSFPLXtP/icon-Addon-wanted-Poster.webp" },
+                        { name: "Жвеательный табак", icon: "https://i.postimg.cc/tCCdY8ds/icon-Addon-chewing-Tobacco.webp" },
+                        { name: "Значок шерифа", icon: "https://i.postimg.cc/MH8YXT6R/icon-Addon-marshals-Badge.webp" },
+                        { name: "Зубодробилка", icon: "https://i.postimg.cc/j2ZRCDHk/icon-Addon-jaw-Smasher.webp" },
+                        { name: "Листья ядовитого дуба", icon: "https://i.postimg.cc/h4dDBGQs/icon-Addon-poison-Oak-Leaves.webp" },
+                        { name: "Ржавый костыль", icon: "https://i.postimg.cc/76P2R2ZK/icon-Addon-rusted-Spike.webp" },
+                        { name: "Замызганная тряпица", icon: "https://i.postimg.cc/PrdxhwsH/icon-Addon-spit-Polish-Rag.webp" },
+                        { name: "Змеиное масло", icon: "https://i.postimg.cc/hP8d1ngD/icon-Addon-snake-Oil.webp" },
+                        { name: "Переделанный патронташ", icon: "https://i.postimg.cc/xTfKZBc0/icon-Addon-modified-Ammo-Belt.webp" },
+                        { name: "Хрупкая цепь", icon: "https://i.postimg.cc/3JfnF3nM/icon-Addon-rickety-Chain.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Палач", 
+                    icon: "https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp",
+                    addons: [
+                        { name: "Обсидиановый кубок", icon: "https://i.postimg.cc/SNHx9M0w/icon-Addon-obsidian-Goblet.webp" },
+                        { name: "Печать Мататрона", icon: "https://i.postimg.cc/SKBRpYd6/icon-Addon-iridescent-Seal.webp" },
+                        { name: "Алое яйцо", icon: "https://i.postimg.cc/XYwB78Z2/icon-Addon-scarlet-Egg.webp" },
+                        { name: "Книга «Багровая церемония»", icon: "https://i.postimg.cc/Kz8cn70D/icon-Addon-crimson-Ceremony-Book.webp" },
+                        { name: "Книга «Потрепанные воспоминания»", icon: "https://i.postimg.cc/zGqP0d1W/icon-Addon-lost-Memories-Book.webp" },
+                        { name: "Яйцо цвета ржавчины", icon: "https://i.postimg.cc/vms9WjFF/icon-Addon-rust-Colored-Egg.webp" },
+                        { name: "Рисунок «Горящий человек»", icon: "https://i.postimg.cc/yYz5t6zw/icon-Addon-burning-Man-Painting.webp" },
+                        { name: "Стопа манекена", icon: "https://i.postimg.cc/Mpsttq52/icon-Addon-mannequin-Foot.webp" },
+                        { name: "Табличка угнетателя", icon: "https://i.postimg.cc/63wsRCh5/icon-Addon-tablet-Of-The-Oppressor.webp" },
+                        { name: "Туманнный день", icon: "https://i.postimg.cc/zvjTBFPZ/icon-Addon-misty-Day.webp" },
+                        { name: "Фотография секты", icon: "https://i.postimg.cc/gcZSdxyg/icon-Addon-valtiel-Sect-Photograph.webp" },
+                        { name: "Восковая кукла", icon: "https://i.postimg.cc/sDfhm825/icon-Addon-wax-Doll.webp" },
+                        { name: "Забытая видеокассета", icon: "https://i.postimg.cc/85mKVMG9/icon-Addon-forgotten-Video-Tape.webp" },
+                        { name: "Леопардавая ткань", icon: "https://i.postimg.cc/nzWkxk5d/icon-Addon-leopard-Print-Fabric.webp" },
+                        { name: "Музыкальная шкатулка", icon: "https://i.postimg.cc/1XRFVNqk/icon-Addon-cinderella-Music-Box.webp" },
+                        { name: "Наконечник копья", icon: "https://i.postimg.cc/HksV07Bz/icon-Addon-spearhead.webp" },
+                        { name: "Медное кольцо", icon: "https://i.postimg.cc/0QkjV1ym/icon-Addon-copper-Ring.webp" },
+                        { name: "Мертвая бабочка", icon: "https://i.postimg.cc/QM0hx9j9/icon-Addon-dead-Butterfly.webp" },
+                        { name: "Свинцовое кольцо", icon: "https://i.postimg.cc/rybn2V28/icon-Addon-lead-Ring.webp" },
+                        { name: "Черный ремень", icon: "https://i.postimg.cc/635gHMJT/icon-Addon-black-Strap.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Мор", 
+                    icon: "https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp",
+                    addons: [
+                        { name: "Переливчатая бирка", icon: "https://i.postimg.cc/ZKSNd2r8/icon-Addon-iridescent-Blight-Tag.webp" },
+                        { name: "Состав №33", icon: "https://i.postimg.cc/4xcYd10K/icon-Addon-compound-Thirty-Three.webp" },
+                        { name: "Вещество души", icon: "https://i.postimg.cc/gc8XGpxV/icon-Addon-soul-Chemical.webp" },
+                        { name: "Дневник Виго", icon: "https://i.postimg.cc/gJRV9Z9R/icon-Addon-vigos-Journal.webp" },
+                        { name: "Камень призыва", icon: "https://i.postimg.cc/VvKcz5ns/icon-Addon-summoning-Stone.webp" },
+                        { name: "Кольцо алхимика", icon: "https://i.postimg.cc/g2x07KpS/icon-Addon-alchemists-Ring.webp" },
+                        { name: "Изуродованная ворона", icon: "https://i.postimg.cc/LXC7Gj2D/icon-Addon-blighted-Crow.webp" },
+                        { name: "Розовый тоник", icon: "https://i.postimg.cc/W4Lm5zZy/icon-Addon-rose-Tonic.webp" },
+                        { name: "Состав №21", icon: "https://i.postimg.cc/pdtpnFNs/icon-Addon-compound-Twenty-One.webp" },
+                        { name: "Теневые соли", icon: "https://i.postimg.cc/9X6kqdF3/icon-Addon-umbra-Salts.webp" },
+                        { name: "Флакон с адреналином", icon: "https://i.postimg.cc/d3n0bHDX/icon-Addon-adrenaline-Vial.webp" },
+                        { name: "Желчь чумыЖелчь чумы", icon: "https://i.postimg.cc/rwJyPYRL/icon-Addon-plague-Bile.webp" },
+                        { name: "Изуродованная крыса", icon: "https://i.postimg.cc/L5J7Shsp/icon-Addon-blighted-Rat.webp" },
+                        { name: "Порванные записи", icon: "https://i.postimg.cc/Y2GNgTh0/icon-Addon-shredded-Notes.webp" },
+                        { name: "Порошок гнойника", icon: "https://i.postimg.cc/tJt848jq/icon-Addon-pustula-Dust.webp" },
+                        { name: "Шип язвенника", icon: "https://i.postimg.cc/xjLpvrbg/icon-Addon-canker-Thorn.webp" },
+                        { name: "Монокль со сколами", icon: "https://i.postimg.cc/CxRj4DQY/icon-Addon-chipped-Monocle.webp" },
+                        { name: "Наперстянка", icon: "https://i.postimg.cc/QCN6NCxt/icon-Addon-foxglove.webp" },
+                        { name: "Состав №7", icon: "https://i.postimg.cc/SNJ2047f/icon-Addon-compound-Seven.webp" },
+                        { name: "Таблетка плацебо", icon: "https://i.postimg.cc/sgyDKRXc/icon-Addon-placebo-Tablet.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Близнецы", 
+                    icon: "https://i.postimg.cc/3wtPQTKw/K22-The-Twins-Portrait.webp",
+                    addons: [
+                        { name: "Переливчатый кулон", icon: "https://i.postimg.cc/7Y95T6P4/icon-Addon-iridescent-Pendant.webp" },
+                        { name: "Тряпичный кляп", icon: "https://i.postimg.cc/1RkGKMqH/icon-Addon-silencing-Cloth.webp" },
+                        { name: "Волчок", icon: "https://i.postimg.cc/90hfD4DG/icon-Addon-spinning-Top.webp" },
+                        { name: "Капля парфюма", icon: "https://i.postimg.cc/PxDHb6mZ/icon-Addon-drop-Of-Perfume.webp" },
+                        { name: "Лесное рагу", icon: "https://i.postimg.cc/wvpfPFCD/icon-Addon-forest-Stew.webp" },
+                        { name: "Солдатик Виктора", icon: "https://i.postimg.cc/g2Sq3pqw/icon-Addon-victors-Soldier.webp" },
+                        { name: "Канализационная слякоть", icon: "https://i.postimg.cc/tRYkkYmX/icon-Addon-sewer-Sludge.webp" },
+                        { name: "Ржавая иголка", icon: "https://i.postimg.cc/9fY91pC4/icon-Addon-rusted-Needle.webp" },
+                        { name: "Увесистая погремушка", icon: "https://i.postimg.cc/vHP6Nz1k/icon-Addon-weighty-Rattle.webp" },
+                        { name: "Черствый хлебец", icon: "https://i.postimg.cc/76vHRCMp/icon-Addon-stale-Biscuit.webp" },
+                        { name: "Шарф Мадлен", icon: "https://i.postimg.cc/NM2N5S1h/icon-Addon-madeleines-Scarf.webp" },
+                        { name: "Кошачий глаз", icon: "https://i.postimg.cc/mDCjyMhh/icon-Addon-cats-Eye.webp" },
+                        { name: "Молочные зубы", icon: "https://i.postimg.cc/26GmyqmL/icon-Addon-baby-Teeth.webp" },
+                        { name: "Перчатка Мадлен", icon: "https://i.postimg.cc/Gt0XYKQ4/icon-Addon-madeleines-Glove.webp" },
+                        { name: "Ритуальный подсвечник", icon: "https://i.postimg.cc/dtq6GhFt/icon-Addon-ceremonial-Candelabrum.webp" },
+                        { name: "Черный капюшон", icon: "https://i.postimg.cc/cLyjqxyp/icon-Addon-bloodied-Black-Hood.webp" },
+                        { name: "Игрушечный меч", icon: "https://i.postimg.cc/W34nQ3Nw/icon-Addon-toy-Sword.webp" },
+                        { name: "Ноготок", icon: "https://i.postimg.cc/h45yR97z/icon-Addon-tiny-Fingernail.webp" },
+                        { name: "Скисшее молоко", icon: "https://i.postimg.cc/gkpwJ7hf/icon-Addon-soured-Milk.webp" },
+                        { name: "Статуэтка кошки", icon: "https://i.postimg.cc/fb65d5z6/icon-Addon-cat-Figurine.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Трюкач", 
+                    icon: "https://i.postimg.cc/QtVvXytJ/K23-The-Trickster-Portrait.webp",
+                    addons: [
+                        { name: "Переливающийся снимок", icon: "https://i.postimg.cc/XYf6v2wD/icons-Addon-Iridescent-Photocard.webp" },
+                        { name: "Сборник «Предсмертные муки»", icon: "https://i.postimg.cc/Xqr0748w/icons-Addon-Death-Throes-Compilation.webp" },
+                        { name: "Альбом «Край возрождения»", icon: "https://i.postimg.cc/Vsh8Z0f4/icons-Addon-Edge-Of-Revival-Album.webp" },
+                        { name: "Бриллиантовые запонки", icon: "https://i.postimg.cc/L5GFJwCG/icons-Addon-Diamond-Cufflinks.webp" },
+                        { name: "Сингл «Сквозь тебя»", icon: "https://i.postimg.cc/xCx22cKf/icons-Addon-Cut-Thru-Usingle.webp" },
+                        { name: "Трюковые ножи", icon: "https://i.postimg.cc/YqgC1z6Q/icons-Addon-Trick-Blades.webp" },
+                        { name: "Кровавая горжетка", icon: "https://i.postimg.cc/rp9Tfhst/icons-Addon-Bloody-Boa.webp" },
+                        { name: "Мелодичное убийство", icon: "https://i.postimg.cc/YS22BcJx/icons-Addon-Yumis-Murder.webp" },
+                        { name: "Напульсник из «Потрошителя»", icon: "https://i.postimg.cc/XNrJvbXH/icons-Addon-Ripper-Brace.webp" },
+                        { name: "Часы-реквизит", icon: "https://i.postimg.cc/CxsM2M61/icons-Addon-Waiting-For-You-Watch.webp" },
+                        { name: "Шипучка без прикрас", icon: "https://i.postimg.cc/SxFpk0zM/icons-Addon-Fizz-Spin-Soda.webp" },
+                        { name: "Автограф Чиуна", icon: "https://i.postimg.cc/rpqXRSjy/icons-Addon-Ji-Woons-Autograph.webp" },
+                        { name: "Сингл «Вижу цель»", icon: "https://i.postimg.cc/D0Jt35v6/icons-Addon-On-Target-Single.webp" },
+                        { name: "Счастливый ножик", icon: "https://i.postimg.cc/d10b4wgz/icons-Addon-Lucky-Blade.webp" },
+                        { name: "Текила «Лунный камень»", icon: "https://i.postimg.cc/7PjLGW2x/icons-Addon-Tequila-Moonrock.webp" },
+                        { name: "Туфли запертого сердца", icon: "https://i.postimg.cc/NMfcS12C/icons-Addon-Caged-Heart-Shoes.webp" },
+                        { name: "Злосчастные провода", icon: "https://i.postimg.cc/DybK9fmh/icons-Addon-Inferno-Wires.webp" },
+                        { name: "Памятные ножи", icon: "https://i.postimg.cc/rmYvH7kz/icons-Addon-Memento-Blades.webp" },
+                        { name: "Сумка ловкача", icon: "https://i.postimg.cc/MpSKtf5N/icons-Addon-Trick-Pouch.webp" },
+                        { name: "Убойные аккорды", icon: "https://i.postimg.cc/fb54cJqc/icons-Addon-Killing-Part-Chords.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Немезис", 
+                    icon: "https://i.postimg.cc/8539smfQ/K24-The-Nemesis-Portrait.webp",
+                    addons: [
+                        { name: "Переливчатый значок", icon: "https://i.postimg.cc/zvjGWtr7/icon-Addon-iridescent-Umbrella-Badge.webp" },
+                        { name: "Расколотый значок", icon: "https://i.postimg.cc/MKBDkgSN/icon-Addon-shattered-Stars-Badge.webp" },
+                        { name: "Чернильная лентае", icon: "https://i.postimg.cc/y8KDDRCv/icon-Addon-depleted-Ink-Ribbon.webp" },
+                        { name: "Паразит NE-A", icon: "https://i.postimg.cc/GpwtWsqk/icon-Addon-nea-Parasite.webp" },
+                        { name: "Сломанная монета", icon: "https://i.postimg.cc/QMnwypXb/icon-Addon-broken-Recovery-Coin.webp" },
+                        { name: "Сэндвич Джилл", icon: "https://i.postimg.cc/GpGrG7PD/icon-Addon-jill-Sandwich.webp" },
+                        { name: "Лианы образца 43", icon: "https://i.postimg.cc/bvVyzDRC/icon-Addon-plant43-Vines.webp" },
+                        { name: "Образец Т-вируса", icon: "https://i.postimg.cc/DZmN15Xh/icon-Addon-TVirus-Sample.webp" },
+                        { name: "Останки Тирана", icon: "https://i.postimg.cc/gjZBTJsB/icon-Addon-tyrant-Gore.webp" },
+                        { name: "Шприц с серотонином", icon: "https://i.postimg.cc/jSQCrS9m/icon-Addon-serotonin-Injector.webp" },
+                        { name: "Язык лизуна", icon: "https://i.postimg.cc/7b8nGLq0/icon-Addon-licker-Tongue.webp" },
+                        { name: "Браслет администратора", icon: "https://i.postimg.cc/wM9vb8xL/icon-Addon-admin-Wristband.webp" },
+                        { name: "Глаз Михаила", icon: "https://i.postimg.cc/MGC7rTj4/icon-Addon-mikhails-Eye.webp" },
+                        { name: "Кровь Марвина", icon: "https://i.postimg.cc/zDnj6n7k/icon-Addon-marvins-Blood.webp" },
+                        { name: "Сердце зомби", icon: "https://i.postimg.cc/13wsqRZB/icon-Addon-zombie-Heart.webp" },
+                        { name: "Шприц с адреналином", icon: "https://i.postimg.cc/fLcyKTsM/icon-Addon-adrenaline-Injector.webp" },
+                        { name: "Гостевой браслет", icon: "https://i.postimg.cc/rFgSLTHh/icon-Addon-visitor-Wristband.webp" },
+                        { name: "Кишки Брайана", icon: "https://i.postimg.cc/zG8sbztn/icon-Addon-brians-Intestines.webp" },
+                        { name: "Поврежденный шприц", icon: "https://i.postimg.cc/GmncMnM2/icon-Addon-damaged-Syringe.webp" },
+                        { name: "Полевой справочник", icon: "https://i.postimg.cc/FzN9926p/icon-Addon-stars-Field-Combat-Manual.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Сенобит", 
+                    icon: "https://i.postimg.cc/XqCh5B9Z/K25-The-Cenobite-Portrait.webp",
+                    addons: [
+                        { name: "Клык инженера", icon: "https://i.postimg.cc/wjbYCK2L/icon-Addon-engineers-Fang.webp" },
+                        { name: "Конфигурация Плача", icon: "https://i.postimg.cc/zGP30cRP/icon-Addon-iridescent-Lament-Configuration.webp" },
+                        { name: "Зуб щелкунчика", icon: "https://i.postimg.cc/FRybL4nL/icon-Addon-chatterers-Tooth.webp" },
+                        { name: "Исходная боль", icon: "https://i.postimg.cc/ZqHmw9gY/icon-Addon-original-Pain.webp" },
+                        { name: "Пронзающая проволока", icon: "https://i.postimg.cc/DfbQs1RT/icon-Addon-impaling-Wire.webp" },
+                        { name: "Сальная черная линза", icon: "https://i.postimg.cc/hvw9FtXN/icon-Addon-greasy-Black-Lens.webp" },
+                        { name: "Колонна терзаний", icon: "https://i.postimg.cc/s2sK4mb8/icon-Addon-torture-Pillar.webp" },
+                        { name: "Кровь Ларри", icon: "https://i.postimg.cc/Dw1YctD7/icon-Addon-larrys-Blood.webp" },
+                        { name: "Останки Ларри", icon: "https://i.postimg.cc/5t1KKsdL/icon-Addon-larrys-Remains.webp" },
+                        { name: "Ошметок Фрэнка", icon: "https://i.postimg.cc/4dr9BNmd/icon-Addon-sliceof-Frank.webp" },
+                        { name: "Сердце Фрэнка", icon: "https://i.postimg.cc/SQVTT6Dz/icon-Addon-franks-Heart.webp" },
+                        { name: "Мерцающий телевизор", icon: "https://i.postimg.cc/hvM5Vx3T/icon-Addon-flickering-Television.webp" },
+                        { name: "Пронзенная крыса", icon: "https://i.postimg.cc/xdpHNPQL/icon-Addon-skewered-Rat.webp" },
+                        { name: "Сгнившая еда", icon: "https://i.postimg.cc/ht5P9ZJ4/icon-Addon-spoiled-Meal.webp" },
+                        { name: "Сжиженные останки", icon: "https://i.postimg.cc/vmHkH0qM/icon-Addon-liquified-Gore.webp" },
+                        { name: "Шевелящиеся личинки", icon: "https://i.postimg.cc/cJ7xVx9C/icon-Addon-wriggling-Maggots.webp" },
+                        { name: "Бодрые сверчки", icon: "https://i.postimg.cc/pdG79K4j/icon-Addon-lively-Crickets.webp" },
+                        { name: "Горящая свеча", icon: "https://i.postimg.cc/v8nk0gCr/icon-Addon-burning-Candle.webp" },
+                        { name: "Кожаный ремешок", icon: "https://i.postimg.cc/5tng71mW/icon-Addon-leather-Strip.webp" },
+                        { name: "Погнутый гвоздь", icon: "https://i.postimg.cc/HWPDN1Lm/icon-Addon-bent-Nail.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Художница", 
+                    icon: "https://i.postimg.cc/pVh34432/K26-The-Artist-Portrait.webp",
+                    addons: [
+                        { name: "Переливчатое перо", icon: "https://i.postimg.cc/RhzWwJnS/icon-Addon-Iridescent-Feather.webp" },
+                        { name: "Сад гнили", icon: "https://i.postimg.cc/Xqv8SPQB/icon-Addon-Gardenof-Rot.webp" },
+                        { name: "Ботиночки Матиаса", icon: "https://i.postimg.cc/3RQ8q5r9/icon-Addon-Jacobs-Baby-Shoes.webp" },
+                        { name: "Отрезанный язык", icon: "https://i.postimg.cc/QVZNR2qj/icon-Addon-Severed-Tongue.webp" },
+                        { name: "Отрубленные руки", icon: "https://i.postimg.cc/cHjLcggg/icon-Addon-Severed-Hands.webp" },
+                        { name: "Чернильное яйцо", icon: "https://i.postimg.cc/DzMs4zg0/icon-Addon-Ink-Egg.webp" },
+                        { name: "Колючее гнездо", icon: "https://i.postimg.cc/j5qgtcXN/icon-Addon-Thorny-Nest.webp" },
+                        { name: "О горечь и любовь моя", icon: "https://i.postimg.cc/L8f6382h/icon-Addon-OGrief-OLover.webp" },
+                        { name: "Серебряный колокольчик", icon: "https://i.postimg.cc/t45FpjmS/icon-Addon-Silver-Bell.webp" },
+                        { name: "Темнейшая тушь", icon: "https://i.postimg.cc/25zCDFNN/icon-Addon-Darkest-Ink.webp" },
+                        { name: "Угольная палочка", icon: "https://i.postimg.cc/yd4XxdnK/icon-Addon-Charcoal-Stick.webp" },
+                        { name: "Агония без названия", icon: "https://i.postimg.cc/ydJfDdMY/icon-Addon-Untitled-Agony.webp" },
+                        { name: "Бархатная ткань", icon: "https://i.postimg.cc/rpsjHsFC/icon-Addon-Velvet-Fabric.webp" },
+                        { name: "Вороний натюрморт", icon: "https://i.postimg.cc/RZNvV1gk/icon-Addon-Still-Life-Crow.webp" },
+                        { name: "Гниющие останки", icon: "https://i.postimg.cc/c4Xp3qV2/icon-Addon-Festering-Carrion.webp" },
+                        { name: "Живописная прихоть", icon: "https://i.postimg.cc/43CXSkBy/icon-Addon-Automatic-Drawing.webp" },
+                        { name: "Густое варево", icon: "https://i.postimg.cc/1zrCk2ps/icon-Addon-Thick-Tar.webp" },
+                        { name: "Красочный некролог", icon: "https://i.postimg.cc/FF3Z82mq/icon-Addon-Vibrant-Obituary.webp" },
+                        { name: "Кукуруза чокло", icon: "https://i.postimg.cc/1tQwPd55/icon-Addon-Choclo-Corn.webp" },
+                        { name: "Масляные краски", icon: "https://i.postimg.cc/rpkyn2wj/icon-Addon-Oil-Paints.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Онрё", 
+                    icon: "https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp",
+                    addons: [
+                        { name: "Пульт от видика", icon: "https://i.postimg.cc/4dR8Hwwm/icon-Addon-Remote-Control.webp" },
+                        { name: "Радужная кассета", icon: "https://i.postimg.cc/BQmvnVNQ/icon-Addon-Iridescent-VHStape.webp" },
+                        { name: "Видеомагнитофон", icon: "https://i.postimg.cc/2Sz24Tst/icon-Addon-VCR.webp" },
+                        { name: "Искаженное фото", icon: "https://i.postimg.cc/3NMKPMKn/icon-Addon-Disorted-Photo.webp" },
+                        { name: "Монтажный пульт", icon: "https://i.postimg.cc/brC4KWfs/icon-Addon-Tape-Editing-Deck.webp" },
+                        { name: "Телефон", icon: "https://i.postimg.cc/50prCT0n/icon-Addon-Telephone.webp" },
+                        { name: "Вода из колодца", icon: "https://i.postimg.cc/mgJ1bgyS/icon-Addon-Well-Water.webp" },
+                        { name: "Окровавленные ногти", icon: "https://i.postimg.cc/tR1pp4wJ/icon-Addon-Bloody-Fingernail.webp" },
+                        { name: "Расческа матери", icon: "https://i.postimg.cc/9MP78B2R/icon-Addon-Mothers-Comb.webp" },
+                        { name: "Рисунок кольца", icon: "https://i.postimg.cc/VkS472VJ/icon-Addon-Ring-Drawing.webp" },
+                        { name: "Хлипкая игрушка", icon: "https://i.postimg.cc/rwvj7gBQ/icon-Addon-Rickety-Pinwheel.webp" },
+                        { name: "Колодезный камень", icon: "https://i.postimg.cc/3xdD5vmR/icon-Addon-Well-Stone.webp" },
+                        { name: "Лохмы", icon: "https://i.postimg.cc/rpSRh9C6/icon-Addon-Clump-Of-Hair.webp" },
+                        { name: "Просоленная ткань", icon: "https://i.postimg.cc/fyGkMtMn/icon-Addon-Sea-Soaked-Cloth.webp" },
+                        { name: "Рыбацкая сеть Ёити", icon: "https://i.postimg.cc/4NKJXbLr/icon-Addon-Yoichis-Fishing-Net.webp" },
+                        { name: "Часы Рэйко", icon: "https://i.postimg.cc/pdFGd3fw/icon-Addon-Reikos-Watch.webp" },
+                        { name: "Зеркало матери", icon: "https://i.postimg.cc/fyB0ZTJM/icon-Addon-Mothers-Mirror.webp" },
+                        { name: "Копия кассеты", icon: "https://i.postimg.cc/SRFGjGLD/icon-Addon-Vhs-Copy.webp" },
+                        { name: "Старая газета", icon: "https://i.postimg.cc/TwkR3yqN/icon-Addon-Old-Newspaper.webp" },
+                        { name: "Табличка из хижины", icon: "https://i.postimg.cc/nhFWVdr2/icon-Addon-Cabin-Sign.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Грязь", 
+                    icon: "https://i.postimg.cc/RZ983FhF/K28-The-Dredge-Portrait.webp",
+                    addons: [
+                        { name: "Жертвенный нож", icon: "https://i.postimg.cc/W4TFDkgs/icon-Addon-Sacrificial-Knife.webp" },
+                        { name: "Радужная доска", icon: "https://i.postimg.cc/CxdxBs6C/icon-Addon-Iridescent-Wooden-Plank.webp" },
+                        { name: "Диктофон", icon: "https://i.postimg.cc/dV3zmHF1/icon-Addon-Field-Recorder.webp" },
+                        { name: "Ключ от судна", icon: "https://i.postimg.cc/d0tcXsGq/icon-Addon-Boat-Key.webp" },
+                        { name: "Пахотный инструмент", icon: "https://i.postimg.cc/tJYBVg84/icon-Addon-Tiling-Blade.webp" },
+                        { name: "Петличный микрофон", icon: "https://i.postimg.cc/TYDkRzTn/icon-Addon-Lavalier-Microphone.webp" },
+                        { name: "Камушек беспокойства", icon: "https://i.postimg.cc/wjmTQcDh/icon-Addon-Worry-Stones.webp" },
+                        { name: "Оттомарские записи", icon: "https://i.postimg.cc/x8JSj6dq/icon-Addon-Ottomarian-Writing.webp" },
+                        { name: "Разодранная подушка", icon: "https://i.postimg.cc/N0fL4wMX/icon-Addon-Destroyed-Pillow.webp" },
+                        { name: "Сломанная кукла", icon: "https://i.postimg.cc/htsHVk6N/icon-Addon-Broken-Doll.webp" },
+                        { name: "Солдатский шлем", icon: "https://i.postimg.cc/7hwTptn8/icon-Addon-War-Helmet.webp" },
+                        { name: "Календарь ХэддиКалендарь Хэдди", icon: "https://i.postimg.cc/s2y5C82f/icon-Addon-Haddies-Calendar.webp" },
+                        { name: "Освежитель воздуха", icon: "https://i.postimg.cc/dQ9DZ1nB/icon-Addon-Air-Freshner.webp" },
+                        { name: "Сожженные письма", icon: "https://i.postimg.cc/tCtfj0q7/icon-Addon-Burnt-Letters.webp" },
+                        { name: "Упавшая дранка", icon: "https://i.postimg.cc/NG7qg2bg/icon-Addon-Fallen-Shingle.webp" },
+                        { name: "Череп плоходумца", icon: "https://i.postimg.cc/dtYWVW3X/icon-Addon-Malthinkers-Skull.webp" },
+                        { name: "Деревянная доска", icon: "https://i.postimg.cc/jqM5xjsJ/icon-Addon-Wooden-Plank.webp" },
+                        { name: "Капюшон адепта", icon: "https://i.postimg.cc/QdFyWFgK/icon-Addon-Followers-Cowl.webp" },
+                        { name: "Кофеиновые таблетки", icon: "https://i.postimg.cc/dV5xh8TY/icon-Addon-Caffeine-Tablets.webp" },
+                        { name: "Пестик и ступка", icon: "https://i.postimg.cc/rprWWkY9/icon-Addon-Mortar-And-Pestle.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Вескер", 
+                    icon: "https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp",
+                    addons: [
+                        { name: "Радужная склянка", icon: "https://i.postimg.cc/66L3D3vZ/icon-Addon-iridescent-Uroboros-Vial.webp" },
+                        { name: "Фото из лаборатории", icon: "https://i.postimg.cc/Bbywhs4n/icon-Addon-lab-Photo.webp" },
+                        { name: "Вертолетный руль", icon: "https://i.postimg.cc/5tnQd2Gp/icon-Addon-helicopter-Stick.webp" },
+                        { name: "Вирус «Уроборос»", icon: "https://i.postimg.cc/7LVsFSwc/icon-Addon-las-Plagas-Variant.webp" },
+                        { name: "Зеленая трава", icon: "https://i.postimg.cc/vHJW3DFV/icon-Addon-green-Herb.webp" },
+                        { name: "Темные очки", icon: "https://i.postimg.cc/1tXPgmzW/icon-Addon-dark-Sunglasses.webp" },
+                        { name: "Красная трава", icon: "https://i.postimg.cc/15mjKCSF/icon-Addon-red-Herb.webp" },
+                        { name: "Медальон с дамой", icon: "https://i.postimg.cc/9XT8V3mZ/icon-Addon-maiden-Medalliom.webp" },
+                        { name: "Переносной сейф", icon: "https://i.postimg.cc/3xn7B4z8/icon-Addon-portable-Safe.webp" },
+                        { name: "Устройство видеосвязи", icon: "https://i.postimg.cc/85mKVMG9/icon-Addon-forgotten-Video-Tape.webp" },
+                        { name: "Золотое яйцо", icon: "https://i.postimg.cc/pdYY9vSn/icon-Addon-golden-Egg.webp" },
+                        { name: "Кожаные перчатки", icon: "https://i.postimg.cc/T3jCbnLw/icon-Addon-leather-Gloves.webp" },
+                        { name: "Золотой кубок", icon: "https://i.postimg.cc/yNzyYxLH/icon-Addon-gold-Chalice.webp" },
+                        { name: "Медальон со львом", icon: "https://i.postimg.cc/fLVPYJQr/icon-Addon-lion-Medallion.webp" },
+                        { name: "Отвалившаяся ручка", icon: "https://i.postimg.cc/CLT2fhPc/icon-Addon-loose-Crank.webp" },
+                        { name: "Рупор", icon: "https://i.postimg.cc/yx0Gxt0Q/icon-Addon-bullhorn.webp" },
+                        { name: "Златка", icon: "https://i.postimg.cc/mZwLm5vN/icon-Addon-jewel-Beetle.webp" },
+                        { name: "Медальон с единорогом", icon: "https://i.postimg.cc/K8NpVC7F/icon-Addon-unicorn-Medallion.webp" },
+                        { name: "Ошметок «Уробороса»", icon: "https://i.postimg.cc/63DMnKKV/icon-Addon-uroboros-Tendril.webp" },
+                        { name: "Полицейская рация", icon: "https://i.postimg.cc/0jQ7zwgz/icon-Addon-RPDShoulder-Walkie.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Рыцарь", 
+                    icon: "https://i.postimg.cc/bwT51hSR/K30-The-Knight-Portrait.webp",
+                    addons: [
+                        { name: "Радужное знамя", icon: "https://i.postimg.cc/W4hqVvvv/icon-Addon-Iridescent-Company-Banner.webp" },
+                        { name: "Рыцарский договор", icon: "https://i.postimg.cc/8cs0Bs8Y/icon-Addon-Knight-Contract.webp" },
+                        { name: "Исцеляющая припарка", icon: "https://i.postimg.cc/fT9dtZtT/icon-Addon-Healing-Poultice.webp" },
+                        { name: "Колокольчики тюремщика", icon: "https://i.postimg.cc/XJKjSHpW/icon-Addon-Jailers-Chimes.webp" },
+                        { name: "Кремень и сталь", icon: "https://i.postimg.cc/kMyzr3XG/icon-Addon-Flintand-Steel.webp" },
+                        { name: "Кузнечный молот", icon: "https://i.postimg.cc/Gpj6JZfZ/icon-Addon-Blacksmith-Hammer.webp" },
+                        { name: "Заостренная опора", icon: "https://i.postimg.cc/9XKpnCvy/icon-Addon-Sharpened-Mount.webp" },
+                        { name: "Караульный факел", icon: "https://i.postimg.cc/Jhxx6JLh/icon-Addon-Town-Watct-Torch.webp" },
+                        { name: "Кузнечные щипцы", icon: "https://i.postimg.cc/tgxRDCbY/icon-Addon-Ironworker-Tongs.webp" },
+                        { name: "Мрачная железная маска", icon: "https://i.postimg.cc/Bn22ys4w/icon-Addon-Grim-Iron-Mask.webp" },
+                        { name: "Сломанная рукоять", icon: "https://i.postimg.cc/wBBn2WdM/icon-Addon-Broken-Hilt.webp" },
+                        { name: "Вяленая конина", icon: "https://i.postimg.cc/XY2nnBjZ/icon-Addon-Dried-Horsemeat.webp" },
+                        { name: "Лезвие боевого топора", icon: "https://i.postimg.cc/TPqvNyKN/icon-Addon-Battleaxe-Head.webp" },
+                        { name: "Призыв к оружию", icon: "https://i.postimg.cc/wB3bL7hs/icon-Addon-Call-To-Arms.webp" },
+                        { name: "Протравленный клинок", icon: "https://i.postimg.cc/3xHzzgPj/icon-Addon-Treated-Blade.webp" },
+                        { name: "Стальные кандалы", icon: "https://i.postimg.cc/CMvB65DK/icon-Addon-Cold-Steel-Manacles.webp" },
+                        { name: "Изношенный табард", icon: "https://i.postimg.cc/8PYq42bY/icon-Addon-Tattered-Tabard.webp" },
+                        { name: "Карта мира", icon: "https://i.postimg.cc/k5BspzYV/icon-Addon-Mapofthe-Realms.webp" },
+                        { name: "Украденная медовуха", icon: "https://i.postimg.cc/nVyLjmfN/icon-Addon-Pillaged-Mead.webp" },
+                        { name: "Черствая краюха", icon: "https://i.postimg.cc/vHgrrfjy/icon-Addon-Gritty-Lump.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Торговка", 
+                    icon: "https://i.postimg.cc/QMdybypZ/K31-The-Skull-Merchant-Portrait.webp",
+                    addons: [
+                        { name: "Радужная рукопись", icon: "https://i.postimg.cc/15mtPQGj/icon-Addon-Iridescent-Unpublished-Manuscript.webp" },
+                        { name: "Разряженные аккумуляторы", icon: "https://i.postimg.cc/NMRh2Kck/icon-Addon-Expired-Batteries.webp" },
+                        { name: "Прогноз перемещений", icon: "https://i.postimg.cc/QxxCQ3yr/icon-Addon-Advanced-Movement-Prediction.webp" },
+                        { name: "Случайные импульсы", icon: "https://i.postimg.cc/sg0qxpth/icon-Addon-Randomized-Strobes.webp" },
+                        { name: "Считывание геоданных", icon: "https://i.postimg.cc/d3S9q9xH/icon-Addon-Geographical-Readout.webp" },
+                        { name: "Экспериментальный винт", icon: "https://i.postimg.cc/s2qk6pmr/icon-Addon-Prototype-Rotor.webp" },
+                        { name: "Анализатор уязвимостей", icon: "https://i.postimg.cc/qBssjyxH/icon-Addon-Vital-Targeting-Processor.webp" },
+                        { name: "Генератор красного шума", icon: "https://i.postimg.cc/4dDMJsHH/icon-Addon-Brown-Noise-Generator.webp" },
+                        { name: "Инфракрасный модуль", icon: "https://i.postimg.cc/yNdcNR02/icon-Addon-Infared-Upgrade.webp" },
+                        { name: "Ослабленные винты", icon: "https://i.postimg.cc/15GjGkbs/icon-Addon-Loose-Screw.webp" },
+                        { name: "Толченное стекло", icon: "https://i.postimg.cc/mkfGDQ1w/icon-Addon-Powdered-Glass.webp" },
+                        { name: "Адаптивное освещение", icon: "https://i.postimg.cc/50djLQZP/icon-Addon-Adaptive-Lighting.webp" },
+                        { name: "Оглушающие динамики", icon: "https://i.postimg.cc/qq38T69y/icon-Addon-Shotgun-Speakers.webp" },
+                        { name: "Режим энергосбережения", icon: "https://i.postimg.cc/JhnYWG0z/icon-Addon-Low-Power-Mode.webp" },
+                        { name: "Сверхнапряжение", icon: "https://i.postimg.cc/rF4LvZbP/icon-Addon-Overcharge.webp" },
+                        { name: "Стереорадиомикрофон", icon: "https://i.postimg.cc/VsWf7kSV/icon-Addon-Stereo-Remote-Mic.webp" },
+                        { name: "Ади Валенте №1", icon: "https://i.postimg.cc/8Crj7mnJ/icon-Addon-Adi-Valente1.webp" },
+                        { name: "Высокоамперный усилитель", icon: "https://i.postimg.cc/L5ZJ1Bs0/icon-Addon-High-Current-Upgrade.webp" },
+                        { name: "Мощный прожектор", icon: "https://i.postimg.cc/QNBmb29v/icon-Addon-High-Power-Floodlight.webp" },
+                        { name: "Ультразвуковой динамик", icon: "https://i.postimg.cc/VLXV9JdJ/icon-Addon-Ultrasonic-Trap-Speaker.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Хакс-А7", 
+                    icon: "https://i.postimg.cc/q7DZZxLh/K32-The-Singularity-Portrait.webp",
+                    addons: [
+                        { name: "Радужный осколок", icon: "https://i.postimg.cc/QdPxpKR2/icon-Addon-iridiscent-Crystal-Shard.webp" },
+                        { name: "Форма заявки с отказом", icon: "https://i.postimg.cc/WbgDpnCd/icon-Addon-denied-Requisition-Form.webp" },
+                        { name: "Волокна неизвестных растений", icon: "https://i.postimg.cc/rw7YGqgn/icon-Addon-foreign-Plant-Fibers.webp" },
+                        { name: "Инструмент диагностики", icon: "https://i.postimg.cc/0QhQPMCG/icon-Addon-diagnostic-Tool-Construction.webp" },
+                        { name: "Семейная фотография Сома", icon: "https://i.postimg.cc/jj2nTJf2/icon-Addon-soma-Family-Photo.webp" },
+                        { name: "Список экипажа", icon: "https://i.postimg.cc/HL2scv9L/icon-Addon-crew-Manifest.webp" },
+                        { name: "Гель с наномашинами", icon: "https://i.postimg.cc/VsDSJvk8/icon-Addon-nanomachine-Gel.webp" },
+                        { name: "Генератор голограмм", icon: "https://i.postimg.cc/mg4SThXG/icon-Addon-hologram-Generator.webp" },
+                        { name: "Провода под напряжением", icon: "https://i.postimg.cc/qRW5w4kM/icon-Addon-live-Wires.webp" },
+                        { name: "Пустой кислородный баллон", icon: "https://i.postimg.cc/hGNvqZgZ/icon-Addon-spent-Oxygen-Tank.webp" },
+                        { name: "Спрей гипервнимательности", icon: "https://i.postimg.cc/1tbp2zn2/icon-Addon-hyperawareness-Spray.webp" },
+                        { name: "Детская перчатка", icon: "https://i.postimg.cc/yYtwjh8y/icon-Addon-kids-Ball-Glove.webp" },
+                        { name: "Кремированные останки", icon: "https://i.postimg.cc/P51qh5LY/icon-Addon-cremated-Remains.webp" },
+                        { name: "Криогель", icon: "https://i.postimg.cc/mDpLVcqf/icon-Addon-cryo-Gel.webp" },
+                        { name: "Рука андроида", icon: "https://i.postimg.cc/KjcGDPQ5/icon-Addon-android-Arm.webp" },
+                        { name: "Ультразвуковой датчик", icon: "https://i.postimg.cc/J7Dgn68c/icon-Addon-ultrasonic-Sensor.webp" },
+                        { name: "Инструмент диагностики - починка", icon: "https://i.postimg.cc/0jmNQktT/icon-Addon-diagnostic-Tool-Repair.webp" },
+                        { name: "Питательная смесь", icon: "https://i.postimg.cc/fyrTB3VS/icon-Addon-nutritional-Slurry.webp" },
+                        { name: "Сломанный ключ безопасности", icon: "https://i.postimg.cc/zBb6ZVv1/icon-Addon-broken-Security-Key.webp" },
+                        { name: "Тяжелая вода", icon: "https://i.postimg.cc/XvVBzC2p/icon-Addon-heavy-Water.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Ксеноморф", 
+                    icon: "https://i.postimg.cc/hjJ3FQyC/K33-The-Xenomorph-Portrait.webp",
+                    addons: [
+                        { name: "Импровизированный электрохлыст", icon: "https://i.postimg.cc/15hGKfZN/icon-Addon-improvised-Cattle-Prod.webp" },
+                        { name: "Кислотная кровь", icon: "https://i.postimg.cc/GmtBCCFj/icon-Addon-acidic-Blood.webp" },
+                        { name: "Болт самоуничтожения", icon: "https://i.postimg.cc/FsS7DZx9/icon-Addon-self-Destruct-Bolt.webp" },
+                        { name: "Гарпун", icon: "https://i.postimg.cc/prgnGc7H/icon-Addon-harpoon-Gun.webp" },
+                        { name: "Кошачья переноска", icon: "https://i.postimg.cc/43KBnjg6/icon-Addon-cat-Carrier.webp" },
+                        { name: "Семиотическая клавиатура", icon: "https://i.postimg.cc/Z5h0gdf6/icon-Addon-semiotic-Keyboard.webp" },
+                        { name: "Аварийный шлем", icon: "https://i.postimg.cc/sDmrJGZn/icon-Addon-emergency-Helmet.webp" },
+                        { name: "Повязка Паркера", icon: "https://i.postimg.cc/wvMCFwLF/icon-Addon-parkers-Headband.webp" },
+                        { name: "Растекшаяся шкурка", icon: "https://i.postimg.cc/y8W019mt/icon-Addon-molted-Skin.webp" },
+                        { name: "Универсальный топор", icon: "https://i.postimg.cc/tgWZJzYS/icon-Addon-multipurpose-Hatchet.webp" },
+                        { name: "Шлем Кейна", icon: "https://i.postimg.cc/4dPDQrYY/icon-Addon-kanes-Helmet.webp" },
+                        { name: "Внутренности Эша", icon: "https://i.postimg.cc/YqsrQmF1/icon-Addon-ashs-Innards.webp" },
+                        { name: "Гарнитура экипажа", icon: "https://i.postimg.cc/DzFwz3sD/icon-Addon-crew-Headset.webp" },
+                        { name: "Звездная карта Ламберт", icon: "https://i.postimg.cc/8kn3kdMg/icon-Addon-lamberts-Star-Map.webp" },
+                        { name: "Кепка Бретта", icon: "https://i.postimg.cc/bNxXwDTy/icon-Addon-bretts-Cap.webp" },
+                        { name: "Световой жезл", icon: "https://i.postimg.cc/sD7tnQGF/icon-Addon-light-Wand.webp" },
+                        { name: "Питание злаками", icon: "https://i.postimg.cc/qBcQt895/icon-Addon-Cereal-Rations.webp" },
+                        { name: "Пьющая птичка", icon: "https://i.postimg.cc/Dz8n0f0x/icon-Addon-drinking-Bird.webp" },
+                        { name: "Часы Рипли", icon: "https://i.postimg.cc/3NJF2qGJ/icon-Addon-ripleys-Watch.webp" },
+                        { name: "Яйцо ксеноморфа", icon: "https://i.postimg.cc/g2PPdqbk/icon-Addon-ovomorph.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Чаки", 
+                    icon: "https://i.postimg.cc/G2Zgb36b/K34-The-Yerkes-Portrait.webp",
+                    addons: [
+                        { name: "Жесткая шляпа", icon: "https://i.postimg.cc/FzfLxXTp/icon-Addon-hard-Hat.webp" },
+                        { name: "Радужный амулет", icon: "https://i.postimg.cc/5ywFrSMQ/icon-Addon-iridescent-Amulet.webp" },
+                        { name: "Кучка гвоздей", icon: "https://i.postimg.cc/gcXJ2DQv/icon-Addon-pile-Of-Nails.webp" },
+                        { name: "Опасная бритва", icon: "https://i.postimg.cc/7LzDSH8X/icon-Addon-straight-Razor.webp" },
+                        { name: "Осколки зеркала", icon: "https://i.postimg.cc/x8YKn453/icon-Addon-mirror-Shards.webp" },
+                        { name: "Пластиковый мешок", icon: "https://i.postimg.cc/V6SY5fGY/icon-Addon-plastic-Bag.webp" },
+                        { name: "Беговая обувь", icon: "https://i.postimg.cc/y89c3KGy/icon-Addon-running-Shoes.webp" },
+                        { name: "Крысиный яд", icon: "https://i.postimg.cc/43D0bX44/icon-Addon-rat-Poison.webp" },
+                        { name: "Линейка", icon: "https://i.postimg.cc/rsHMSKmn/icon-Addon-yardstick.webp" },
+                        { name: "Переносной телик", icon: "https://i.postimg.cc/L8H2LBCQ/icon-Addon-portable-TV.webp" },
+                        { name: "Шелковая подушка", icon: "https://i.postimg.cc/9FyGgTPj/icon-Addon-silk-Pillow.webp" },
+                        { name: "Перфоратор", icon: "https://i.postimg.cc/cCRG8rQN/icon-Addon-power-Drill.webp" },
+                        { name: "Разделочный электронож", icon: "https://i.postimg.cc/Vsj1dVsP/icon-Addon-electric-Carving-Knife.webp" },
+                        { name: "Свечка и лак для волос", icon: "https://i.postimg.cc/x89Zkgg9/icon-Addon-flaming-Hair-Spray.webp" },
+                        { name: "Скакалка", icon: "https://i.postimg.cc/ht7qRy5Y/icon-Addon-jump-Rope1.webp" },
+                        { name: "Шуруповерт", icon: "https://i.postimg.cc/wBh9KfGV/icon-Addon-automatic-Screwdriver.webp" },
+                        { name: "Коробка «Хороший парень»", icon: "https://i.postimg.cc/xCfGM7rp/icon-Addon-good-Guy-Box.webp" },
+                        { name: "Крошечный скальпель", icon: "https://i.postimg.cc/BQPhSXxh/icon-Addon-tiny-Scalpel.webp" },
+                        { name: "Кукольные глаза", icon: "https://i.postimg.cc/RhcMmPh9/icon-Addon-doll-Eyes.webp" },
+                        { name: "Мерцающий свет", icon: "https://i.postimg.cc/PxzjFSqw/icon-Addon-strobing-Light.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Неведомое", 
+                    icon: "https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp",
+                    addons: [
+                        { name: "В ловушке мрака", icon: "https://i.postimg.cc/ZKZ7jf8m/icon-Addon-captured-By-The-Dark.webp" },
+                        { name: "Радужный доклад УСС", icon: "https://i.postimg.cc/CxKzCgdq/icon-Addon-iridescent-OSSReport.webp" },
+                        { name: "Картридж с жуткой игрой", icon: "https://i.postimg.cc/7Ps6xRKP/icon-Addon-obscure-Game-Cartridge.webp" },
+                        { name: "Пустой пакет из-под молока", icon: "https://i.postimg.cc/Gp2hDJ7J/icon-Addon-discarded-Milk-Carton.webp" },
+                        { name: "Самодельная маска", icon: "https://i.postimg.cc/52mSy1TQ/icon-Addon-homemade-Mask.webp" },
+                        { name: "Склянка с сывороткойСклянка с сывороткой", icon: "https://i.postimg.cc/zB3fWSBY/icon-Addon-serum-Vial.webp" },
+                        { name: "Афиша второсортного фильма", icon: "https://i.postimg.cc/YCxwbGGn/icon-Addon-b-movie-Poster.webp" },
+                        { name: "Исчезающая шкатулка", icon: "https://i.postimg.cc/FsXPKhDN/icon-Addon-vanishing-Box.webp" },
+                        { name: "Передовица", icon: "https://i.postimg.cc/vHNPMQRY/icon-Addon-front-Page-Article.webp" },
+                        { name: "Слепок следа", icon: "https://i.postimg.cc/wTfrvXNd/icon-Addon-footprint-Cast.webp" },
+                        { name: "Часы гипнотизера", icon: "https://i.postimg.cc/2yv4Dfn6/icon-Addon-hypnotists-Watch.webp" },
+                        { name: "Блокнот с предложениями", icon: "https://i.postimg.cc/hjMGQZgr/icon-Addon-notebook-Of-Theories.webp" },
+                        { name: "Иссеченный рюкзак", icon: "https://i.postimg.cc/KzKTPgcw/icon-Addon-slashed-Backpack.webp" },
+                        { name: "Карта жертвы", icon: "https://i.postimg.cc/QxDb30dM/icon-Addon-victims-Detailed-Routine.webp" },
+                        { name: "Последние звуки", icon: "https://i.postimg.cc/4d28dZKQ/icon-Addon-last-Known-Recording.webp" },
+                        { name: "Устройство неизвестного назначения", icon: "https://i.postimg.cc/1zCX7Ynj/icon-Addon-device-Of-Undisclosed-Origin.webp" },
+                        { name: "Кроличья лапка", icon: "https://i.postimg.cc/v8WJhx6J/icon-Addon-rabbits-Foot.webp" },
+                        { name: "Неаккуратный набросок", icon: "https://i.postimg.cc/BvnHvVrq/icon-Addon-sketch-Attempt.webp" },
+                        { name: "Проткнутый глаз", icon: "https://i.postimg.cc/mD900tpF/icon-Addon-punctured-Eyeball.webp" },
+                        { name: "Размытое фото", icon: "https://i.postimg.cc/3xhTXCR0/icon-Addon-blurry-Photo.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Лич", 
+                    icon: "https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp",
+                    addons: [
+                        { name: "Вострый меч", icon: "https://i.postimg.cc/VkxPfxrt/icon-Addon-Sword-Of-Kass.webp" },
+                        { name: "Радужная книга", icon: "https://i.postimg.cc/QxJTkmbR/icon-Addon-Iridescent-Book-Of-Vile-Darkness.webp" },
+                        { name: "Бездонная сумка", icon: "https://i.postimg.cc/PrPhfr7N/icon-Addon-Bag-Of-Holding.webp" },
+                        { name: "Глазастая мантия", icon: "https://i.postimg.cc/BbYcpC55/icon-Addon-Robe-Of-Eyes.webp" },
+                        { name: "Кинжал из зуба дракона", icon: "https://i.postimg.cc/3JT81Hfw/icon-Addon-Dragontooth-Dagger.webp" },
+                        { name: "Плащ невидимости", icon: "https://i.postimg.cc/CLQ8d5L2/icon-Addon-Cloak-Of-Invisibility.webp" },
+                        { name: "Жемчужина силы", icon: "https://i.postimg.cc/XqyT6X2C/icon-Addon-Pearl-Of-Power.webp" },
+                        { name: "Посох увядания", icon: "https://i.postimg.cc/8CfkwdWR/icon-Addon-Staff-Of-Withering.webp" },
+                        { name: "Сапоги скорости", icon: "https://i.postimg.cc/kGS08BPy/icon-Addon-Boots-Of-Speed.webp" },
+                        { name: "Украшенный рог", icon: "https://i.postimg.cc/tTgjwqQ3/icon-Addon-Ornate-Horn.webp" },
+                        { name: "Эльфийский плащ", icon: "https://i.postimg.cc/KvzLZBFL/icon-Addon-Cloak-Of-Elvenkind.webp" },
+                        { name: "Зелье скорости", icon: "https://i.postimg.cc/9fk233Ws/icon-Addon-Potion-Of-Speed.webp" },
+                        { name: "Кольцо телекинеза", icon: "https://i.postimg.cc/SKCd4Cqq/icon-Addon-Ring-Of-Spell-Storing.webp" },
+                        { name: "Кольцо заклинаний", icon: "https://i.postimg.cc/Dy8gxtSt/icon-Addon-Glass-Eye.webp" },
+                        { name: "Стеклянный глаз", icon: "https://i.postimg.cc/RV6YW3L6/icon-Addon-Lantern-Of-Revealing.webp" },
+                        { name: "Фонарь разоблачения", icon: "https://i.postimg.cc/RV6YW3L6/icon-Addon-Lantern-Of-Revealing.webp" }, 
+                        { name: "Изодранная повязка", icon: "https://i.postimg.cc/7YhFgHS7/icon-Addon-Tattered-Headband.webp" },
+                        { name: "Перо ворона", icon: "https://i.postimg.cc/NFYPSbrW/icon-Addon-Ravens-Feather.webp" },
+                        { name: "Перчатка трюкача", icon: "https://i.postimg.cc/8zBxG7S2/icon-Addon-Tricksters-Glove.webp" },
+                        { name: "Хрустальный шар", icon: "https://i.postimg.cc/mkcbnLfc/icon-Addon-Crystal-Ball.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Дракула", 
+                    icon: "https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp",
+                    addons: [
+                        { name: "Радужное кольцо", icon: "https://i.postimg.cc/hjVj44ZH/icon-Addon-Iridescent-Ring-Of-Vlad.webp" },
+                        { name: "Щит Алукарда", icon: "https://i.postimg.cc/FHwKXJs9/icon-Addon-Alucards-Shield.webp" },
+                        { name: "Волосы медузы", icon: "https://i.postimg.cc/ncpkJCwf/icon-Addon-Medusas-Hair.webp" },
+                        { name: "Клык Варга", icon: "https://i.postimg.cc/FRjLCXcV/icon-Addon-Wargs-Fang.webp" },
+                        { name: "Куб Зои", icon: "https://i.postimg.cc/J091VfMp/icon-Addon-Cube-Of-Zoe.webp" },
+                        { name: "Ляпис-Лазурь", icon: "https://i.postimg.cc/ncyPBH3d/icon-Addon-Lapis-Lazuli.webp" },
+                        { name: "Карманные часы", icon: "https://i.postimg.cc/SswmMB3c/icon-Addon-Pocket-Watch.webp" },
+                        { name: "Кукла-убийца", icon: "https://i.postimg.cc/0NqhR8m6/icon-Addon-Killer-Doll.webp" },
+                        { name: "Перо сильфы", icon: "https://i.postimg.cc/7LS8fK0W/icon-Addon-Sylph-Feather.webp" },
+                        { name: "Сила эха", icon: "https://i.postimg.cc/8CWXtx01/icon-Addon-Force-Of-Echo.webp" },
+                        { name: "Солнцезащитные очки", icon: "https://i.postimg.cc/HWzmwvRG/icon-Addon-Sunglasses.webp" },
+                        { name: "Волшебный билет", icon: "https://i.postimg.cc/MHydYBPd/icon-Addon-Magical-Ticket.webp" },
+                        { name: "Крылатая обувь", icon: "https://i.postimg.cc/GpvtdJ2c/icon-Addon-Winged-Boots.webp" },
+                        { name: "Медальон белого волка", icon: "https://i.postimg.cc/bw7r7FqC/icon-Addon-White-Wolf-Medallion.webp" },
+                        { name: "Ожерелье с лунным камнем", icon: "https://i.postimg.cc/T3SgpwQw/icon-Addon-Moonstone-Necklace.webp" },
+                        { name: "Чаша с кровью", icon: "https://i.postimg.cc/dQfpBRWt/icon-Addon-Blood-Filled-Goblet.webp" },
+                        { name: "Коготь цербера", icon: "https://i.postimg.cc/5ymmZVBV/icon-Addon-Cerberus-Talon.webp" },
+                        { name: "Рубиновый венец", icon: "https://i.postimg.cc/x84MM1Yt/icon-Addon-Ruby-Circlet.webp" },
+                        { name: "Снаряжение «Часовая башня»", icon: "https://i.postimg.cc/7ZJ2z45Z/icon-Addon-Clock-Tower-Gear.webp" },
+                        { name: "Шляпа путника", icon: "https://i.postimg.cc/tRwKN0kM/icon-Addon-Travelers-Hat.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Егерь", 
+                    icon: "https://i.postimg.cc/ncKStJ2t/K38-The-Houndmaster-Portrait.webp",
+                    addons: [
+                        { name: "Порванная книга", icon: "https://i.postimg.cc/JzNtW5tR/T-UI-icon-Addon-Torn-Novel.webp" },
+                        { name: "Радужный штурвал", icon: "https://i.postimg.cc/d36nXyd6/T-UI-icon-Addon-Iridescent-Wheel-Handle.webp" },
+                        { name: "Банка пороха", icon: "https://i.postimg.cc/T1JH6S8r/T-UI-icon-Addon-Gunpowder-Tin.webp" },
+                        { name: "Кожаная сбруя", icon: "https://i.postimg.cc/htfMyhG8/T-UI-icon-Addon-Leather-Harness.webp" },
+                        { name: "Носовая фигура", icon: "https://i.postimg.cc/br5SsYj8/T-UI-icon-Addon-Ship-Figurehead.webp" },
+                        { name: "Свайка", icon: "https://i.postimg.cc/DZdcJXCh/T-UI-icon-Addon-Marlinspike.webp" },
+                        { name: "Бурдюк", icon: "https://i.postimg.cc/F1tFMY4f/T-UI-icon-Addon-Waterskin.webp" },
+                        { name: "Жирное мясо", icon: "https://i.postimg.cc/bYk7gC5Y/T-UI-icon-Addon-Fatty-Meat.webp" },
+                        { name: "Незаконченная карта", icon: "https://i.postimg.cc/hjjGTFsG/T-UI-icon-Addon-Unfinished-Map.webp" },
+                        { name: "Ошейник с шипами", icon: "https://i.postimg.cc/pdvh9139/T-UI-icon-Addon-Spiked-Collar.webp" },
+                        { name: "Тренировочный колокольчик", icon: "https://i.postimg.cc/850zbyXm/T-UI-icon-Addon-Training-Bell.webp" },
+                        { name: "Веревка с узлами", icon: "https://i.postimg.cc/L64xPxKb/T-UI-icon-Addon-Knotted-Rope.webp" },
+                        { name: "Копченый окунь", icon: "https://i.postimg.cc/L8Lg8MQK/T-UI-icon-Addon-Smoked-Snapper.webp" },
+                        { name: "Кофель-нагели", icon: "https://i.postimg.cc/Nf1Qyft4/T-UI-icon-Addon-Belaying-Pins.webp" },
+                        { name: "Подзорная труба", icon: "https://i.postimg.cc/sXDMmGjs/T-UI-icon-Addon-Spyglass.webp" },
+                        { name: "Ячменная мука", icon: "https://i.postimg.cc/vHRQHxJT/T-UI-icon-Addon-Barley-Meal.webp" },
+                        { name: "Книга по дрессировке", icon: "https://i.postimg.cc/3w9Rkrg6/T-UI-icon-Addon-Trainers-Book.webp" },
+                        { name: "Кость существа", icon: "https://i.postimg.cc/Z5wt3WMr/T-UI-icon-Addon-Creatures-Bone.webp" },
+                        { name: "Липкая смола", icon: "https://i.postimg.cc/RhWN5rJY/T-UI-icon-Addon-Sticky-Pitch.webp" },
+                        { name: "Неспелый кокос", icon: "https://i.postimg.cc/X7F9pFXz/T-UI-icon-Addon-Young-Coconut.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Гуль", 
+                    icon: "https://i.postimg.cc/CxFPhQrn/K39-The-Ghoul-Portrait.webp",
+                    addons: [
+                        { name: "Маска Ямори", icon: "https://i.postimg.cc/Pf0mXKfD/T-UI-icon-Addon-Yamoris-Mask.webp" },
+                        { name: "Радужная повязка", icon: "https://i.postimg.cc/QtpfQPdR/T-UI-icon-Addon-iridescent-Eye-Patch.webp" },
+                        { name: "Инструмент пыток", icon: "https://i.postimg.cc/prWJDL7F/T-UI-icon-Addon-medical-Apparatus.webp" },
+                        { name: "Красноголовая сколопендра", icon: "https://i.postimg.cc/XqY9rDGK/T-UI-icon-Addon-red-Headed-Centipede.webp" },
+                        { name: "Свежий кофе", icon: "https://i.postimg.cc/hGNYbTb7/T-UI-icon-Addon-fresh-Coffee.webp" },
+                        { name: "Удостоверение CCG", icon: "https://i.postimg.cc/G2W126SV/T-UI-icon-Addon-CCGIDCard.webp" },
+                        { name: "Галстук Амона", icon: "https://i.postimg.cc/k4BnDQM6/T-UI-icon-Addon-Amons-Necktie.webp" },
+                        { name: "Ликорис лучистый", icon: "https://i.postimg.cc/zv2KKSKs/T-UI-icon-Addon-red-Spider-Lily.webp" },
+                        { name: "Одежда «Дерево Аогири»", icon: "https://i.postimg.cc/gjhmHGZG/T-UI-icon-Addon-Aogiri-Tree-Robe.webp" },
+                        { name: "Очки Ридзэ", icon: "https://i.postimg.cc/25NvQ5LS/T-UI-icon-Addon-Rizes-Glasses.webp" },
+                        { name: "Перчатка Мадо", icon: "https://i.postimg.cc/cHNmLmBT/T-UI-icon-Addon-Mados-Glove.webp" },
+                        { name: "Зонтик Хинами", icon: "https://i.postimg.cc/7ZWtw0RQ/T-UI-icon-Addon-Hinamis-Umbrella.webp" },
+                        { name: "Мешочек Канэки", icon: "https://i.postimg.cc/mD8HWNXP/T-UI-icon-Addon-satchel.webp" },
+                        { name: "Наушники Хидэ", icon: "https://i.postimg.cc/MpT3Cd9Q/T-UI-icon-Addon-Hides-Headphones.webp" },
+                        { name: "Окровавленный носовой платок", icon: "https://i.postimg.cc/cL00fy4N/T-UI-icon-Addon-blood-Stained-Handkerchief.webp" },
+                        { name: "Разованная цепь", icon: "https://i.postimg.cc/HLPmGr0p/T-UI-icon-Addon-broken-Chain.webp" },
+                        { name: "Бумажник Канэки", icon: "https://i.postimg.cc/SRkDDrXj/T-UI-icon-Addon-Kanekis-Wallet.webp" },
+                        { name: "Тайяки", icon: "https://i.postimg.cc/qBFNc79H/T-UI-icon-Addon-taiyaki.webp" },
+                        { name: "Фартук «Антэйку»", icon: "https://i.postimg.cc/gJQGhxrM/T-UI-icon-Addon-Anteiku-Apron.webp" },
+                        { name: "Яйцо черного козла", icon: "https://i.postimg.cc/JzVtg2rT/T-UI-icon-Addon-The-Black-Goats-Egg.webp" },
+                        { name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Спрингтрап", 
+                    icon: "https://i.postimg.cc/13JWfrbC/K40-The-Animatronic-Portrait.webp",
+                    addons: [
+                        { name: "Фаз-монета", icon: "https://i.postimg.cc/X7WTzKMf/T-UI-icon-Addon-Faz-Coin.webp" },
+                        { name: "Радужная «оболочка»", icon: "https://i.postimg.cc/PxG68hTW/T-UI-icon-Addon-Iridescent-Remnant.webp" },
+                        { name: "Панель доступа", icon: "https://i.postimg.cc/MGs6WPwJ/T-UI-icon-Addon-Access-Panel.webp" },
+                        { name: "Все на праздник! Плакат", icon: "https://i.postimg.cc/mk7WFVvD/T-UI-icon-Addon-Celebrate-Poster.webp" },
+                        { name: "Процессор Эндо", icon: "https://i.postimg.cc/NF6Z0FX2/T-UI-icon-Addon-Endo-CPU.webp" },
+                        { name: "Сумка с добычей", icon: "https://i.postimg.cc/bN6391qN/T-UI-icon-Addon-Loot-Bag.webp" },
+                        { name: "Гитарные струны Бонни", icon: "https://i.postimg.cc/3x17BSd0/T-UI-icon-Addon-Bonnies-Guitar-Strings.webp" },
+                        { name: "Слюнявчик Чики", icon: "https://i.postimg.cc/dQCYXthY/T-UI-icon-Addon-Chicas-Bib.webp" },
+                        { name: "Крюк Фокси", icon: "https://i.postimg.cc/XY7tVVYX/T-UI-icon-Addon-Foxy-Hook.webp" },
+                        { name: "Шляпа Фредди", icon: "https://i.postimg.cc/KY1VMJL2/T-UI-icon-Addon-Freddys-Hat.webp" },
+                        { name: "Рисунок фиолетового", icon: "https://i.postimg.cc/pLhYQ70q/T-UI-icon-Addon-Purple-Guy-Drawing.webp" },
+                        { name: "Офисный телефон", icon: "https://i.postimg.cc/MZ5Dz1Mb/T-UI-icon-Addon-Office-Phone.webp" },
+                        { name: "Колпак для вечеринок", icon: "https://i.postimg.cc/tCmNxyzs/T-UI-icon-Addon-Party-Hat.webp" },
+                        { name: "Порванная занавеска", icon: "https://i.postimg.cc/hPwVGsSx/T-UI-icon-Addon-Ripped-Curtain.webp" },
+                        { name: "Значок охранника", icon: "https://i.postimg.cc/SRRzS23D/T-UI-icon-Addon-Security-Guards-Badge.webp" },
+                        { name: "Цветные ленты", icon: "https://i.postimg.cc/3NzW3Lgx/T-UI-icon-Addon-Streamers.webp" },
+                        { name: "Одноразовая тарелка", icon: "https://i.postimg.cc/MZ7LVccv/T-UI-icon-Addon-Greasy-Paper-Plate.webp" },
+                        { name: "Объявление о найме", icon: "https://i.postimg.cc/tC9M5XPD/T-UI-icon-Addon-Help-Wanted-Ad.webp" },
+                        { name: "Меню ресторана", icon: "https://i.postimg.cc/T2trzGFt/T-UI-icon-Addon-Restaurant-Menu.webp" },
+                        { name: "Гнилая пицца", icon: "https://i.postimg.cc/5t5znM8q/T-UI-icon-Addon-Rotten-Pizza.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                name: "Красу", 
+                    icon: "https://i.postimg.cc/bvrmb2hz/the-krasue.webp",
+                    addons: [
+                        { name: "Изодранное платье", icon: "https://i.postimg.cc/657GFZdQ/T-UI-icon-Addon-Shredded-Gown.webp" },
+                        { name: "Цыплячья голова", icon: "https://i.postimg.cc/vHdsdFn6/T-UI-icon-Addon-Chicken-Head.webp" },
+                        { name: "Гнилая свинья", icon: "https://i.postimg.cc/W32kyfnR/T-UI-icon-Addon-Rotten-Swine.webp" },
+                        { name: "Загадочный эликсир", icon: "https://i.postimg.cc/Zqv7R0tY/T-UI-icon-Addon-Iridescent-Elixir.webp" },
+                        { name: "Скипетр королевы", icon: "https://i.postimg.cc/tTy3jg9M/T-UI-icon-Addon-Queens-Scepter.webp" },
+                        { name: "Газета в рамке", icon: "https://i.postimg.cc/mgXJk0Pj/T-UI-icon-Addon-Framed-Newspaper.webp" },
+                        { name: "Зазбрызганный платок", icon: "https://i.postimg.cc/KY5KtDy0/T-UI-icon-Addon-Spotted-Handkerchief.webp" },
+                        { name: "Затупленный нож", icon: "https://i.postimg.cc/yx4wBcDz/T-UI-icon-Addon-Dulled-Knife.webp" },
+                        { name: "Рука Джанджиры", icon: "https://i.postimg.cc/CMsvdWt8/T-UI-icon-Addon-Janjiras-Hand.webp" },
+                        { name: "Театральный бинокль", icon: "https://i.postimg.cc/xTbc622J/T-UI-icon-Addon-Theater-Binoculars.webp" },
+                        { name: "Извивающийся паразит", icon: "https://i.postimg.cc/L4JtFGSR/T-UI-icon-Addon-Wriggling-Parasite.webp" },
+                        { name: "Испорченный метроном", icon: "https://i.postimg.cc/QtWRR0xb/T-UI-icon-Addon-Defective-Metronome.webp" },
+                        { name: "Ошметок Малай", icon: "https://i.postimg.cc/htDRfLpD/T-UI-icon-Addon-Chunk-Of-Malai.webp" },
+                        { name: "Свиной глаз", icon: "https://i.postimg.cc/R0w7ytxt/T-UI-icon-Addon-Pigs-Eye.webp" },
+                        { name: "Скомканные ноты", icon: "https://i.postimg.cc/0N4TWLxj/T-UI-icon-Addon-Crumpled-Sheet-Music.webp" },
+                        { name: "Липкая пастилка", icon: "https://i.postimg.cc/63jym6qR/T-UI-icon-Addon-Sticky-Lozenge.webp" },
+                        { name: "Несчастная мышь", icon: "https://i.postimg.cc/QdwmRsB2/T-UI-icon-Addon-Luckless-Mouse.webp" },
+                        { name: "Первое либретто", icon: "https://i.postimg.cc/NfxWqyYW/T-UI-icon-Addon-First-Libretto.webp" },
+                        { name: "Останки Лоренцы", icon: "https://i.postimg.cc/9f9b2SZr/T-UI-icon-Addon-Lorenzas-Remains.webp" },
+                        { name: "Сломанная тиара", icon: "https://i.postimg.cc/pThHPPkK/T-UI-icon-Addon-Broken-Tiara.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                }
+            ];
+            
+            // База данных перков для киллеров
+            const killerPerks = [
                 { name: "Нетерпимость", icon: "https://i.postimg.cc/kXHnzWDt/icon-Perks-Agitation.webp" },
                 { name: "Детище тьмы", icon: "https://i.postimg.cc/9FQdJHqQ/icon-Perks-Shadowborn.webp" },
                 { name: "Стойкий", icon: "https://i.postimg.cc/SKD11fNB/icon-Perks-Enduring.webp" },
@@ -569,45 +1735,83 @@
                 { name: "Разбитые надежды", icon: "https://i.postimg.cc/R0LxStCd/icon-Perks-Boon-Destroyer.webp" },
 				{ name: "Проклятие Рока", icon: "https://i.postimg.cc/DZzvR6QL/T-UI-icon-Perks-Hex-Overture-Of-Doom.webp" },
 				{ name: "Прожорливость", icon: "https://i.postimg.cc/MpbzTNd1/T-UI-icon-Perks-Ravenous.webp" },
-				{ name: "Блужлающий взгляд", icon: "https://i.postimg.cc/LsxRkfdX/T-UI-icon-Perks-Wandering-Eye.webp" }
+				{ name: "Блужлающий взгляд", icon: "https://i.postimg.cc/LsxRkfdX/T-UI-icon-Perks-Wandering-Eye.webp" },
+                { name: "Без перка", icon: "https://i.postimg.cc/8krXjTh8/icon-Perks-Hope.webp" }
             ];
             
-            generateBtn.addEventListener('click', function() {
-                // Очищаем предыдущие результаты
-                perksGrid.innerHTML = '';
-                itemsGrid.innerHTML = '';
+            // Функция создания одного набора
+            function createBuild() {
+                const randomKiller = killers[Math.floor(Math.random() * killers.length)];
                 
-                // Выбираем 4 случайных перка
-                const selectedPerks = getRandomItems(survivorPerks, 4);
+                // Случайные перки (4 штуки)
+                const shuffledPerks = [...killerPerks].sort(() => 0.5 - Math.random());
+                const selectedPerks = shuffledPerks.slice(0, 4);
                 
-                // Добавляем перки в сетку
-                selectedPerks.forEach(perk => {
-                    const perkElement = document.createElement('div');
-                    perkElement.className = 'perk-card';
-                    perkElement.innerHTML = `
-                        <div class="perk-icon">
-                            <img src="${perk.icon}" alt="${perk.name}">
+                // Аддоны ПРИВЯЗАНЫ к выбранному киллеру
+                const shuffledAddons = [...randomKiller.addons].sort(() => 0.5 - Math.random());
+                const selectedAddons = shuffledAddons.slice(0, 2);
+                
+                return {
+                    killer: randomKiller,
+                    perks: selectedPerks,
+                    addons: selectedAddons
+                };
+            }
+            
+            // Функция отображения набора
+            function renderBuild(build) {
+                return `
+                    <div class="build-container">
+                        <!-- Киллер -->
+                        <div class="killer-card">
+                            <div class="killer-icon">
+                                <img src="${build.killer.icon}" alt="${build.killer.name}" onerror="this.src='https://via.placeholder.com/80x80/333333/ffffff?text=K'">
+                            </div>
+                            <div class="killer-name">${build.killer.name}</div>
+                            <div class="item-label">Киллер</div>
                         </div>
-                        <h4>${perk.name}</h4>
                         
-                    `;
-                    perksGrid.appendChild(perkElement);
-                }); 
-                
-                // Показываем результат с анимацией
+                        <!-- 4 перка -->
+                        <div class="perks-container">
+                            ${build.perks.map(perk => `
+                                <div class="perk-card">
+                                    <div class="perk-icon">
+                                        <img src="${perk.icon}" alt="${perk.name}" onerror="this.src='https://via.placeholder.com/60x60/333333/ffffff?text=P'">
+                                    </div>
+                                    <div class="item-label">${perk.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- 2 аддона с цветными рамками -->
+                        <div class="addons-container">
+                            ${build.addons.map((addon, index) => `
+                                <div class="addon-card addon-${index + 1}">
+
+                                    <div class="addon-icon">
+                                        <img src="${addon.icon}" alt="${addon.name}" onerror="this.src='https://via.placeholder.com/60x60/333333/ffffff?text=A'">
+                                    </div>
+                                    <div class="item-label">${addon.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Обработчик кнопки генерации
+            generateBtn.addEventListener('click', function() {
                 resultDiv.classList.add('visible');
                 
-                // Прокрутка к результатам
+                const build = createBuild();
+                buildsContainer.innerHTML = `
+                    <h3 class="section-title">Случайная сборка для киллера</h3>
+                    ${renderBuild(build)}
+                `;
+                
                 resultDiv.scrollIntoView({ behavior: 'smooth' });
             });
-            
-            // Функция для получения случайных элементов из массива
-            function getRandomItems(array, count) {
-                const shuffled = [...array].sort(() => 0.5 - Math.random());
-                return shuffled.slice(0, count);
-            }
         });
     </script>
 </body>
-
 </html>
