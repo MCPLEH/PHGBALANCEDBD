@@ -13,10 +13,6 @@
             --text-color: #f0f0f0;
             --accent-color: #3a3a3a;
             --highlight-color: #ff2a2a;
-            --border-color-1: rgba(0, 162, 255, 0.3); /* Синяя рамка */
-            --border-color-2: rgba(0, 255, 106, 0.3); /* Зеленая рамка */
-            --border-color-3: rgba(255, 251, 0, 0.3); /* Желтая рамка */
-            --border-color-4: rgba(255, 0, 234, 0.3); /* Фиолетовая рамка */
         }
         
         * {
@@ -44,7 +40,7 @@
         
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
         }
@@ -89,19 +85,19 @@
         }
         
         .hero {
-            padding: 4rem 0;
+            padding: 3rem 0;
             text-align: center;
             background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
         }
         
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             color: #ccc;
@@ -111,7 +107,7 @@
             background-color: rgba(26, 26, 26, 0.9);
             border-radius: 10px;
             padding: 2rem;
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             border: 1px solid #333;
@@ -128,7 +124,7 @@
             font-size: 1rem;
             font-weight: bold;
             transition: background-color 0.3s, transform 0.2s;
-            margin-bottom: 1.5rem;
+            margin: 0.5rem;
         }
         
         .btn:hover {
@@ -138,6 +134,22 @@
         
         .btn:active {
             transform: translateY(0);
+        }
+        
+        .btn-solo {
+            background-color: #2a7dc7;
+        }
+        
+        .btn-party {
+            background-color: #ed071e;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }
         
         .result {
@@ -158,42 +170,118 @@
             to { opacity: 1; }
         }
         
-        .result h3 {
+        .section-title {
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            font-size: 1.5rem;
         }
         
-        .perks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        /* Стили для одного набора (Соло) */
+        .build-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            border: 2px solid #444;
+        }
+        
+        /* Стили для четырех наборов (Пати) */
+        .party-builds-container {
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
-            margin-top: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .perks-grid.party {
-            grid-template-columns: repeat(4, 1fr);
+        .party-build-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 8px;
+            border: 2px solid #444;
+            position: relative;
         }
         
-        .perk-card {
+        .player-number {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+        
+        .killer-card {
             background-color: #2a2a2a;
             border-radius: 8px;
             padding: 1rem;
             text-align: center;
+            border: 2px solid var(--primary-color);
+            min-width: 100px;
+        }
+        
+        .killer-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 0.5rem;
+            border-radius: 0%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            //border: 2px solid var(--primary-color);
+        }
+        
+        .killer-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .perks-container {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        
+        .perk-card {
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            padding: 0.8rem;
+            text-align: center;
             transition: transform 0.3s;
             border: 1px solid #333;
+            min-width: 80px;
         }
         
         .perk-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             border-color: var(--primary-color);
         }
         
         .perk-icon {
             width: 80px;
             height: 80px;
-            margin: 0 auto 0.5rem;
-            border-radius: 8px;
+            margin: 0 auto 0.3rem;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -206,76 +294,20 @@
             object-fit: cover;
         }
         
-        /* Стили для горизонтальных рамок в режиме пати */
-        .perks-grid.party .perk-card:nth-child(1),
-        .perks-grid.party .perk-card:nth-child(2),
-        .perks-grid.party .perk-card:nth-child(3),
-        .perks-grid.party .perk-card:nth-child(4) {
-            border-width: 3px;
-            border-color: var(--border-color-1);
-            box-shadow: 0 0 10px var(--border-color-1);
-        }
-        
-        .perks-grid.party .perk-card:nth-child(5),
-        .perks-grid.party .perk-card:nth-child(6),
-        .perks-grid.party .perk-card:nth-child(7),
-        .perks-grid.party .perk-card:nth-child(8) {
-            border-width: 3px;
-            border-color: var(--border-color-2);
-            box-shadow: 0 0 10px var(--border-color-2);
-        }
-        
-        .perks-grid.party .perk-card:nth-child(9),
-        .perks-grid.party .perk-card:nth-child(10),
-        .perks-grid.party .perk-card:nth-child(11),
-        .perks-grid.party .perk-card:nth-child(12) {
-            border-width: 3px;
-            border-color: var(--border-color-3);
-            box-shadow: 0 0 10px var(--border-color-3);
-        }
-        
-        .perks-grid.party .perk-card:nth-child(13),
-        .perks-grid.party .perk-card:nth-child(14),
-        .perks-grid.party .perk-card:nth-child(15),
-        .perks-grid.party .perk-card:nth-child(16) {
-            border-width: 3px;
-            border-color: var(--border-color-4);
-            box-shadow: 0 0 10px var(--border-color-4);
-        }
-        
-        .items-section {
-            margin-top: 2.5rem;
-            padding: 1.5rem;
-            background-color: #252525;
-            border-radius: 8px;
-        }
-        
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        
         .item-card {
             background-color: #2a2a2a;
-            border-radius: 8px;
-            padding: 1rem;
+            border-radius: 6px;
+            padding: 0.8rem;
             text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid #333;
-        }
-        
-        .item-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
+            border: 2px solid #2a7dc7;
+            min-width: 80px;
         }
         
         .item-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 0.5rem;
-            border-radius: 8px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 0.3rem;
+            border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -288,46 +320,56 @@
             object-fit: cover;
         }
         
-        .section-title {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.5rem;
+        .addons-container {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
         }
         
-        .features {
-            padding: 4rem 0;
-            background-color: rgba(20, 20, 20, 0.9);
-        }
-        
-        .features h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.2rem;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background-color: rgba(40, 40, 40, 0.7);
-            padding: 1.5rem;
-            border-radius: 8px;
+        .addon-card {
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            padding: 0.8rem;
             text-align: center;
             transition: transform 0.3s;
+            border: 1px solid #333;
+            min-width: 80px;
         }
         
-        .feature-card:hover {
-            transform: translateY(-5px);
+        .addon-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
+        .addon-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 0.3rem;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .addon-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-label {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin-top: 0.3rem;
+            font-weight: bold;
+        }
+        
+        .killer-name {
+            font-size: 0.9rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            font-weight: bold;
+            margin-top: 0.2rem;
         }
         
         footer {
@@ -335,6 +377,7 @@
             padding: 2rem 0;
             text-align: center;
             border-top: 1px solid #333;
+            margin-top: 2rem;
         }
         
         .footer-content {
@@ -348,22 +391,6 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 1rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-links a {
-            color: #ccc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-color);
         }
         
         .copyright {
@@ -387,28 +414,44 @@
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
-            .features-grid {
-                grid-template-columns: 1fr;
+            .build-container, .party-build-row {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
             }
             
-            .perks-grid {
-                grid-template-columns: 1fr;
+            .perks-container, .addons-container {
+                flex-wrap: wrap;
             }
             
-            .perks-grid.party {
-                grid-template-columns: 1fr;
+            .killer-card, .perk-card, .item-card, .addon-card {
+                min-width: 70px;
             }
             
-            .items-grid {
-                grid-template-columns: 1fr;
+            .killer-icon {
+                width: 60px;
+                height: 60px;
             }
             
-            /* Адаптация рамок для мобильных устройств */
-            .perks-grid.party .perk-card {
-                border-width: 2px;
+            .perk-icon, .item-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .addon-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .player-number {
+                top: -8px;
+                left: 10px;
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -434,28 +477,24 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Рандомайзер перков</h1>
-			<a href="randomS.html" class="btn" style="background-color: #2a7dc7;"><i class="fas fa-users"></i> Выжившие</a> <a href="random.html" class="btn" style="background-color: #ed071e;"><i class="fas fa-crosshairs"></i> Киллеры</a>
+            <h1>Рандомайзер киллеров</h1>
+			<a href="randomS.html" class="btn btn-solo"><i class="fas fa-users"></i> Выжившие</a> 
+            <a href="random.html" class="btn btn-party"><i class="fas fa-crosshairs"></i> Киллеры</a>
             <br>
             
             <div class="checker-container">
-                <button class="btn" id="generateSolo">Сгенерировать Соло</button> <button class="btn" id="generateParty">Сгенерировать Пати</button>
+                <div class="buttons-container">
+                    <button class="btn btn-solo" id="generateSolo">
+                        <i class="fas fa-user"></i> Генерировать Соло
+                    </button>
+                    <button class="btn btn-party" id="generateParty">
+                        <i class="fas fa-users"></i> Генерировать Пати
+                    </button>
+                </div>
                 
                 <div class="result" id="result">
-                    
-                    
-                    <div class="perks-section">
-                        <h4 class="section-title">Перки для выживших</h4>
-                        <div class="perks-grid" id="perksGrid">
-                            <!-- Перки будут добавлены через JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="items-section">
-                        
-                        <div class="items-grid" id="itemsGrid">
-                            <!-- Предметы будут добавлены через JavaScript -->
-                        </div>
+                    <div id="buildsContainer">
+                        <!-- Сюда будут добавляться сборки через JavaScript -->
                     </div>
                 </div>
             </div>
@@ -466,30 +505,466 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">PHG | DBD Creator</div>
-
                 <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
             </div>
         </div>
     </footer>
+    
     <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
-            <center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
-            <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
-            <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
-            <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
-            <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
-            <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const generateSoloBtn = document.getElementById('generateSolo');
             const generatePartyBtn = document.getElementById('generateParty');
             const resultDiv = document.getElementById('result');
-            const perksGrid = document.getElementById('perksGrid');
-            const itemsGrid = document.getElementById('itemsGrid');
+            const buildsContainer = document.getElementById('buildsContainer');
             
-            // Базы данных с реальными значками из DBD
-            const survivorPerks = [
- { name: 'Связь', icon: 'https://i.postimg.cc/2yPR0R79/icon-Perks-Bond.webp' },
+            // База данных выжившиъ
+            const killers = [
+                { name: "Дуайт Фейрфилд", icon: "https://i.postimg.cc/nzJ4PYjk/S01-Dwight-Fairfield-Portrait.webp" },
+                { name: "Мэг Томас", icon: "https://i.postimg.cc/V6WqQrXc/S02-Meg-Thomas-Portrait.webp" },
+                { name: "Клодетт Морель", icon: "https://i.postimg.cc/NFNRF3NJ/S03-Claudette-Morel-Portrait.webp" },
+                { name: "Джейк Парк", icon: "https://i.postimg.cc/zvDnJzkH/S04-Jake-Park-Portrait.webp" },
+                { name: "Нея Карлссон", icon: "https://i.postimg.cc/RCG7gtM7/S05-Nea-Karlsson-Portrait.webp" },
+                { name: "Уильям «Билл» Овербек", icon: "https://i.postimg.cc/CxnbM6b7/S08-William-Bill-Overbeck-Portrait.webp" },
+                { name: "Лори Строуд", icon: "https://i.postimg.cc/tCThwgTL/S06-Laurie-Strode-Portrait.webp" },
+				{ name: "Эйс Висконти", icon: "https://i.postimg.cc/15jpQZV4/S07-Ace-Visconti-Portrait.webp" },
+                { name: "Фенг Мин", icon: "https://i.postimg.cc/tg0Wst5j/S09-Feng-Min-Portrait.webp" },
+                { name: "Дэвид Кинг", icon: "https://i.postimg.cc/3wgpm4SD/S10-David-King-Portrait.webp" },
+                { name: "Квентин Смит", icon: "https://i.postimg.cc/C1S8NhXr/S11-Quentin-Smith-Portrait.webp" },
+                { name: "Детектив Тэпп", icon: "https://i.postimg.cc/cCJ8pDsQ/S12-Detective-David-Tapp-Portrait.webp" },
+                { name: "Кейт Денсон", icon: "https://i.postimg.cc/bJgtFXjy/S13-Kate-Denson-Portrait.webp" },
+                { name: "Адам Фрэнсис", icon: "https://i.postimg.cc/Kc9TPyNQ/S14-Adam-Francis-Portrait.webp" },
+				{ name: "Джефф Йохансен", icon: "https://i.postimg.cc/j2kJtz5B/S15-Jeff-Johansen-Portrait.webp" },
+                { name: "Джейн Ромеро", icon: "https://i.postimg.cc/c4rnT5kW/S16-Jane-Romero-Portrait.webp" },
+                { name: "Эшли Джей Уильямс", icon: "https://i.postimg.cc/TYFWsqBD/S17-Ashley-JWilliams-Portrait.webp" },
+                { name: "Нэнси Уиллер", icon: "https://i.postimg.cc/0NqKk5k5/S19-Nancy-Wheeler-Portrait.webp" },
+                { name: "Стив Харрингтон", icon: "https://i.postimg.cc/dVCTcZKS/S18-Steve-Harrington-Portrait.webp" },
+                { name: "Юи Кимура", icon: "https://i.postimg.cc/0NdMbgjY/S20-Yui-Kimura-Portrait.webp" },
+                { name: "Зарина Кассир", icon: "https://i.postimg.cc/pTW9j05g/S21-Zarina-Kassir-Portrait.webp" },
+				{ name: "Шерил Мейсон", icon: "https://i.postimg.cc/xC6X3KKq/S22-Cheryl-Mason-Portrait.webp" },
+                { name: "Феликс Рихтер", icon: "https://i.postimg.cc/rszKnKJj/S23-Felix-Richter-Portrait.webp" },
+                { name: "Элоди Ракото", icon: "https://i.postimg.cc/3rbyyF8c/S24-Elodie-Rakoto-Portrait.webp" },
+                { name: "Ли Юнчин", icon: "https://i.postimg.cc/rsbzvMZk/S25-Yun-Jin-Lee-Portrait.webp" },
+                { name: "Джилл Валентайн", icon: "https://i.postimg.cc/fTGJCW07/S26-Jill-Valentine-Portrait.webp" },
+                { name: "Леон С. Кеннеди", icon: "https://i.postimg.cc/L8jhbdzc/S27-Leon-SKennedy-Portrait.webp" },
+                { name: "Микаэла Рид", icon: "https://i.postimg.cc/4N7YpHnN/S28-Mikaela-Reid-Portrait.webp" },
+				{ name: "Хонас Васкес", icon: "https://i.postimg.cc/bv8dX6gs/S29-Jonah-Vasquez-Portrait.webp" },
+                { name: "Ёити Асакава", icon: "https://i.postimg.cc/C1x15zW0/S30-Yoichi-Asakawa-Portrait.webp" },
+                { name: "Хэдди Каур", icon: "https://i.postimg.cc/SKrRmW1V/S31-Haddie-Kaur-Portrait.webp" },
+                { name: "Ада Вонг", icon: "https://i.postimg.cc/QtYMTj3T/S32-Ada-Wong-Portrait.webp" },
+                { name: "Ребекка Чемберс", icon: "https://i.postimg.cc/vT1Z7CYS/S33-Rebecca-Chambers-Portrait.webp" },
+                { name: "Витторио Тоскано", icon: "https://i.postimg.cc/ncDLX8wX/S34-Vittorio-Toscano-Portrait.webp" },
+                { name: "Талита Лира", icon: "https://i.postimg.cc/zDMBDDpm/S35-Thalita-Lyra-Portrait.webp" },
+				{ name: "Ренато Лира", icon: "https://i.postimg.cc/kGkXTwDM/S36-Renato-Lyra-Portrait.webp" },
+                { name: "Габриэль Сома", icon: "https://i.postimg.cc/qvcMGsr0/S37-Gabriel-Soma-Portrait.webp" },
+                { name: "Николас Кейдж", icon: "https://i.postimg.cc/k5nMY2MS/S38-Nicolas-Cage-Portrait.webp" },
+                { name: "Эллен Рипли", icon: "https://i.postimg.cc/TPCdzTh4/S39-Ellen-Ripley-Portrait.webp" },
+                { name: "Алан Уэйк", icon: "https://i.postimg.cc/rpWGjYms/Alan-Wake-Portrait.webp" },
+                { name: "Сейбл Уорд", icon: "https://i.postimg.cc/HxnYHFys/S41-Sable-Ward-Portrait.webp" },
+                { name: "Аэстри Язар", icon: "https://i.postimg.cc/NMng0b68/S42-The-Troupe-Portrait.webp" },
+				{ name: "Лара Крофт", icon: "https://i.postimg.cc/prnP58Cw/S43-Lara-Croft-Portrait.webp" },
+                { name: "Тревор Бельмонт", icon: "https://i.postimg.cc/SjFk6stJ/S44-Trevor-Belmont-Portrait.webp" },
+                { name: "Тори Кейн", icon: "https://i.postimg.cc/MZhQPmCj/S45-Taurie-Cain-Portrait.webp" },
+                { name: "Орела Роуз", icon: "https://i.postimg.cc/WpDZwHHv/S46-Orela-Rose-Portrait.webp" },
+                { name: "Рик Граймс", icon: "https://i.postimg.cc/MKVjhjw3/S47-Rick-Grimes-Portrait.webp" },
+				{ name: "Мишон Граймс", icon: "https://i.postimg.cc/GmRsrhhL/S48-Michonne-Grimes-Portrait.webp" },
+                { name: "Ви Бунясак", icon: "https://i.postimg.cc/9QBwf5rG/S49-Vee-Boonyasak-Portrait.webp" }
+            ];
+            
+            // База данных предметов с ПРИВЯЗАННЫМИ аддонами
+            const items = [
+                {
+                    name: "Ключ скелета",
+                    type: "Ключ",
+                    icon: "https://i.postimg.cc/mkMv71pJ/icon-Items-key.webp",
+                    addons: [
+                        { name: "Кровавый янтарь", icon: "https://i.postimg.cc/bYnrBBNZ/icon-Addon-blood-Amber.webp" },
+                        { name: "Уникальное обручальное кольцо", icon: "https://i.postimg.cc/xTd7dWJC/icon-Addon-unique-Ring.webp" },
+                        { name: "Плетеная безделушка", icon: "https://i.postimg.cc/TPtn7H0y/T-UI-icon-Addon-Braided-Bauble.webp" },
+						{ name: "Пронзительный свист", icon: "https://i.postimg.cc/VLtWZBdY/T-UI-icon-Addon-Shrill-Whistle.webp" },
+                        { name: "Амулет дружбы", icon: "https://i.postimg.cc/K8rrxGPw/T-UI-icon-IAddon-Friendship-Charm.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }  
+                    ]
+                },
+                {
+				    name: "Потертый ключ",
+                    type: "Ключ",
+                    icon: "https://i.postimg.cc/MX2swsDr/icon-Items-dull-Key.webp",
+                    addons: [
+                        { name: "Кровавый янтарь", icon: "https://i.postimg.cc/bYnrBBNZ/icon-Addon-blood-Amber.webp" },
+                        { name: "Уникальное обручальное кольцо", icon: "https://i.postimg.cc/xTd7dWJC/icon-Addon-unique-Ring.webp" },
+                        { name: "Плетеная безделушка", icon: "https://i.postimg.cc/TPtn7H0y/T-UI-icon-Addon-Braided-Bauble.webp" },
+						{ name: "Пронзительный свист", icon: "https://i.postimg.cc/VLtWZBdY/T-UI-icon-Addon-Shrill-Whistle.webp" },
+                        { name: "Амулет дружбы", icon: "https://i.postimg.cc/K8rrxGPw/T-UI-icon-IAddon-Friendship-Charm.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Сломанный ключ",
+                    type: "Ключ",
+                    icon: "https://i.postimg.cc/prn0gNDF/icon-Items-broken-Key.webp",
+                    addons: [
+                        { name: "Кровавый янтарь", icon: "https://i.postimg.cc/bYnrBBNZ/icon-Addon-blood-Amber.webp" },
+                        { name: "Уникальное обручальное кольцо", icon: "https://i.postimg.cc/xTd7dWJC/icon-Addon-unique-Ring.webp" },
+                        { name: "Плетеная безделушка", icon: "https://i.postimg.cc/TPtn7H0y/T-UI-icon-Addon-Braided-Bauble.webp" },
+						{ name: "Пронзительный свист", icon: "https://i.postimg.cc/VLtWZBdY/T-UI-icon-Addon-Shrill-Whistle.webp" },
+                        { name: "Амулет дружбы", icon: "https://i.postimg.cc/K8rrxGPw/T-UI-icon-IAddon-Friendship-Charm.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                    name: "Флакон Виго с туманом",
+                    type: "Инструмент",
+                    icon: "https://i.postimg.cc/0yNtsJdv/T-UI-icon-Items-vigos-Fog-Vial.webp",
+                    addons: [
+                        { name: "Мощная вытяжка", icon: "https://i.postimg.cc/907TfXhT/T-UI-icon-Addon-potent-Extract.webp" },
+                        { name: "Грибная смесь", icon: "https://i.postimg.cc/yWCR3q1G/T-UI-icon-Addon-mushroom-Formula.webp" },
+                        { name: "Маслянистый сок", icon: "https://i.postimg.cc/d1Xrvkzw/T-UI-icon-Addon-oily-Sap.webp" },
+						{ name: "Реактивное соединение", icon: "https://i.postimg.cc/fWJKmhsS/T-UI-icon-Addon-reactive-Compound.webp" },
+                        { name: "Вулканический камень", icon: "https://i.postimg.cc/g2PqCXZ3/T-UI-icon-Addon-volcanic-Stone.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Флакон мастерового с туманом",
+                    type: "Инструмент",
+                    icon: "https://i.postimg.cc/xjKpyQTw/T-UI-icon-Items-artisans-Fog-Vial.webp",
+                    addons: [
+                        { name: "Мощная вытяжка", icon: "https://i.postimg.cc/907TfXhT/T-UI-icon-Addon-potent-Extract.webp" },
+                        { name: "Грибная смесь", icon: "https://i.postimg.cc/yWCR3q1G/T-UI-icon-Addon-mushroom-Formula.webp" },
+                        { name: "Маслянистый сок", icon: "https://i.postimg.cc/d1Xrvkzw/T-UI-icon-Addon-oily-Sap.webp" },
+						{ name: "Реактивное соединение", icon: "https://i.postimg.cc/fWJKmhsS/T-UI-icon-Addon-reactive-Compound.webp" },
+                        { name: "Вулканический камень", icon: "https://i.postimg.cc/g2PqCXZ3/T-UI-icon-Addon-volcanic-Stone.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Флакон подмастерья с туманом",
+                    type: "Инструмент",
+                    icon: "https://i.postimg.cc/m2jdJS9V/T-UI-icon-Items-apprentices-Fog-Vial.webp",
+                    addons: [
+                        { name: "Мощная вытяжка", icon: "https://i.postimg.cc/907TfXhT/T-UI-icon-Addon-potent-Extract.webp" },
+                        { name: "Грибная смесь", icon: "https://i.postimg.cc/yWCR3q1G/T-UI-icon-Addon-mushroom-Formula.webp" },
+                        { name: "Маслянистый сок", icon: "https://i.postimg.cc/d1Xrvkzw/T-UI-icon-Addon-oily-Sap.webp" },
+						{ name: "Реактивное соединение", icon: "https://i.postimg.cc/fWJKmhsS/T-UI-icon-Addon-reactive-Compound.webp" },
+                        { name: "Вулканический камень", icon: "https://i.postimg.cc/g2PqCXZ3/T-UI-icon-Addon-volcanic-Stone.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                    name: "Тяжелый фонарь",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/76pvCn9S/icon-Items-flashlight-Utility.webp",
+                    addons: [
+                        { name: "Страння лампочка", icon: "https://i.postimg.cc/PJHjcK2D/icon-Addon-odd-Bulb.webp" },
+                        { name: "Высококлассные сапфировые линзы", icon: "https://i.postimg.cc/44p45HBt/icon-Addon-high-End-Sapphire-Lens.webp" },
+                        { name: "Аккумулятор с мощным зарядом", icon: "https://i.postimg.cc/P5VdxW5G/icon-Addon-long-Life-Battery.webp" },
+						{ name: "Интенсивный галоген", icon: "https://i.postimg.cc/KvFGscHW/icon-Addon-intense-Halogen.webp" },
+                        { name: "TIR Оптика", icon: "https://i.postimg.cc/x864RP7n/icon-Addon-tir-Optic.webp" },
+                        { name: "Резиновая рукоятка", icon: "https://i.postimg.cc/qvFd0p14/icon-Addon-rubber-Grip.webp" },
+						{ name: "Сверхмощная батарейка", icon: "https://i.postimg.cc/Rh1MV2NG/icon-Addon-heavy-Duty-Battery.webp" },
+                        { name: "Тонкая нить накаливания", icon: "https://i.postimg.cc/XJchZWkZ/icon-Addon-threaded-Filament.webp" },
+                        { name: "Фокусирующая линза", icon: "https://i.postimg.cc/Hk6kMG3h/icon-Addon-focus-Lens.webp" },
+						{ name: "Батарейка", icon: "https://i.postimg.cc/pThrx0f1/icon-Addon-battery.webp" },
+                        { name: "Кожаная рукоять", icon: "https://i.postimg.cc/y88VsQBX/icon-Addon-leather-Grip.webp" },
+                        { name: "Широкоугольные линзы", icon: "https://i.postimg.cc/wBwqTBvL/icon-Addon-wide-Lens.webp" },
+                        { name: "Электролампа", icon: "https://i.postimg.cc/BbC0GDVV/icon-Addon-power-Bulb.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Спортивный фонарик",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/pdcMvHnG/icon-Items-flashlight-Sport.webp",
+                    addons: [
+                        { name: "Страння лампочка", icon: "https://i.postimg.cc/PJHjcK2D/icon-Addon-odd-Bulb.webp" },
+                        { name: "Высококлассные сапфировые линзы", icon: "https://i.postimg.cc/44p45HBt/icon-Addon-high-End-Sapphire-Lens.webp" },
+                        { name: "Аккумулятор с мощным зарядом", icon: "https://i.postimg.cc/P5VdxW5G/icon-Addon-long-Life-Battery.webp" },
+						{ name: "Интенсивный галоген", icon: "https://i.postimg.cc/KvFGscHW/icon-Addon-intense-Halogen.webp" },
+                        { name: "TIR Оптика", icon: "https://i.postimg.cc/x864RP7n/icon-Addon-tir-Optic.webp" },
+                        { name: "Резиновая рукоятка", icon: "https://i.postimg.cc/qvFd0p14/icon-Addon-rubber-Grip.webp" },
+						{ name: "Сверхмощная батарейка", icon: "https://i.postimg.cc/Rh1MV2NG/icon-Addon-heavy-Duty-Battery.webp" },
+                        { name: "Тонкая нить накаливания", icon: "https://i.postimg.cc/XJchZWkZ/icon-Addon-threaded-Filament.webp" },
+                        { name: "Фокусирующая линза", icon: "https://i.postimg.cc/Hk6kMG3h/icon-Addon-focus-Lens.webp" },
+						{ name: "Батарейка", icon: "https://i.postimg.cc/pThrx0f1/icon-Addon-battery.webp" },
+                        { name: "Кожаная рукоять", icon: "https://i.postimg.cc/y88VsQBX/icon-Addon-leather-Grip.webp" },
+                        { name: "Широкоугольные линзы", icon: "https://i.postimg.cc/wBwqTBvL/icon-Addon-wide-Lens.webp" },
+                        { name: "Электролампа", icon: "https://i.postimg.cc/BbC0GDVV/icon-Addon-power-Bulb.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Фонарик",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/521VqpV3/icon-Items-flashlight.webp",
+                    addons: [
+                        { name: "Страння лампочка", icon: "https://i.postimg.cc/PJHjcK2D/icon-Addon-odd-Bulb.webp" },
+                        { name: "Высококлассные сапфировые линзы", icon: "https://i.postimg.cc/44p45HBt/icon-Addon-high-End-Sapphire-Lens.webp" },
+                        { name: "Аккумулятор с мощным зарядом", icon: "https://i.postimg.cc/P5VdxW5G/icon-Addon-long-Life-Battery.webp" },
+						{ name: "Интенсивный галоген", icon: "https://i.postimg.cc/KvFGscHW/icon-Addon-intense-Halogen.webp" },
+                        { name: "TIR Оптика", icon: "https://i.postimg.cc/x864RP7n/icon-Addon-tir-Optic.webp" },
+                        { name: "Резиновая рукоятка", icon: "https://i.postimg.cc/qvFd0p14/icon-Addon-rubber-Grip.webp" },
+						{ name: "Сверхмощная батарейка", icon: "https://i.postimg.cc/Rh1MV2NG/icon-Addon-heavy-Duty-Battery.webp" },
+                        { name: "Тонкая нить накаливания", icon: "https://i.postimg.cc/XJchZWkZ/icon-Addon-threaded-Filament.webp" },
+                        { name: "Фокусирующая линза", icon: "https://i.postimg.cc/Hk6kMG3h/icon-Addon-focus-Lens.webp" },
+						{ name: "Батарейка", icon: "https://i.postimg.cc/pThrx0f1/icon-Addon-battery.webp" },
+                        { name: "Кожаная рукоять", icon: "https://i.postimg.cc/y88VsQBX/icon-Addon-leather-Grip.webp" },
+                        { name: "Широкоугольные линзы", icon: "https://i.postimg.cc/wBwqTBvL/icon-Addon-wide-Lens.webp" },
+                        { name: "Электролампа", icon: "https://i.postimg.cc/BbC0GDVV/icon-Addon-power-Bulb.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                    name: "Аптечка лесничего",
+                    type: "Клинок",
+                    icon: "https://i.postimg.cc/pT54tnvr/icon-Items-rangers-Aid-Kit.webp",
+                    addons: [
+                        { name: "Гелевые повязки", icon: "https://i.postimg.cc/8C3kyh2d/icon-Addon-gel-Dressings.webp" },
+                        { name: "Кровоостанавливающий шприц", icon: "https://i.postimg.cc/mDGJ2kCf/icon-Addon-syringe.webp" },
+                        { name: "Брюшные повязки", icon: "https://i.postimg.cc/XvDqRMCC/icon-Addon-abdominal-Dressing.webp" },
+						{ name: "Кровоостанавливающий препарат", icon: "https://i.postimg.cc/YqX5fpKY/icon-Addon-styptic-Agent.webp" },
+                        { name: "Бинты", icon: "https://i.postimg.cc/XvX7c2z7/icon-Addon-gause-Roll.webp" },
+                        { name: "Хирургическая игла", icon: "https://i.postimg.cc/d0CgYr7j/icon-Addon-surgical-Suture.webp" },
+						{ name: "Губка", icon: "https://i.postimg.cc/jqh02HM8/icon-Addon-sponge.webp" },
+                        { name: "Иголка и нитка", icon: "https://i.postimg.cc/d1rF4gmv/icon-Addon-need-And-Thread.webp" },
+                        { name: "Медицинские ножницы", icon: "https://i.postimg.cc/6QGxpFPR/icon-Addon-scissors.webp" },
+						{ name: "Самоклеющиеся бинты", icon: "https://i.postimg.cc/B6TWxH4n/icon-Addon-self-Adherent-Wrap.webp" },
+                        { name: "Пластырь-бабочка", icon: "https://i.postimg.cc/WbPzLwhX/icon-Addon-butterfly-Tape.webp" },
+                        { name: "Повязки", icon: "https://i.postimg.cc/50h0twp9/icon-Addon-bandages.webp" },
+                        { name: "Резиновые перчатки", icon: "https://i.postimg.cc/cHnxPvWp/icon-Addon-gloves.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Аптечка первой помощи",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/YqBKM8hH/icon-Items-medkit.webp",
+                    addons: [
+                        { name: "Гелевые повязки", icon: "https://i.postimg.cc/8C3kyh2d/icon-Addon-gel-Dressings.webp" },
+                        { name: "Кровоостанавливающий шприц", icon: "https://i.postimg.cc/mDGJ2kCf/icon-Addon-syringe.webp" },
+                        { name: "Брюшные повязки", icon: "https://i.postimg.cc/XvDqRMCC/icon-Addon-abdominal-Dressing.webp" },
+						{ name: "Кровоостанавливающий препарат", icon: "https://i.postimg.cc/YqX5fpKY/icon-Addon-styptic-Agent.webp" },
+                        { name: "Бинты", icon: "https://i.postimg.cc/XvX7c2z7/icon-Addon-gause-Roll.webp" },
+                        { name: "Хирургическая игла", icon: "https://i.postimg.cc/d0CgYr7j/icon-Addon-surgical-Suture.webp" },
+						{ name: "Губка", icon: "https://i.postimg.cc/jqh02HM8/icon-Addon-sponge.webp" },
+                        { name: "Иголка и нитка", icon: "https://i.postimg.cc/d1rF4gmv/icon-Addon-need-And-Thread.webp" },
+                        { name: "Медицинские ножницы", icon: "https://i.postimg.cc/6QGxpFPR/icon-Addon-scissors.webp" },
+						{ name: "Самоклеющиеся бинты", icon: "https://i.postimg.cc/B6TWxH4n/icon-Addon-self-Adherent-Wrap.webp" },
+                        { name: "Пластырь-бабочка", icon: "https://i.postimg.cc/WbPzLwhX/icon-Addon-butterfly-Tape.webp" },
+                        { name: "Повязки", icon: "https://i.postimg.cc/50h0twp9/icon-Addon-bandages.webp" },
+                        { name: "Резиновые перчатки", icon: "https://i.postimg.cc/cHnxPvWp/icon-Addon-gloves.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Аптечка",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/hPVnd6Hv/icon-Items-first-Aid-Kit.webp",
+                    addons: [
+                        { name: "Гелевые повязки", icon: "https://i.postimg.cc/8C3kyh2d/icon-Addon-gel-Dressings.webp" },
+                        { name: "Кровоостанавливающий шприц", icon: "https://i.postimg.cc/mDGJ2kCf/icon-Addon-syringe.webp" },
+                        { name: "Брюшные повязки", icon: "https://i.postimg.cc/XvDqRMCC/icon-Addon-abdominal-Dressing.webp" },
+						{ name: "Кровоостанавливающий препарат", icon: "https://i.postimg.cc/YqX5fpKY/icon-Addon-styptic-Agent.webp" },
+                        { name: "Бинты", icon: "https://i.postimg.cc/XvX7c2z7/icon-Addon-gause-Roll.webp" },
+                        { name: "Хирургическая игла", icon: "https://i.postimg.cc/d0CgYr7j/icon-Addon-surgical-Suture.webp" },
+						{ name: "Губка", icon: "https://i.postimg.cc/jqh02HM8/icon-Addon-sponge.webp" },
+                        { name: "Иголка и нитка", icon: "https://i.postimg.cc/d1rF4gmv/icon-Addon-need-And-Thread.webp" },
+                        { name: "Медицинские ножницы", icon: "https://i.postimg.cc/6QGxpFPR/icon-Addon-scissors.webp" },
+						{ name: "Самоклеющиеся бинты", icon: "https://i.postimg.cc/B6TWxH4n/icon-Addon-self-Adherent-Wrap.webp" },
+                        { name: "Пластырь-бабочка", icon: "https://i.postimg.cc/WbPzLwhX/icon-Addon-butterfly-Tape.webp" },
+                        { name: "Повязки", icon: "https://i.postimg.cc/50h0twp9/icon-Addon-bandages.webp" },
+                        { name: "Резиновые перчатки", icon: "https://i.postimg.cc/cHnxPvWp/icon-Addon-gloves.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Походная аптечка",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/PJGcfrf4/icon-Items-rundown-Aid-Kit.webp",
+                    addons: [
+                        { name: "Гелевые повязки", icon: "https://i.postimg.cc/8C3kyh2d/icon-Addon-gel-Dressings.webp" },
+                        { name: "Кровоостанавливающий шприц", icon: "https://i.postimg.cc/mDGJ2kCf/icon-Addon-syringe.webp" },
+                        { name: "Брюшные повязки", icon: "https://i.postimg.cc/XvDqRMCC/icon-Addon-abdominal-Dressing.webp" },
+						{ name: "Кровоостанавливающий препарат", icon: "https://i.postimg.cc/YqX5fpKY/icon-Addon-styptic-Agent.webp" },
+                        { name: "Бинты", icon: "https://i.postimg.cc/XvX7c2z7/icon-Addon-gause-Roll.webp" },
+                        { name: "Хирургическая игла", icon: "https://i.postimg.cc/d0CgYr7j/icon-Addon-surgical-Suture.webp" },
+						{ name: "Губка", icon: "https://i.postimg.cc/jqh02HM8/icon-Addon-sponge.webp" },
+                        { name: "Иголка и нитка", icon: "https://i.postimg.cc/d1rF4gmv/icon-Addon-need-And-Thread.webp" },
+                        { name: "Медицинские ножницы", icon: "https://i.postimg.cc/6QGxpFPR/icon-Addon-scissors.webp" },
+						{ name: "Самоклеющиеся бинты", icon: "https://i.postimg.cc/B6TWxH4n/icon-Addon-self-Adherent-Wrap.webp" },
+                        { name: "Пластырь-бабочка", icon: "https://i.postimg.cc/WbPzLwhX/icon-Addon-butterfly-Tape.webp" },
+                        { name: "Повязки", icon: "https://i.postimg.cc/50h0twp9/icon-Addon-bandages.webp" },
+                        { name: "Резиновые перчатки", icon: "https://i.postimg.cc/cHnxPvWp/icon-Addon-gloves.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                    name: "Инструменты Алекса",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/mgZngn40/icon-Items-toolbox-Alexs.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Инструменты инженера",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/vZPNgvHD/icon-Items-toolbox-Engineers.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Вместительный ящик с инструментами",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/zXFM5rsC/icon-Items-toolbox-Commodious.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Инструменты механика",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/CKXrJL8g/icon-Items-toolbox-Mechanics.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Ящик с инструментами",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/sxpLMdvR/icon-Items-toolbox.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				    name: "Изношенные инструменты",
+                    type: "Оружие",
+                    icon: "https://i.postimg.cc/d3KHPHnN/icon-Items-toolbox-Worn-Out.webp",
+                    addons: [
+                        { name: "Новая деталь", icon: "https://i.postimg.cc/SRcKYJt6/icon-Addon-brand-New-Part.webp" },
+						{ name: "Ножовка", icon: "https://i.postimg.cc/pd9Rnmmm/icon-Addon-metal-Saw.webp" },
+                        { name: "Разводной ключ", icon: "https://i.postimg.cc/wMYqz9T7/icon-Addon-grip-Wrench.webp" },
+                        { name: "Защитные перчатки", icon: "https://i.postimg.cc/VLYwWGSQ/icon-Addon-protective-Gloves.webp" },
+						{ name: "Катушка проволоки", icon: "https://i.postimg.cc/QCh2SCdk/icon-Addon-spool-Of-Wire.webp" },
+                        { name: "Пружинный зажим", icon: "https://i.postimg.cc/c44qnvjd/icon-Addon-spring-Clamp.webp" },
+                        { name: "Режущая проволока", icon: "https://i.postimg.cc/RZS0qC1t/icon-Addon-cutting-Wire.webp" },
+						{ name: "Шарнирный ключ", icon: "https://i.postimg.cc/C57W20Zy/icon-Addon-socket-Swivels.webp" },
+                        { name: "Руководство", icon: "https://i.postimg.cc/L6T9dKd8/icon-Addon-instructions.webp" },
+                        { name: "Старые запчасти", icon: "https://i.postimg.cc/rmXX0Q6H/icon-Addon-scraps.webp" },
+                        { name: "Чистая тряпка", icon: "https://i.postimg.cc/hPbjSQmg/icon-Addon-clean-Rag.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+				name: "Карта с подписями",
+                    type: "Инструмент",
+                    icon: "https://i.postimg.cc/KYHwVDdC/icon-Items-rainbow-Map.webp",
+                    addons: [
+                        { name: "Багровая печать", icon: "https://i.postimg.cc/vZLr9m6t/T-UI-icon-Addon-Crimson-Stamp.webp" },
+                        { name: "Заостренная щепка", icon: "https://i.postimg.cc/xjhPPFjx/T-UI-icon-Addon-Sharpened-Flint.webp" },
+                        { name: "Потрепанная лента", icon: "https://i.postimg.cc/T3XjpbhP/T-UI-icon-Addon-Battered-Tape.webp" },
+						{ name: "Погрызенный компас", icon: "https://i.postimg.cc/3RWmPCft/T-UI-icon-Addon-Gnarled-Compass.webp" },
+                        { name: "Светящиеся чернила", icon: "https://i.postimg.cc/nLFv1t4b/T-UI-icon-Addon-Glowing-Ink.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+				{
+				name: "Небрежная карта",
+                    type: "Инструмент",
+                    icon: "https://i.postimg.cc/xjzDwBj5/icon-Items-map.webp",
+                    addons: [
+                        { name: "Багровая печать", icon: "https://i.postimg.cc/vZLr9m6t/T-UI-icon-Addon-Crimson-Stamp.webp" },
+                        { name: "Заостренная щепка", icon: "https://i.postimg.cc/xjhPPFjx/T-UI-icon-Addon-Sharpened-Flint.webp" },
+                        { name: "Потрепанная лента", icon: "https://i.postimg.cc/T3XjpbhP/T-UI-icon-Addon-Battered-Tape.webp" },
+						{ name: "Погрызенный компас", icon: "https://i.postimg.cc/3RWmPCft/T-UI-icon-Addon-Gnarled-Compass.webp" },
+                        { name: "Светящиеся чернила", icon: "https://i.postimg.cc/nLFv1t4b/T-UI-icon-Addon-Glowing-Ink.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                },
+                {
+                    name: "Загадочная карта",
+                    type: "Гаджет",
+                    icon: "https://i.postimg.cc/L62CxWJn/T-UI-icon-Items-Cryptic-Map.webp",
+                    addons: [
+                        { name: "Багровая печать", icon: "https://i.postimg.cc/vZLr9m6t/T-UI-icon-Addon-Crimson-Stamp.webp" },
+                        { name: "Заостренная щепка", icon: "https://i.postimg.cc/xjhPPFjx/T-UI-icon-Addon-Sharpened-Flint.webp" },
+                        { name: "Потрепанная лента", icon: "https://i.postimg.cc/T3XjpbhP/T-UI-icon-Addon-Battered-Tape.webp" },
+						{ name: "Погрызенный компас", icon: "https://i.postimg.cc/3RWmPCft/T-UI-icon-Addon-Gnarled-Compass.webp" },
+                        { name: "Светящиеся чернила", icon: "https://i.postimg.cc/nLFv1t4b/T-UI-icon-Addon-Glowing-Ink.webp" },
+						{ name: "Без аддона", icon: "https://i.postimg.cc/DzMfPJRV/icon-Addon-disfigured-Ear1.webp" }
+                    ]
+                }
+            ];
+            
+            // База данных перков для киллеров
+            const killerPerks = [
+                { name: 'Связь', icon: 'https://i.postimg.cc/2yPR0R79/icon-Perks-Bond.webp' },
 { name: 'Спокойствие духа', icon: 'https://i.postimg.cc/J0HSDYCN/icon-Perks-Calm-Spirit.webp' },
 { name: 'Ловкое приземление', icon: 'https://i.postimg.cc/ZYDTWXpd/icon-Perks-Balanced-Landing.webp' },
  { name: 'Туз в рукаве', icon: 'https://i.postimg.cc/GhVh56pC/icon-Perks-Ace-In-The-Hole.webp' },
@@ -649,59 +1124,114 @@
  { name: 'Один Два Три Четыре ', icon: 'https://i.postimg.cc/L5M6s1r8/T-UI-icon-Perks-One-Two-Three-Four.webp' },
  { name: 'Дорожная жизнь ', icon: 'https://i.postimg.cc/Wz6pq4v6/T-UI-icon-Perks-Road-Life.webp' },
  { name: 'Призрачные заметки ', icon: 'https://i.postimg.cc/43qxrMPt/T-UI-icon-Perks-Ghost-Notes.webp' },
+ { name: "Без перка", icon: "https://i.postimg.cc/8krXjTh8/icon-Perks-Hope.webp" }
             ];
             
-            generateSoloBtn.addEventListener('click', function() {
-                generatePerks(4, false);
-            });
+            // Функция создания одного набора
+            function createBuild() {
+                const randomKiller = killers[Math.floor(Math.random() * killers.length)];
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                
+                // Случайные перки (4 штуки)
+                const shuffledPerks = [...killerPerks].sort(() => 0.5 - Math.random());
+                const selectedPerks = shuffledPerks.slice(0, 4);
+                
+                // Аддоны ПРИВЯЗАНЫ к выбранному предмету
+                const shuffledAddons = [...randomItem.addons].sort(() => 0.5 - Math.random());
+                const selectedAddons = shuffledAddons.slice(0, 2);
+                
+                return {
+                    killer: randomKiller,
+                    perks: selectedPerks,
+                    item: randomItem,
+                    addons: selectedAddons
+                };
+            }
             
-            generatePartyBtn.addEventListener('click', function() {
-                generatePerks(16, true);
-            });
-            
-            function generatePerks(count, isParty) {
-                // Очищаем предыдущие результаты
-                perksGrid.innerHTML = '';
-                itemsGrid.innerHTML = '';
+            // Функция отображения одного набора (ряда)
+            function renderBuildRow(build, index = null) {
+                const isParty = index !== null;
                 
-                // Устанавливаем класс для сетки в зависимости от режима
-                if (isParty) {
-                    perksGrid.classList.add('party');
-                } else {
-                    perksGrid.classList.remove('party');
-                }
-                
-                // Выбираем случайные перки
-                const selectedPerks = getRandomItems(survivorPerks, count);
-                
-                // Добавляем перки в сетку
-                selectedPerks.forEach(perk => {
-                    const perkElement = document.createElement('div');
-                    perkElement.className = 'perk-card';
-                    perkElement.innerHTML = `
-                        <div class="perk-icon">
-                            <img src="${perk.icon}" alt="${perk.name}">
-                        </div>
-                        <h4>${perk.name}</h4>
+                return `
+                    <div class="${isParty ? 'party-build-row' : 'build-container'}">
+                        ${isParty ? `<div class="player-number">${index + 1}</div>` : ''}
                         
-                    `;
-                    perksGrid.appendChild(perkElement);
-                }); 
-                
-                // Показываем результат с анимацией
+                        <!-- Киллер -->
+                        <div class="killer-card">
+                            <div class="killer-icon">
+                                <img src="${build.killer.icon}" alt="${build.killer.name}" onerror="this.src='https://via.placeholder.com/80x80/333333/ffffff?text=K'">
+                            </div>
+                            <div class="killer-name">${build.killer.name}</div>
+                            <div class="item-label">Выживший</div>
+                        </div>
+                        
+                        <!-- 4 перка -->
+                        <div class="perks-container">
+                            ${build.perks.map(perk => `
+                                <div class="perk-card">
+                                    <div class="perk-icon">
+                                        <img src="${perk.icon}" alt="${perk.name}" onerror="this.src='https://via.placeholder.com/60x60/333333/ffffff?text=P'">
+                                    </div>
+                                    <div class="item-label">${perk.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- Предмет -->
+                        <div class="item-card">
+                            <div class="item-icon">
+                                <img src="${build.item.icon}" alt="${build.item.name}" onerror="this.src='https://via.placeholder.com/60x60/2a7dc7/ffffff?text=I'">
+                            </div>
+                            <div class="item-label">${build.item.name}</div>
+                        </div>
+                        
+                        <!-- 2 аддона (ПРИВЯЗАНЫ К ПРЕДМЕТУ) -->
+                        <div class="addons-container">
+                            ${build.addons.map(addon => `
+                                <div class="addon-card">
+                                    <div class="addon-icon">
+                                        <img src="${addon.icon}" alt="${addon.name}" onerror="this.src='https://via.placeholder.com/50x50/333333/ffffff?text=A'">
+                                    </div>
+                                    <div class="item-label">${addon.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Обработчик кнопки "Соло"
+            generateSoloBtn.addEventListener('click', function() {
                 resultDiv.classList.add('visible');
                 
-                // Прокрутка к результатам
+                const build = createBuild();
+                buildsContainer.innerHTML = `
+                    <h3 class="section-title">Перки для выживших (Соло)</h3>
+                    ${renderBuildRow(build)}
+                `;
+                
                 resultDiv.scrollIntoView({ behavior: 'smooth' });
-            }
+            });
             
-            // Функция для получения случайных элементов из массива
-            function getRandomItems(array, count) {
-                const shuffled = [...array].sort(() => 0.5 - Math.random());
-                return shuffled.slice(0, count);
-            }
+            // Обработчик кнопки "Пати"
+            generatePartyBtn.addEventListener('click', function() {
+                resultDiv.classList.add('visible');
+                
+                const builds = [];
+                for (let i = 0; i < 4; i++) {
+                    builds.push(createBuild());
+                }
+                
+                buildsContainer.innerHTML = `
+                    <h3 class="section-title">Перки для выживших (Пати)</h3>
+                    <div class="party-builds-container">
+                        ${builds.map((build, index) => renderBuildRow(build, index)).join('')}
+                    </div>
+                `;
+                
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+            });
         });
     </script>
 </body>
-</html>
 </html>
