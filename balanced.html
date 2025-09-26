@@ -4,7 +4,7 @@
     <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHG Баланс | Calculator</title>
+    <title>PHG Баланс | DBD</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -113,6 +113,32 @@
             border: 1px solid #333;
         }
         
+        .character-selector {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .character-selector label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .character-selector select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .character-selector select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -138,6 +164,12 @@
             border-color: var(--primary-color);
         }
         
+        .buttons-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
         .btn {
             display: inline-block;
             background-color: var(--primary-color);
@@ -149,6 +181,7 @@
             font-size: 1rem;
             font-weight: bold;
             transition: background-color 0.3s, transform 0.2s;
+            flex: 1;
         }
         
         .btn:hover {
@@ -158,6 +191,14 @@
         
         .btn:active {
             transform: translateY(0);
+        }
+        
+        .btn-reset {
+            background-color: #444;
+        }
+        
+        .btn-reset:hover {
+            background-color: #666;
         }
         
         .result {
@@ -181,6 +222,37 @@
         .result h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
+        }
+        
+        .balance-meter {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .balance-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .rating-excellent {
+            background-color: #4CAF50;
+        }
+        
+        .rating-good {
+            background-color: #8BC34A;
+        }
+        
+        .rating-average {
+            background-color: #FFC107;
+        }
+        
+        .rating-poor {
+            background-color: #F44336;
         }
         
         .perks-grid {
@@ -314,6 +386,10 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .buttons-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -321,35 +397,76 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <a href="#" class="logo">PHG<span>Balance</span></a>
                 <nav>
                     <ul>
-                        <li><a href="mainPHG.html">Главная</a></li>
-                        <li><a href="mainTour.html">Турниры</a></li>
-                        <li><a href="guides.html">База знаний</a></li>
-                        <li><a href="builds.html">Билды</a></li>
-                        <li><a href="gallery.html">Галерея</a></li>
-                        <li><a href="FAQ.html">О проекте</a></li>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры 1v4</a></li>
+						<li><a href="perksK.html">Перки</a></li>
+                        <li><a href="Balanced.html">Сборки</a></li>
+                        <li><a href="sponsors.html">Спонсоры</a></li>
+						<li><a href="FAQ.html">О проекте</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    
-
-    <section class="section">
-            <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-
-</head>
-<body>
-    
-    <center><img src="https://i.postimg.cc/2yHzLWp1/razrabotka.png" alt="Логотип"></center>
+    <section class="hero">
+        <div class="container">
+            <h1>Проверьте баланс вашей сборки</h1>
+            <p>Узнайте, насколько эффективна ваша комбинация перков, и получите рекомендации по улучшению для игры в Dead by Daylight</p>
+            
+            <div class="checker-container">
+                <div class="character-selector">
+                    <label for="characterType">Выберите тип персонажа:</label>
+                    <select id="characterType">
+                        <option value="survivor">Выживший</option>
+                        <option value="killer">Убийца</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="perk1">Перк 1</label>
+                    <input type="text" id="perk1" placeholder="Введите название перка">
+                </div>
+                
+                <div class="input-group">
+                    <label for="perk2">Перк 2</label>
+                    <input type="text" id="perk2" placeholder="Введите название перка">
+                </div>
+                
+                <div class="input-group">
+                    <label for="perk3">Перк 3</label>
+                    <input type="text" id="perk3" placeholder="Введите название перка">
+                </div>
+                
+                <div class="input-group">
+                    <label for="perk4">Перк 4</label>
+                    <input type="text" id="perk4" placeholder="Введите название перка">
+                </div>
+                
+                <div class="buttons-group">
+                    <button class="btn" id="checkBalance">Проверить баланс</button>
+                    <button class="btn btn-reset" id="resetCalculator">Сбросить</button>
+                </div>
+                
+                <div class="result" id="result">
+                    <h3>Результаты анализа</h3>
+                    <div id="balanceMeter" class="balance-meter">
+                        <div id="balanceFill" class="balance-fill"></div>
+                    </div>
+                    <p id="balanceText">Ваша сборка имеет <strong id="balancePercent">0%</strong> баланса.</p>
+                    <p id="balanceDescription"></p>
+                    
+                    <h4>Статистика сборки:</h4>
+                    <ul id="buildStats">
+                        <!-- Статистика будет добавлена динамически -->
+                    </ul>
+                    
+                    <div id="recommendations">
+                        <!-- Рекомендации будут добавлены динамически -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -371,5 +488,567 @@
 			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
 			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
 			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        // База данных перков выживших
+        const survivorPerks = {
+            "Связь": 20,
+            "Спокойствие духа": 20,
+            "Ловкое приземление": 25,
+            "Туз в рукаве": 10,
+            "Познания в ботанике": 15,
+            "Прояви себя": 25,
+            "Железная воля": 20,
+            "Городской бег": 15,
+            "Повысить ставки": 15,
+            "Сострадание": 15,
+            "Лидер": 15,
+            "Крушитель": 15,
+            "Уроки улиц": 15,
+            "Игра в открытую": 15,
+            "Сам себе доктор": 15,
+            "Адреналин": 25,
+            "Единственный выживший": 15,
+            "Одолженное время": 15,
+            "Тревога": 20,
+            "Мы будем жить вечно": 20,
+            "Быстрый и тихий": 15,
+            "Решающий удар": 20,
+            "Оставленный позади": 15,
+            "Гибкость": 25,
+            "Крепкий орешек": 20,
+            "Спринтер": 25,
+            "Объект одержимости": 15,
+            "Несокрушимый": 20,
+            "Техник": 10,
+            "Без сожаления": 10,
+            "Аптекарь": 15,
+            "Выдержка": 10,
+            "Потанцуй со мной": 15,
+            "Самоучка": 20,
+            "Уход за больным": 15,
+            "Бессонница": 25,
+            "Детективное чутье": 10,
+            "Уникальная возможность": 20,
+            "Освобождение": 20,
+            "Поломка": 10,
+            "Проснись": 15,
+            "Выслеживание подозреваемого": 15,
+            "Через край": 15,
+            "Диверсия": 10,
+            "Искажение": 20,
+            "Солидарность": 15,
+            "Раскачка": 10,
+            "Нянька": 15,
+            "Лучше вместе": 15,
+            "Любыми средствами": 15,
+            "Равновесие": 10,
+            "Пристегнись": 10,
+            "Товарищество": 15,
+            "Фиксация": 20,
+            "Форсаж": 20,
+            "Напролом": 20,
+            "Проверка на прочность": 15,
+            "Второе дыхание": 15,
+            "Внутренняя сила": 20,
+            "Везение": 10,
+            "Ради людей": 15,
+            "Оберег души": 15,
+            "Строим на века": 20,
+            "Изучение": 15,
+            "За чужой счет": 20,
+            "Обман во благо": 10,
+            "Кровавый договор": 15,
+            "Отчаянные меры": 10,
+            "Уловка": 15,
+            "Ударный забег": 25,
+            "Без огласки": 20,
+            "Скрытый союз": 15,
+            "Визионер": 15,
+            "Отчаянная борьба": 15,
+            "Самосохранение": 15,
+            "Стиснув зубы": 20,
+            "Фугасная мина": 15,
+            "Ясновидение": 20,
+            "Преодоление": 25,
+            "Дар: теория мрака": 10,
+            "Световая граната": 25,
+            "Поправка": 25,
+            "Дар: круг исцеления": 10,
+            "Корректировка": 15,
+            "Эмпатическая связь": 15,
+            "Дух новичка": 10,
+            "Противодействие": 15,
+            "Дар: уход в тень": 15,
+            "Дар: экспонента": 20,
+            "Родительская забота": 20,
+            "Собранность": 15,
+            "Жучок": 20,
+            "Как новенький": 15,
+            "Потенциальная энергия": 25,
+            "На волю": 15,
+            "Остаточное проявление": 20,
+            "Ниже травы": 15,
+            "Ободрение": 25,
+            "Умудренный туманом": 15,
+            "Командная работа: быстрая пара": 10,
+            "Усердие": 15,
+            "Поспешное лечение": 15,
+            "Полная сосредоточенность": 15,
+            "Быстрый гамбит": 15,
+            "Дружеское состязание": 15,
+            "Запасной игрок": 20,
+            "Ремонтник": 15,
+            "Драматургия": 20,
+            "Счастливая звезда": 15,
+            "Воин света": 20,
+            "Командная работа: общая скрытность": 10,
+            "Призвание": 15,
+            "Партнер по сцене": 15,
+            "Химическая ловушка": 15,
+            "Дар: освещение": 10,
+            "Выше головы": 10,
+            "Утилизатор": 15,
+            "Вот это поворот": 15,
+            "Легкоступ": 20,
+            "Дедлайн": 10,
+            "Чары: пауки-прядильщики": 10,
+            "Зеркальная иллюзия": 10,
+            "Сноровка": 25,
+            "Глаза Бельмонта": 10,
+            "Чары: предательские вороны": 10,
+            "Сила во мраке": 15,
+            "Вдохновение барда": 10,
+            "Специалист": 10,
+            "Ликование": 10,
+            "С чистого листа": 15,
+            "Дерзость": 25,
+            "Замри и увидишь": 20,
+            "Закалка": 15,
+            "Момент славы": 10,
+            "Бремя на себя": 15,
+            "Не навреди": 10,
+            "Командная работа: собраться с силами": 10,
+            "Убежденность": 10,
+            "Врачебный долг": 15,
+            "Апокалиптическая смекалка": 20,
+            "Последний рубеж": 15,
+            "Быстрое реагирование": 15,
+            "Эй, я здесь!": 10,
+            "Командная работа: скромная победа": 10,
+            "Темное чувство": 15,
+            "Дежавю": 25,
+            "Надежда": 15,
+            "Кровные узы": 20,
+            "Легковес": 20,
+            "Этому не бывать": 15,
+            "Мы справимся": 15,
+            "Предчувствие": 10,
+            "Устойчивость": 25,
+            "Скользкое мясо": 20,
+            "Мелкая дичь": 10,
+            "Мурашки по спине": 10,
+            "Никто не остался позади": 15,
+            "Один, Два, Три, Четыре!": 10,
+            "Жизнь в дороге": 10,
+            "Записки о призраке": 10,
+            "Мародерское чутье": 15
+        };
+
+        // База данных перков убийц
+        const killerPerks = {
+            "Нетерпимость": 20,
+            "Детище тьмы": 20,
+            "Стойкий": 20, 
+            "Стридор": 10,
+            "Оставьте лучшее напоследок": 25,
+            "Зверская сила": 20,
+            "Ищейка": 10,
+            "Детище света": 25,
+            "Танатофобия": 20,
+            "Угасающий свет": 20,
+            "Пугающее присутствие": 15,
+            "Хищник": 10,
+            "Умелец": 25,
+            "Зов Медсестры": 20,
+            "Поиграть со своей жертвой": 20,
+            "Порча: погибель": 20,
+            "Слежка и наказание": 15,
+            "Территориальный императив": 10,
+            "Барбекю и чили": 25,
+            "Яркое пламя": 15,
+            "Порча: пожирание надежды": 20,
+            "Перегрузка": 10,
+            "Порча: колыбельная охотницы": 15,
+            "Гибель Франклина": 20,
+            "Помни меня": 20,
+            "Порча: третья печать": 15,
+            "Невыносимое присутствие": 15,
+            "Хищный зверь": 10,
+            "Нокаут": 15,
+            "Кровавый смотритель": 20,
+            "Выбор за тобой": 15,
+            "Чертик из табакерки": 25,
+            "Ненависть": 15,
+            "Разлад": 15,
+            "Темная преданность": 15,
+            "Наблюдение": 10,
+            "Клоунофобия": 20,
+            "Порча: проклятая земля": 20,
+            "Железная дева": 20, 
+            "Вмешательство скверны": 25,
+            "Секущий крюк: секрет палача": 15,
+            "Розыгрыш": 25,
+            "Ярость духа": 20,
+            "Безумное упорство": 20,
+            "Заразительный ужас": 20,
+            "Скрытная погоня": 15,
+            "Жестокая изоляция": 10,
+            "Тактика зансин": 15,
+            "Порча: кара": 15,
+            "Тропа терзаний": 20,
+            "Чуткий слух": 20,
+            "Разрушитель разума": 20,
+            "Отзвук крови": 10,
+            "Аварийная кнопка": 25,
+            "Принудительная мера": 15,
+            "Пугающая тряска": 15,
+            "Выброс": 20,
+            "Возмездие": 10,
+            "Знаток техники": 15,
+            "Смертельные узы": 15,
+            "Порча: благоволение крови": 20,
+            "Добивание": 20,
+            "Фанатение": 20,
+            "Подрыв": 20,
+            "Мертвая хватка": 20,
+            "Порча: не-смерть": 20,
+            "Скопидом": 15,
+            "Порча: контроль толпы": 15,
+            "Истерия": 10,
+            "Порча: игрушка": 20,
+            "Драконья хватка": 15,
+            "Притеснение": 20,
+            "Выхода нет": 20,
+            "Преследователь-убийца": 20,
+            "Секущий крюк: дар боли": 15,
+            "Мрачные объятья": 25,
+            "Соленое море": 20,
+            "Растворение": 20,
+            "Лучшая анатомия": 15,
+            "Им не укрыться": 20,
+            "Секущий крюк: резонанс боли": 25,
+            "Секущий крюк: пучина ярости": 15,
+            "Явление мрака": 20,
+            "Развитая внимательность": 15,
+            "Порча: лик мрака": 20,
+            "Порча: пентименто": 15,
+            "Безжалостный шторм": 15,
+            "Тлетворное касание": 15,
+            "Последний этап": 10,
+            "Свирепая гордыня": 20,
+            "Бац!": 10,
+            "Генетические ограничения": 10,
+            "Совершенное оружие": 10,
+            "Порча: игра для двоих": 15,
+            "Свободное": 10, 
+            "Рычаг влияния": 10,
+            "Вынужденная нерешительность": 15,
+            "Быстрая жестокость": 10,
+            "Друзья до гроба": 20,
+            "Непредвиденное": 10,
+            "Догонялки": 15,
+            "Машинное обучение": 15,
+            "Инстинкт чужого": 15,
+            "Батарейки в комплекте": 15,
+            "Незавершенное": 10,
+            "Связь с плетением": 20,
+            "Алчность": 15,
+            "Оглушительный гром": 15,
+            "Порча: только отчаяние": 15, 
+            "Требуются работники": 10,
+            "Безжизненное касание": 15,
+            "Владычество": 15,
+            "Секущий крюк: щербатый компас": 10,
+            "Переплетенные навсегда": 15,
+            "Фантомный страх": 20,
+            "Темное высокомерие": 15,
+            "Порча: горькая участь": 15,
+            "Без пощады": 10,
+            "Все несвободны": 10,
+            "Неполадки": 15,
+            "Тихий шорох": 20,
+            "Охотник на оленей": 20,
+            "Сеющий страх": 15,
+            "Коварство": 15,
+            "Мертвая хватка": 20,
+            "Секущий крюк: чудовищный храп": 10,
+            "Порча: никому не скрыться от смерти": 25,
+            "Небрежный мясник": 20,
+            "Сумеречные шпионы": 25,
+            "Порча: охотничий азарт": 15,
+            "Безжалостный": 15,
+            "Шепоты": 10,
+            "Разбитые надежды": 10,
+            "Проклятие Рока": 15,
+            "Прожорливость": 15,
+            "Блуждающий взгляд": 15
+        };
+
+        // Функция сброса калькулятора
+        function resetCalculator() {
+            // Очищаем поля ввода
+            document.getElementById('perk1').value = '';
+            document.getElementById('perk2').value = '';
+            document.getElementById('perk3').value = '';
+            document.getElementById('perk4').value = '';
+            
+            // Сбрасываем тип персонажа к значению по умолчанию
+            document.getElementById('characterType').value = 'survivor';
+            
+            // Скрываем результат
+            document.getElementById('result').classList.remove('visible');
+            
+            // Очищаем автодополнение
+            clearAutocomplete();
+        }
+
+        // Назначаем обработчик события для кнопки сброса
+        document.getElementById('resetCalculator').addEventListener('click', resetCalculator);
+
+        document.getElementById('checkBalance').addEventListener('click', function() {
+            const characterType = document.getElementById('characterType').value;
+            const perk1 = document.getElementById('perk1').value.trim();
+            const perk2 = document.getElementById('perk2').value.trim();
+            const perk3 = document.getElementById('perk3').value.trim();
+            const perk4 = document.getElementById('perk4').value.trim();
+            
+            const perks = [perk1, perk2, perk3, perk4].filter(perk => perk !== '');
+            
+            if (perks.length === 0) {
+                alert('Пожалуйста, введите хотя бы один перк');
+                return;
+            }
+            
+            // Выбираем базу данных в зависимости от типа персонажа
+            const perkDatabase = characterType === 'survivor' ? survivorPerks : killerPerks;
+            const otherDatabase = characterType === 'survivor' ? killerPerks : survivorPerks;
+            
+            let totalScore = 0;
+            let validPerks = 0;
+            let unknownPerks = [];
+            let perkDetails = [];
+            
+            // Проверяем каждый перк
+            for (const perk of perks) {
+                if (perkDatabase[perk]) {
+                    totalScore += perkDatabase[perk];
+                    validPerks++;
+                    perkDetails.push({
+                        name: perk,
+                        score: perkDatabase[perk],
+                        rating: getRating(perkDatabase[perk])
+                    });
+                } else if (otherDatabase[perk]) {
+                    // Перк из другой базы данных
+                    unknownPerks.push(`${perk} (неправильный тип персонажа)`);
+                } else {
+                    // Неизвестный перк
+                    unknownPerks.push(perk);
+                }
+            }
+            
+            // Если все перки неизвестны
+            if (validPerks === 0) {
+                alert('Не удалось распознать введенные перки. Пожалуйста, проверьте правильность написания.');
+                return;
+            }
+            
+            // Рассчитываем средний балл
+            const averageScore = totalScore / validPerks;
+            
+            // Определяем рейтинг
+            const rating = getRating(averageScore);
+            
+            // Отображаем результат
+            displayResult(averageScore, rating, perkDetails, unknownPerks, characterType);
+        });
+        
+        function getRating(score) {
+            if (score >= 20) return 'excellent';
+            if (score >= 15) return 'good';
+            if (score >= 10) return 'average';
+            return 'poor';
+        }
+        
+        function displayResult(score, rating, perkDetails, unknownPerks, characterType) {
+            const resultElement = document.getElementById('result');
+            const balanceFill = document.getElementById('balanceFill');
+            const balancePercent = document.getElementById('balancePercent');
+            const balanceDescription = document.getElementById('balanceDescription');
+            const buildStats = document.getElementById('buildStats');
+            const recommendations = document.getElementById('recommendations');
+            
+            // Устанавливаем процент баланса
+            const percentage = Math.min(100, Math.round((score / 25) * 100));
+            balancePercent.textContent = `${percentage}%`;
+            
+            // Устанавливаем цвет и ширину индикатора
+            balanceFill.className = 'balance-fill';
+            balanceFill.classList.add(`rating-${rating}`);
+            balanceFill.style.width = `${percentage}%`;
+            
+            // Устанавливаем описание
+            const descriptions = {
+                excellent: 'Отличная сборка! Эта комбинация перков очень эффективна и хорошо сбалансирована.',
+                good: 'Хорошая сборка. Перки хорошо работают вместе, но есть возможности для улучшения.',
+                average: 'Средняя сборка. Некоторые перки могут конфликтовать или дублировать функции.',
+                poor: 'Слабая сборка. Перки плохо сочетаются друг с другом или имеют низкую эффективность.'
+            };
+            
+            balanceDescription.textContent = descriptions[rating];
+            
+            // Отображаем статистику по перкам
+            buildStats.innerHTML = '';
+            perkDetails.forEach(perk => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${perk.name}</strong>: ${perk.score}/25 (${getRatingText(perk.rating)})`;
+                buildStats.appendChild(li);
+            });
+            
+            // Добавляем рекомендации
+            recommendations.innerHTML = '';
+            
+            if (unknownPerks.length > 0) {
+                const warning = document.createElement('div');
+                warning.innerHTML = `<h4>Внимание:</h4><p>Следующие перки не были распознаны или не подходят для выбранного типа персонажа:</p><ul>${unknownPerks.map(perk => `<li>${perk}</li>`).join('')}</ul>`;
+                recommendations.appendChild(warning);
+            }
+            
+            // Добавляем общие рекомендации
+            const generalRecs = document.createElement('div');
+            generalRecs.innerHTML = '<br><h4>Результат и рекомендации:</h4>';
+            
+            if (rating === 'excellent') {
+                generalRecs.innerHTML += '<p>Ваша сборка отлично сбалансирована!</p>';
+            } else {
+                generalRecs.innerHTML += '<p>Для улучшения баланса рассмотрите следующие варианты:</p><ul>';
+                
+                if (rating === 'poor' || rating === 'average') {
+                    generalRecs.innerHTML += '<li>Замените слабые перки на более эффективные альтернативы</li>';
+                }
+                
+                generalRecs.innerHTML += '<li>Убедитесь, что перки дополняют друг друга, а не конфликтуют</li>';
+                generalRecs.innerHTML += '<li>Обратите внимание, что вы можете указать несколько перков на усталось, но вы должны понимать что не все они будут работать в одном билде. Калькулятор лишь покажет их индивидуальную эффективность.</li>';
+                generalRecs.innerHTML += '<li>Рассмотрите добавление перков, покрывающих слабые стороны вашей сборки</li>';
+                generalRecs.innerHTML += '</ul>';
+            }
+            
+            recommendations.appendChild(generalRecs);
+            
+            // Показываем результат
+            resultElement.classList.add('visible');
+        }
+        
+        function getRatingText(rating) {
+            const ratings = {
+                excellent: 'Отличный',
+                good: 'Хороший',
+                average: 'Средний',
+                poor: 'Слабый'
+            };
+            return ratings[rating];
+        }
+
+        // Функции для автодополнения
+        function setupAutocomplete() {
+            const inputs = ['perk1', 'perk2', 'perk3', 'perk4'];
+            
+            inputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                
+                input.addEventListener('input', function() {
+                    const value = this.value.trim().toLowerCase();
+                    const characterType = document.getElementById('characterType').value;
+                    const perkDatabase = characterType === 'survivor' ? survivorPerks : killerPerks;
+                    
+                    // Очищаем предыдущие подсказки
+                    clearAutocomplete();
+                    
+                    if (value.length < 1) return;
+                    
+                    // Ищем совпадения
+                    const matches = Object.keys(perkDatabase).filter(perk => 
+                        perk.toLowerCase().includes(value)
+                    ).slice(0, 5); // Ограничиваем до 5 подсказок
+                    
+                    if (matches.length > 0) {
+                        showAutocomplete(this, matches);
+                    }
+                });
+                
+                // Скрываем подсказки при потере фокуса
+                input.addEventListener('blur', function() {
+                    setTimeout(clearAutocomplete, 200);
+                });
+            });
+        }
+        
+        function showAutocomplete(input, matches) {
+            // Создаем контейнер для подсказок
+            const list = document.createElement('ul');
+            list.className = 'autocomplete-list';
+            list.style.position = 'absolute';
+            list.style.background = '#2a2a2a';
+            list.style.border = '1px solid #444';
+            list.style.borderRadius = '5px';
+            list.style.zIndex = '1000';
+            list.style.width = input.offsetWidth + 'px';
+            list.style.maxHeight = '200px';
+            list.style.overflowY = 'auto';
+            
+            // Позиционируем список под полем ввода
+            const rect = input.getBoundingClientRect();
+            list.style.top = (rect.top + rect.height + window.scrollY) + 'px';
+            list.style.left = (rect.left + window.scrollX) + 'px';
+            
+            // Добавляем подсказки
+            matches.forEach(match => {
+                const item = document.createElement('li');
+                item.textContent = match;
+                item.style.padding = '8px 12px';
+                item.style.cursor = 'pointer';
+                item.style.borderBottom = '1px solid #444';
+                
+                item.addEventListener('mouseover', function() {
+                    this.style.background = '#333';
+                });
+                
+                item.addEventListener('mouseout', function() {
+                    this.style.background = 'transparent';
+                });
+                
+                item.addEventListener('click', function() {
+                    input.value = match;
+                    clearAutocomplete();
+                    input.focus();
+                });
+                
+                list.appendChild(item);
+            });
+            
+            document.body.appendChild(list);
+        }
+        
+        function clearAutocomplete() {
+            const existingList = document.querySelector('.autocomplete-list');
+            if (existingList) {
+                existingList.remove();
+            }
+        }
+        
+        // Инициализация автодополнения при загрузке страницы
+        window.addEventListener('DOMContentLoaded', setupAutocomplete);
+    </script>
 </body>
 </html>
