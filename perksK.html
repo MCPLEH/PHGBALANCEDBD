@@ -4,7 +4,7 @@
     <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHG Баланс | Cheker</title>
+    <title>PHG Баланс | DBD</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -86,7 +86,7 @@
             color: var(--primary-color);
         }
         
-        .hero {
+        //.hero {
             padding: 3rem 0;
             text-align: center;
             background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
@@ -145,18 +145,27 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
+        .main-content-wrapper {
+            display: flex;
+            gap: 2rem;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
         .killer-selection {
             margin-bottom: 2rem;
             text-align: center;
             position: relative;
+            width: 300px;
+            flex-shrink: 0;
         }
         
         .killer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
             margin-top: 1rem;
-            max-height: 300px;
+            max-height: 600px;
             overflow-y: auto;
             padding: 10px;
             border-radius: 8px;
@@ -187,6 +196,9 @@
             cursor: pointer;
             transition: all 0.3s;
             border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
         .killer-card:hover {
@@ -201,32 +213,32 @@
         }
         
         .killer-icon {
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 60px;
             background-color: #333;
             border-radius: 50%;
-            margin: 0 auto 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             overflow: hidden;
+            flex-shrink: 0;
         }
         
         .killer-icon img {
-            width: 130%;
-            height: 130%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            border-radius: 50%;
         }
         
         .checker-container {
             background-color: rgba(26, 26, 26, 0.9);
-            border-radius: 100px;
+            border-radius: 10px;
             padding: 2rem;
-            max-width: 2000px;
-            margin: 0 auto;
+            flex-grow: 1;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border: 12px solid #333;
+            border: 1px solid #333;
         }
         
         .selected-killer {
@@ -266,15 +278,15 @@
         
         .perk-card {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             margin: 0 auto;
             cursor: pointer;
             transition: all 0.3s;
             transform: rotate(45deg);
             border: 2px solid transparent;
             overflow: hidden;
-            //background-color: #2a2a2a;
+            background-color: #2a2a2a;
         }
         
         .perk-card:hover {
@@ -304,8 +316,8 @@
         }
         
         .perk-icon {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             border-radius: 10px;
             overflow: hidden;
             display: flex;
@@ -408,6 +420,31 @@
             font-size: 0.9rem;
         }
         
+        @media (max-width: 1200px) {
+            .main-content-wrapper {
+                flex-direction: column;
+            }
+            
+            .killer-selection {
+                width: 100%;
+            }
+            
+            .killer-grid {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .killer-card {
+                flex-direction: column;
+                width: 120px;
+            }
+            
+            .killer-info {
+                text-align: center;
+            }
+        }
+        
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -460,6 +497,16 @@
             
             .features-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .killer-card {
+                width: 100px;
+                padding: 0.8rem;
+            }
+            
+            .killer-icon {
+                width: 50px;
+                height: 50px;
             }
         }
         
@@ -575,7 +622,6 @@
             .selected-perk-slot {
                 min-width: 100px;
                 padding: 0.8rem;
-                flex: 0 0 calc(50% - 0.5rem);
             }
             
             .selected-perk-slot .perk-icon {
@@ -587,28 +633,42 @@
                 font-size: 0.8rem;
             }
         }
-        
-        .scroll-indicator {
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--killer-color);
-            font-size: 1.2rem;
-            animation: bounce 2s infinite;
-            z-index: 10;
+        .perk-card.selected {
+            border-color: #10e817;
+            background-color: rgba(16, 232, 23, 0.2);
+            transform: rotate(45deg) scale(1.1);
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
+        .perk-card.unavailable {
+            opacity: 0.5;
+            background-color: rgba(194, 25, 25, 0.3);
+            pointer-events: none;
+        }
+        
+        /* Добавляем стили для прокрутки перков */
+        .perks-grid-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(40, 40, 40, 0.5);
+            scrollbar-width: thin;
+            scrollbar-color: var(--killer-color) #2a2a2a;
+            margin-top: 1rem;
+        }
+        
+        .perks-grid-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .perks-grid-container::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        
+        .perks-grid-container::-webkit-scrollbar-thumb {
+            background-color: var(--killer-color);
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -630,10 +690,12 @@
             </div>
         </div>
     </header>
-
+    
     <section class="hero">
-        <div class="container">
-        <p>Выберите киллера или выжившего по кнопке ниже</p>
+
+            <center>
+            <br>
+            <p>Выберите киллера или выжившего, чтобы создать комбинацию по PHG Балансу</p>
             
             <div class="character-selection">
     <a href="perksK.html" class="character-btn killer">
@@ -643,258 +705,17 @@
         <i class="fas fa-running"></i> Выживший
     </a>
 </div>
-            
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="main-content-wrapper">
             <div class="killer-selection">
-            <p>Выберите киллера и перки, чтобы создать комбинацию по PHG Балансу (BETA)</p>
-                <h2>Выберите киллера</h2>
-                <div class="killer-grid">
-                    <div class="killer-card" data-killer="trapper">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp" alt="Trapper" width="150">
-    </div>
-    <h3>Охотник</h3>
-</div>
-<div class="killer-card" data-killer="wraith">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp" alt="Wraith" width="150">
-    </div>
-    <h3>Призрак</h3>
-</div>
-<div class="killer-card" data-killer="hillbilly">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp" alt="Hillbilly" width="150">
-    </div>
-    <h3>Билли</h3>
-</div>
-<div class="killer-card" data-killer="nurse">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/gjntWXgS/K04-The-Nurse-Portrait.webp" alt="Nurse" width="150">
-    </div>
-    <h3>Медсестра</h3>
-</div>
-<div class="killer-card" data-killer="shape">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/Y2syxRSJ/K06-The-Shape-Portrait.webp" alt="Shape" width="150">
-    </div>
-    <h3>Тень</h3>
-</div>
-<div class="killer-card" data-killer="hag">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/d3pHtsXq/K05-The-Hag-Portrait.webp" alt="Hag" width="150">
-    </div>
-    <h3>Ведьма</h3>
-</div>
-<div class="killer-card" data-killer="doctor">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp" alt="Doctor" width="150">
-    </div>
-    <h3>Доктор</h3>
-</div>
-<div class="killer-card" data-killer="huntress">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/rw6nBpxj/K08-The-Huntress-Portrait.webp" alt="Huntress" width="150">
-    </div>
-    <h3>Охотница</h3>
-</div>
-<div class="killer-card" data-killer="cannibal">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp" alt="Cannibal" width="150">
-    </div>
-    <h3>Бубба</h3>
-</div>
-<div class="killer-card" data-killer="nightmare">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp" alt="Nightmare" width="150">
-    </div>
-    <h3>Кошмар</h3>
-</div>
-<div class="killer-card" data-killer="pig">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp" alt="Pig" width="150">
-    </div>
-    <h3>Свинья</h3>
-</div>
-<div class="killer-card" data-killer="clown">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp" alt="Clown" width="150">
-    </div>
-    <h3>Клоун</h3>
-</div>
-<div class="killer-card" data-killer="spirit">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/0QHZc59p/K13-The-Spirit-Portrait.webp" alt="Spirit" width="150">
-    </div>
-    <h3>Дух</h3>
-</div>
-<div class="killer-card" data-killer="legion">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/90RbS3fs/K14-The-Legion-Portrait.webp" alt="Legion" width="150">
-    </div>
-    <h3>Легион</h3>
-</div>
-<div class="killer-card" data-killer="plague">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/2ysGNHby/K15-The-Plague-Portrait.webp" alt="Plague" width="150">
-    </div>
-    <h3>Чума</h3>
-</div>
-<div class="killer-card" data-killer="ghostface">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/nVXtZC9f/K16-The-Ghostface-Portrait.webp" alt="GhostFace" width="150">
-    </div>
-    <h3>Гоуст Фейс</h3>
-</div>
-<div class="killer-card" data-killer="demogorgon">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp" alt="Demogorgon" width="150">
-    </div>
-    <h3>Демо</h3>
-</div>
-<div class="killer-card" data-killer="oni">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/pX8bh4B0/K18-The-Oni-Portrait.webp" alt="Oni" width="150">
-    </div>
-    <h3>Они</h3>
-</div>
-<div class="killer-card" data-killer="deathslinger">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/jSbVzcgR/K19-The-Deathslinger-Portrait.webp" alt="Deathslinger" width="150">
-    </div>
-    <h3>Стрелок</h3>
-</div>
-<div class="killer-card" data-killer="executioner">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp" alt="Executioner" width="150">
-    </div>
-    <h3>Палач</h3>
-</div>
-<div class="killer-card" data-killer="blight">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp" alt="Blight" width="150">
-    </div>
-    <h3>Мор</h3>
-</div>
-<div class="killer-card" data-killer="twins">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/3wtPQTKw/K22-The-Twins-Portrait.webp" alt="Twins" width="150">
-    </div>
-    <h3>Близнецы</h3>
-</div>
-<div class="killer-card" data-killer="trickster">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/QtVvXytJ/K23-The-Trickster-Portrait.webp" alt="Trickster" width="150">
-    </div>
-    <h3>Трюкач</h3>
-</div>
-<div class="killer-card" data-killer="nemesis">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/8539smfQ/K24-The-Nemesis-Portrait.webp" alt="Nemesis" width="150">
-    </div>
-    <h3>Немезис</h3>
-</div>
-<div class="killer-card" data-killer="cenobite">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/XqCh5B9Z/K25-The-Cenobite-Portrait.webp" alt="Cenobite" width="150">
-    </div>
-    <h3>Сенобит</h3>
-</div>
-<div class="killer-card" data-killer="artist">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/pVh34432/K26-The-Artist-Portrait.webp" alt="Artist" width="150">
-    </div>
-    <h3>Художница</h3>
-</div>
-<div class="killer-card" data-killer="onryo">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp" alt="Onryō" width="150">
-    </div>
-    <h3>Онрё</h3>
-</div>
-<div class="killer-card" data-killer="dredge">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/RZ983FhF/K28-The-Dredge-Portrait.webp" alt="Dredge" width="150">
-    </div>
-    <h3>Грязь</h3>
-</div>
-<div class="killer-card" data-killer="mastermind">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp" alt="Mastermind" width="150">
-    </div>
-    <h3>Кукловод</h3>
-</div>
-<div class="killer-card" data-killer="knight">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/bwT51hSR/K30-The-Knight-Portrait.webp" alt="Knight" width="150">
-    </div>
-    <h3>Рыцарь</h3>
-</div>
-<div class="killer-card" data-killer="skullMerchant">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/QMdybypZ/K31-The-Skull-Merchant-Portrait.webp" alt="Skull Merchant" width="150">
-    </div>
-    <h3>Торговка черепами</h3>
-</div>
-<div class="killer-card" data-killer="singularity">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/q7DZZxLh/K32-The-Singularity-Portrait.webp" alt="Singularity" width="150">
-    </div>
-    <h3>Хакс-А7</h3>
-</div>
-<div class="killer-card" data-killer="xenomorph">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/hjJ3FQyC/K33-The-Xenomorph-Portrait.webp" alt="Xenomorph" width="150">
-    </div>
-    <h3>Ксеноморф</h3>
-</div>
-<div class="killer-card" data-killer="goodGuy">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/G2Zgb36b/K34-The-Yerkes-Portrait.webp" alt="Good Guy" width="150">
-    </div>
-    <h3>Чаки</h3>
-</div>
-<div class="killer-card" data-killer="unknown">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp" alt="Unknown" width="150">
-    </div>
-    <h3>Неведомое</h3>
-</div>
-<div class="killer-card" data-killer="lich">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp" alt="Lich" width="150">
-    </div>
-    <h3>Лич</h3>
-</div>
-<div class="killer-card" data-killer="darklord">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp" alt="Darklord" width="150">
-    </div>
-    <h3>Дракула</h3>
-</div>
-<div class="killer-card" data-killer="ranger">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/ncKStJ2t/K38-The-Houndmaster-Portrait.webp" alt="Ranger" width="150">
-    </div>
-    <h3>Егерь</h3>
-</div>
-<div class="killer-card" data-killer="ghoul">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/CxFPhQrn/K39-The-Ghoul-Portrait.webp" alt="Ghoul" width="150">
-    </div>
-    <h3>Гуль</h3>
-</div>
-<div class="killer-card" data-killer="animatronic">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/13JWfrbC/K40-The-Animatronic-Portrait.webp" alt="Animatronic" width="150">
-    </div>
-    <h3>Спрингтрап</h3>
-</div>
-<div class="killer-card" data-killer="krasue">
-    <div class="killer-icon">
-        <img src="https://i.postimg.cc/bvrmb2hz/the-krasue.webp" alt="Krasue" width="150">
-    </div>
-    <h3>Красу</h3>
-</div>
+                <h2>Выберите убийцу</h2>
+                <div class="killer-grid" id="killer-grid">
+                    <!-- Killer cards will be generated by JavaScript -->
                 </div>
+                <button class="reset-killer">Сбросить выбор</button>
             </div>
             
             <div class="checker-container">
@@ -902,1581 +723,576 @@
                     <div class="killer-icon">
                         <i class="fas fa-question"></i>
                     </div>
-                    <div>
-                        <h3>Киллер не выбран</h3>
-                        <p>Выберите киллера из списка выше</p>
+                    <h2>Выберите убийцу для просмотра доступных перков</h2>
+                </div>
+                
+                <div class="perks-selection">
+                    <h2>Выберите перки</h2>
+                    <p>Доступные перки для выбранного убийцы:</p>
+                    
+                    <div class="perks-grid-container">
+                        <div class="perks-grid" id="perks-grid">
+                            <!-- Perk cards will be generated by JavaScript -->
+                        </div>
                     </div>
                 </div>
                 
-                <div class="perks-selection" id="perksSelection">
-                    <h2>Выберите перки:</h2>
-                    <br>
-                    <div class="perks-grid">
-                        <div class="perk-card" data-perk="1">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/KYbvGV1T/icon-Perks-Agitation.webp" alt="Нетерпимость">
-        </div>
-    </div>
-    <div class="perk-name">Нетерпимость</div>
-</div>
-<div class="perk-card" data-perk="2">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/9FQdJHqQ/iconPerks_Shadowborn.webp" alt="Детище тьмы">
-        </div>
-    </div>
-    <div class="perk-name">Детище тьмы</div>
-</div>
-<div class="perk-card" data-perk="3">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/SKD11fNB/icon-Perks-Enduring.webp" alt="Стойкий">
-        </div>
-    </div>
-    <div class="perk-name">Стойкий</div>
-</div>
-<div class="perk-card" data-perk="4">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/ZqppCTXV/iconPerks_Stridor.webp" alt="Стридор">
-        </div>
-    </div>
-    <div class="perk-name">Стридор</div>
-</div>
-<div class="perk-card" data-perk="5">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/wv5Xb6V7/iconPerks_SaveTheBestForLast.webp" alt="Оставьте лучшее напоследок">
-        </div>
-    </div>
-    <div class="perk-name">Оставьте лучшее напоследок</div>
-</div>
-<div class="perk-card" data-perk="6">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Twk8mXDW/icon-Perks-Brutal-Strength.webp" alt="Зверская сила">
-        </div>
-    </div>
-    <div class="perk-name">Зверская сила</div>
-</div>
-<div class="perk-card" data-perk="7">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/nh7tW566/icon-Perks-Bloodhound.webp" alt="Ищейка">
-        </div>
-    </div>
-    <div class="perk-name">Ищейка</div>
-</div>
-<div class="perk-card" data-perk="8">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/8C9XVPM4/iconPerks_Lightborn.webp" alt="Детище света">
-        </div>
-    </div>
-    <div class="perk-name">Детище света</div>
-</div>
-<div class="perk-card" data-perk="9">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/CL58bCWZ/iconPerks_Thatanophobia.webp" alt="Танатофобия">
-        </div>
-    </div>
-    <div class="perk-name">Танатофобия</div>
-</div>
-<div class="perk-card" data-perk="10">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp" alt="Угасающий свет">
-        </div>
-    </div>
-    <div class="perk-name">Угасающий свет</div>
-</div>
-<div class="perk-card" data-perk="11">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/8CSsXLnm/iconPerks_UnnervingPresence.webp" alt="Пугающее присутствие">
-        </div>
-    </div>
-    <div class="perk-name">Пугающее присутствие</div>
-</div>
-<div class="perk-card" data-perk="12">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/8zsbPg10/iconPerks_Predator.webp" alt="Хищник">
-        </div>
-    </div>
-    <div class="perk-name">Хищник</div>
-</div>
-<div class="perk-card" data-perk="13">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/5tBQfsFr/iconPerks_Tinkerer.webp" alt="Умелец">
-        </div>
-    </div>
-    <div class="perk-name">Умелец</div>
-</div>
-<div class="perk-card" data-perk="14">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/3w53J7X8/icon-Perks-ANurses-Calling.webp" alt="Зов Медсестры">
-        </div>
-    </div>
-    <div class="perk-name">Зов Медсестры</div>
-</div>
-<div class="perk-card" data-perk="15">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/tCq5wV8y/iconPerks_PlayWithYourFood.webp" alt="Поиграть со своей жертвой">
-        </div>
-    </div>
-    <div class="perk-name">Поиграть со своей жертвой</div>
-</div>
-<div class="perk-card" data-perk="16">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Hx102Jbq/iconPerks_Ruin.webp" alt="Погибель">
-        </div>
-    </div>
-    <div class="perk-name">Погибель</div>
-</div>
-<div class="perk-card" data-perk="17">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/bwvmD2RL/iconPerks_MonitorAndAbuse.webp" alt="Слежка и наказание">
-        </div>
-    </div>
-    <div class="perk-name">Слежка и наказание</div>
-</div>
-<div class="perk-card" data-perk="18">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/9XJT4gN5/iconPerks_TerritorialImperative.webp" alt="Территориальный императив">
-        </div>
-    </div>
-    <div class="perk-name">Территориальный императив</div>
-</div>
-<div class="perk-card" data-perk="19">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp" alt="Барбекю и чили">
-        </div>
-    </div>
-    <div class="perk-name">Барбекю и чили</div>
-</div>
-<div class="perk-card" data-perk="20">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/tTJSKnsY/icon-Perks-Fire-Up.webp" alt="Яркое пламя">
-        </div>
-    </div>
-    <div class="perk-name">Яркое пламя</div>
-</div>
-<div class="perk-card" data-perk="21">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp" alt="Пожирание надежды">
-        </div>
-    </div>
-    <div class="perk-name">Пожирание надежды</div>
-</div>
-<div class="perk-card" data-perk="22">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/g02b0JwP/icon-Perks-Generator-Overcharge.webp" alt="Перегрузка">
-        </div>
-    </div>
-    <div class="perk-name">Перегрузка</div>
-</div>
-<div class="perk-card" data-perk="23">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/634S7GtF/iconPerks_HuntressLullaby.webp" alt="Колыбельная охотницы">
-        </div>
-    </div>
-    <div class="perk-name">Колыбельная охотницы</div>
-</div>
-<div class="perk-card" data-perk="24">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/nVjZ7C3F/icon-Perks-Franklins-Loss.webp" alt="Гибель Франклина">
-        </div>
-    </div>
-    <div class="perk-name">Гибель Франклина</div>
-</div>
-<div class="perk-card" data-perk="25">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/ZqdFpPvP/iconPerks_RememberMe.webp" alt="Помни меня">
-        </div>
-    </div>
-    <div class="perk-name">Помни меня</div>
-</div>
-<div class="perk-card" data-perk="26">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/X7PCLGbs/iconPerks_TheThirdSeal.webp" alt="Третья печать">
-        </div>
-    </div>
-    <div class="perk-name">Третья печать</div>
-</div>
-<div class="perk-card" data-perk="27">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/ryCjf9nQ/iconPerks_OverwhelmingPresence.webp" alt="Невыносимое присутствие">
-        </div>
-    </div>
-    <div class="perk-name">Невыносимое присутствие</div>
-</div>
-<div class="perk-card" data-perk="28">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/c19ZtfR5/icon-Perks-Beast-Of-Prey.webp" alt="Хищный зверь">
-        </div>
-    </div>
-    <div class="perk-name">Хищный зверь</div>
-</div>
-<div class="perk-card" data-perk="29">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/T324VsTV/iconPerks_KnockOut.webp" alt="Нокаут">
-        </div>
-    </div>
-    <div class="perk-name">Нокаут</div>
-</div>
-<div class="perk-card" data-perk="30">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/CKgVp70d/icon-Perks-Blood-Warden.webp" alt="Кровавый смотритель">
-        </div>
-    </div>
-    <div class="perk-name">Кровавый смотритель</div>
-</div>
-<div class="perk-card" data-perk="31">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Y21nJ79N/iconPerks_MakeYourChoice.webp" alt="Выбор за тобой">
-        </div>
-    </div>
-    <div class="perk-name">Выбор за тобой</div>
-</div>
-<div class="perk-card" data-perk="32">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/9FLphQj9/iconPerks_PopGoesTheWeasel.webp" alt="Чертик из табакерки">
-        </div>
-    </div>
-    <div class="perk-name">Чертик из табакерки</div>
-</div>
-<div class="perk-card" data-perk="33">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/XYYm9vWN/icon-Perks-Hatred.webp" alt="Ненависть">
-        </div>
-    </div>
-    <div class="perk-name">Ненависть</div>
-</div>
-<div class="perk-card" data-perk="34">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/mkcnH140/icon-Perks-Discordance.webp" alt="Разлад">
-        </div>
-    </div>
-    <div class="perk-name">Разлад</div>
-</div>
-<div class="perk-card" data-perk="35">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/43LJp0qq/icon-Perks-Dark-Devotion.webp" alt="Темная преданность">
-        </div>
-    </div>
-    <div class="perk-name">Темная преданность</div>
-</div>
-<div class="perk-card" data-perk="36">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Gthy7vt5/icon-Perks-Surveillance.webp" alt="Наблюдение">
-        </div>
-    </div>
-    <div class="perk-name">Наблюдение</div>
-</div>
-<div class="perk-card" data-perk="37">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/RhqkLb7p/icon-Perks-Coulrophobia.webp" alt="Клоунофобия">
-        </div>
-    </div>
-    <div class="perk-name">Клоунофобия</div>
-</div>
-<div class="perk-card" data-perk="38">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/k5VHhhDk/icon-Perks-Haunted-Ground.webp" alt="Проклятая земля">
-        </div>
-    </div>
-    <div class="perk-name">Проклятая земля</div>
-</div>
-<div class="perk-card" data-perk="39">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp" alt="Железная дева">
-        </div>
-    </div>
-    <div class="perk-name">Железная дева</div>
-</div>
-<div class="perk-card" data-perk="40">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp" alt="Вмешательство скверны">
-        </div>
-    </div>
-    <div class="perk-name">Вмешательство скверны</div>
-</div>
-<div class="perk-card" data-perk="41">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/ZR9krMF7/icon-Perks-Hangmans-Trick.webp" alt="Секрет палача">
-        </div>
-    </div>
-    <div class="perk-name">Секрет палача</div>
-</div>
-<div class="perk-card" data-perk="42">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp" alt="Розыгрыш">
-        </div>
-    </div>
-    <div class="perk-name">Розыгрыш</div>
-</div>
-<div class="perk-card" data-perk="43">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/T3j15CRv/icon-Perks-Spirit-Fury.webp" alt="Ярость духа">
-        </div>
-    </div>
-    <div class="perk-name">Ярость духа</div>
-</div>
-<div class="perk-card" data-perk="44">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/mkNmMYqp/icon-Perks-Mad-Grit.webp" alt="Безумное упорство">
-        </div>
-    </div>
-    <div class="perk-name">Безумное упорство</div>
-</div>
-<div class="perk-card" data-perk="45">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/nr1SQywQ/icon-Perks-Infectious-Fright.webp" alt="Заразительный ужас">
-        </div>
-    </div>
-    <div class="perk-name">Заразительный ужас</div>
-</div>
-<div class="perk-card" data-perk="46">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/3J2TSzMz/icon-Perks-Furtive-Chase.webp" alt="Скрытная погоня">
-        </div>
-    </div>
-    <div class="perk-name">Скрытная погоня</div>
-</div>
-<div class="perk-card" data-perk="47">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/wTRKtZT7/icon-Perks-Cruel-Confinement.webp" alt="Жестокая изоляция">
-        </div>
-    </div>
-    <div class="perk-name">Жестокая изоляция</div>
-</div>
-<div class="perk-card" data-perk="48">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/BbXvPpX4/icon-Perks-Zanshin-Tactics.webp" alt="Тактика зансин">
-        </div>
-    </div>
-    <div class="perk-name">Тактика зансин</div>
-</div>
-<div class="perk-card" data-perk="49">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/vHwRVX1h/icon-Perks-Hex-Retribution.webp" alt="Порча: Кара">
-        </div>
-    </div>
-    <div class="perk-name">Порча: Кара</div>
-</div>
-<div class="perk-card" data-perk="50">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/PJxCzhFG/icon-Perks-Trail-Of-Torment.webp" alt="Тропа терзаний">
-        </div>
-    </div>
-    <div class="perk-name">Тропа терзаний</div>
-</div>
-<div class="perk-card" data-perk="51">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/kGxps3Vc/icon-Perks-Im-All-Ears.webp" alt="Чуткий слух">
-        </div>
-    </div>
-    <div class="perk-name">Чуткий слух</div>
-</div>
-<div class="perk-card" data-perk="52">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Wb89170h/icon-Perks-Mind-Breaker.webp" alt="Разрушитель разума">
-        </div>
-    </div>
-    <div class="perk-name">Разрушитель разума</div>
-</div>
-<div class="perk-card" data-perk="53">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/SNHhDqt6/icon-Perks-Blood-Echo.webp" alt="Отзвук крови">
-        </div>
-    </div>
-    <div class="perk-name">Отзвук крови</div>
-</div>
-<div class="perk-card" data-perk="54">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp" alt="Аварийная кнопка">
-        </div>
-    </div>
-    <div class="perk-name">Аварийная кнопка</div>
-</div>
-<div class="perk-card" data-perk="55">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/PNsSv62w/icon-Perks-Forced-Penance.webp" alt="Принудительная мера">
-        </div>
-    </div>
-    <div class="perk-name">Принудительная мера</div>
-</div>
-<div class="perk-card" data-perk="56">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/13NNjmRs/icon-Perks-Thrilling-Tremors.webp" alt="Пугающая тряска">
-        </div>
-    </div>
-    <div class="perk-name">Пугающая тряска</div>
-</div>
-<div class="perk-card" data-perk="57">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp" alt="Выброс">
-        </div>
-    </div>
-    <div class="perk-name">Выброс</div>
-</div>
-<div class="perk-card" data-perk="58">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/xdJggDhz/icon-Perks-Nemesis.webp" alt="Возмездие">
-        </div>
-    </div>
-    <div class="perk-name">Возмездие</div>
-</div>
-<div class="perk-card" data-perk="59">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Hk2CH5k2/icon-Perks-Gear-Head.webp" alt="Знаток техники">
-        </div>
-    </div>
-    <div class="perk-name">Знаток техники</div>
-</div>
-<div class="perk-card" data-perk="60">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/QMbvGrSn/icon-Perks-Deathbound.webp" alt="Смертельные узы">
-        </div>
-    </div>
-    <div class="perk-name">Смертельные узы</div>
-</div>
-<div class="perk-card" data-perk="61">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp" alt="Благоволение крови">
-        </div>
-    </div>
-    <div class="perk-name">Благоволение крови</div>
-</div>
-<div class="perk-card" data-perk="62">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/fyF62j5z/icon-Perks-Coup-De-Grace.webp" alt="Добивание">
-        </div>
-    </div>
-    <div class="perk-name">Добивание</div>
-</div>
-<div class="perk-card" data-perk="63">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/dVzGs7Nh/icon-Perks-Starstruck.webp" alt="Фанатение">
-        </div>
-    </div>
-    <div class="perk-name">Фанатение</div>
-</div>
-<div class="perk-card" data-perk="64">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/rmHnMy4g/icon-Perks-Eruption.webp" alt="Подрыв">
-        </div>
-    </div>
-    <div class="perk-name">Подрыв</div>
-</div>
-<div class="perk-card" data-perk="65">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/gkW5JJ5B/icon-Perks-Iron-Grasp.webp" alt="Мертвая хватка">
-        </div>
-    </div>
-    <div class="perk-name">Мертвая хватка</div>
-</div>
-<div class="perk-card" data-perk="66">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp" alt="Не-смерть">
-        </div>
-    </div>
-    <div class="perk-name">Не-смерть</div>
-</div>
-<div class="perk-card" data-perk="67">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Vk4228KZ/icon-Perks-Hoarder.webp" alt="Скопидом">
-        </div>
-    </div>
-    <div class="perk-name">Скопидом</div>
-</div>
-<div class="perk-card" data-perk="68">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/d3dzfZfG/icon-Perks-Hex-Crowd-Control.webp" alt="Контроль толпы">
-        </div>
-    </div>
-    <div class="perk-name">Контроль толпы</div>
-</div>
-<div class="perk-card" data-perk="69">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/KjXWtvYj/icon-Perks-Hysteria.webp" alt="Истерия">
-        </div>
-    </div>
-    <div class="perk-name">Истерия</div>
-</div>
-<div class="perk-card" data-perk="70">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp" alt="Игрушка">
-        </div>
-    </div>
-    <div class="perk-name">Игрушка</div>
-</div>
-<div class="perk-card" data-perk="71">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/0y14zNBB/icon-Perks-Dragons-Grip.webp" alt="Драконья хватка">
-        </div>
-    </div>
-    <div class="perk-name">Драконья хватка</div>
-</div>
-<div class="perk-card" data-perk="72">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/prZBy2hg/icon-Perks-Oppression.webp" alt="Притеснение">
-        </div>
-    </div>
-    <div class="perk-name">Притеснение</div>
-</div>
-<div class="perk-card" data-perk="73">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp" alt="Выхода нет">
-        </div>
-    </div>
-    <div class="perk-name">Выхода нет</div>
-</div>
-<div class="perk-card" data-perk="74">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp" alt="Преследователь-убийца">
-        </div>
-    </div>
-    <div class="perk-name">Преследователь-убийца</div>
-</div>
-<div class="perk-card" data-perk="75">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Y9j7d9kx/T-UI-icon-Perks-Weeping-Wounds.webp" alt="Дар боли">
-        </div>
-    </div>
-    <div class="perk-name">Дар боли</div>
-</div>
-<div class="perk-card" data-perk="76">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp" alt="Мрачные объятья">
-        </div>
-    </div>
-    <div class="perk-name">Мрачные объятья</div>
-</div>
-<div class="perk-card" data-perk="77">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/W3pLh4hv/icon-Perks-Call-Of-Brine.webp" alt="Соленое море">
-        </div>
-    </div>
-    <div class="perk-name">Соленое море</div>
-</div>
-<div class="perk-card" data-perk="78">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/sf8qRm9y/icon-Perks-Dissolution.webp" alt="Растворение">
-        </div>
-    </div>
-    <div class="perk-name">Растворение</div>
-</div>
-<div class="perk-card" data-perk="79">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/tTbP6Kjy/icon-Perks-Superior-Anatomy.webp" alt="Лучшая анатомия">
-        </div>
-    </div>
-    <div class="perk-name">Лучшая анатомия</div>
-</div>
-<div class="perk-card" data-perk="80">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/L5RTHqXt/icon-Perks-Nowhere-To-Hide.webp" alt="Им не укрыться">
-        </div>
-    </div>
-    <div class="perk-name">Им не укрыться</div>
-</div>
-<div class="perk-card" data-perk="81">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp" alt="Резонанс боли">
-        </div>
-    </div>
-    <div class="perk-name">Резонанс боли</div>
-</div>
-<div class="perk-card" data-perk="82">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/qqCmRfXr/icon-Perks-Flood-Of-Rage.webp" alt="Пучина ярости">
-        </div>
-    </div>
-    <div class="perk-name">Пучина ярости</div>
-</div>
-<div class="perk-card" data-perk="83">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/m2vv7jtV/icon-Perks-Darkness-Revelated.webp" alt="Явление мрака">
-        </div>
-    </div>
-    <div class="perk-name">Явление мрака</div>
-</div>
-<div class="perk-card" data-perk="84">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/nL4pX52v/icon-Perks-Awakened-Awarenesss.webp" alt="Развитая внимательность">
-        </div>
-    </div>
-    <div class="perk-name">Развитая внимательность</div>
-</div>
-<div class="perk-card" data-perk="85">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/tT8KDNBX/icon-Perks-Hex-Face-The-Darkness.webp" alt="Лик мрака">
-        </div>
-    </div>
-    <div class="perk-name">Лик мрака</div>
-</div>
-<div class="perk-card" data-perk="86">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp" alt="Пентименто">
-        </div>
-    </div>
-    <div class="perk-name">Пентименто</div>
-</div>
-<div class="perk-card" data-perk="87">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/qM4brFhP/icon-Perks-Merciless-Storm.webp" alt="Безжалостный шторм">
-        </div>
-    </div>
-    <div class="perk-name">Безжалостный шторм</div>
-</div>
-<div class="perk-card" data-perk="88">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/5935B2yr/icon-Perks-Septic-Touch.webp" alt="Тлетворное касание">
-        </div>
-    </div>
-    <div class="perk-name">Тлетворное касание</div>
-</div>
-<div class="perk-card" data-perk="89">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/BbY1dt1Q/icon-Perks-Terminus.webp" alt="Последний этап">
-        </div>
-    </div>
-    <div class="perk-name">Последний этап</div>
-</div>
-<div class="perk-card" data-perk="90">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/bvJ4hBMy/icon-Perks-Hubris.webp" alt="Свирепая гордыня">
-        </div>
-    </div>
-    <div class="perk-name">Свирепая гордыня</div>
-</div>
-<div class="perk-card" data-perk="91">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/pTPhrKfL/icon-Perks-Thwack.webp" alt="Бац!">
-        </div>
-    </div>
-    <div class="perk-name">Бац!</div>
-</div>
-<div class="perk-card" data-perk="92">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/4NZrN5F9/Icon-Perks-Genetic-Limits.webp" alt="Генетические ограничения">
-        </div>
-    </div>
-    <div class="perk-name">Генетические ограничения</div>
-</div>
-<div class="perk-card" data-perk="93">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/tJMYBfLs/icon-Perks-Ultimate-Weapon.webp" alt="Совершенное оружие">
-        </div>
-    </div>
-    <div class="perk-name">Совершенное оружие</div>
-</div>
-<div class="perk-card" data-perk="94">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/G37838Hb/icon-Perks-two-Can-Play.webp" alt="Игра для двоих">
-        </div>
-    </div>
-    <div class="perk-name">Игра для двоих</div>
-</div>
-<div class="perk-card" data-perk="95">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/qMNtNJ3y/icon-Perks-Unbound.webp" alt="Свободное">
-        </div>
-    </div>
-    <div class="perk-name">Свободное</div>
-</div>
-<div class="perk-card" data-perk="96">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/nzmRVb1J/icon-Perks-Leverage.webp" alt="Рычаг влияния">
-        </div>
-    </div>
-    <div class="perk-name">Рычаг влияния</div>
-</div>
-<div class="perk-card" data-perk="97">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Gtn6DJL6/Icon-Perks-Forced-Hesitation.webp" alt="Вынужденная нерешительность">
-        </div>
-    </div>
-    <div class="perk-name">Вынужденная нерешительность</div>
-</div>
-<div class="perk-card" data-perk="98">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/RZ8LWphV/icon-Perks-Rapid-Brutality.webp" alt="Быстрая жестокость">
-        </div>
-    </div>
-    <div class="perk-name">Быстрая жестокость</div>
-</div>
-<div class="perk-card" data-perk="99">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp" alt="Друзья до гроба">
-        </div>
-    </div>
-    <div class="perk-name">Друзья до гроба</div>
-</div>
-<div class="perk-card" data-perk="100">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp" alt="Непредвиденное">
-        </div>
-    </div>
-    <div class="perk-name">Непредвиденное</div>
-</div>
-<div class="perk-card" data-perk="101">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/cLZNVT0C/icon-Perks-Game-Afoot.webp" alt="Догонялки">
-        </div>
-    </div>
-    <div class="perk-name">Догонялки</div>
-</div>
-<div class="perk-card" data-perk="102">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/fTGS9Vmm/Icon-Perks-Self-Aware.webp" alt="Машинное обучение">
-        </div>
-    </div>
-    <div class="perk-name">Машинное обучение</div>
-</div>
-<div class="perk-card" data-perk="103">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/L8ZHphZQ/icon-Perks-Alien-Instinct.webp" alt="Инстинкт чужого">
-        </div>
-    </div>
-    <div class="perk-name">Инстинкт чужого</div>
-</div>
-<div class="perk-card" data-perk="104">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/8c5SnCSH/icon-Perks-batteries-Included.webp" alt="Батарейки в комплекте">
-        </div>
-    </div>
-    <div class="perk-name">Батарейки в комплекте</div>
-</div>
-<div class="perk-card" data-perk="105">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/MKgnRC74/icon-Perks-Undone.webp" alt="Незавершенное">
-        </div>
-    </div>
-    <div class="perk-name">Незавершенное</div>
-</div>
-<div class="perk-card" data-perk="106">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/SsQRkk4X/icon-Perks-Weave-Attunement.webp" alt="Связь с плетением">
-        </div>
-    </div>
-    <div class="perk-name">Связь с плетением</div>
-</div>
-<div class="perk-card" data-perk="107">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/6Qmg5hJd/icon-Perks-Human-Greed.webp" alt="Алчность">
-        </div>
-    </div>
-    <div class="perk-name">Алчность</div>
-</div>
-<div class="perk-card" data-perk="108">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/PrvxtSgM/T-UI-icon-Perks-All-Shaking-Thunder.webp" alt="Оглушительный гром">
-        </div>
-    </div>
-    <div class="perk-name">Оглушительный гром</div>
-</div>
-<div class="perk-card" data-perk="109">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/c12x5Qvt/T-UI-icon-Perks-Nothing-But-Misery.webp" alt="Только отчаяние">
-        </div>
-    </div>
-    <div class="perk-name">Только отчаяние</div>
-</div>
-<div class="perk-card" data-perk="110">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/QMmN6w7j/T-UI-icon-Perks-Help-Wanted.webp" alt="Требуются работники">
-        </div>
-    </div>
-    <div class="perk-name">Требуются работники</div>
-</div>
-<div class="perk-card" data-perk="111">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/W19fX74Q/icon-Perks-Languid-Touch.webp" alt="Безжизненное касание">
-        </div>
-    </div>
-    <div class="perk-name">Безжизненное касание</div>
-</div>
-<div class="perk-card" data-perk="112">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/3xjcmTMJ/icon-Perks-Dominance.webp" alt="Владычество">
-        </div>
-    </div>
-    <div class="perk-name">Владычество</div>
-</div>
-<div class="perk-card" data-perk="113">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/q7J4Cw5S/T-UI-icon-Perks-Scourge-Hook-Jagged-Compass.webp" alt="Щербатый компас">
-        </div>
-    </div>
-    <div class="perk-name">Щербатый компас</div>
-</div>
-<div class="perk-card" data-perk="114">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/4xzxcmN7/T-UI-icon-Perks-Forever-Entwined.webp" alt="Переплетенные навсегда">
-        </div>
-    </div>
-    <div class="perk-name">Переплетенные навсегда</div>
-</div>
-<div class="perk-card" data-perk="115">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/59Rd2bJh/icon-Perks-Dark-Arrogance.webp" alt="Темное высокомерие">
-        </div>
-    </div>
-    <div class="perk-name">Темное высокомерие</div>
-</div>
-<div class="perk-card" data-perk="116">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/13yLWtrN/icon-Perks-Hex-Wretched-Fate.webp" alt="Горькая участь">
-        </div>
-    </div>
-    <div class="perk-name">Горькая участь</div>
-</div>
-<div class="perk-card" data-perk="117">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/qqPphdPx/T-UI-icon-Perks-No-Quarter.webp" alt="Без пощады">
-        </div>
-    </div>
-    <div class="perk-name">Без пощады</div>
-</div>
-<div class="perk-card" data-perk="118">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/J0D1zh2h/T-UI-icon-Perks-None-Are-Free.webp" alt="Все несвободны">
-        </div>
-    </div>
-    <div class="perk-name">Все несвободны</div>
-</div>
-<div class="perk-card" data-perk="119">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/wBgTQg7W/T-UI-icon-Perks-Haywire.webp" alt="Неполадки">
-        </div>
-    </div>
-    <div class="perk-name">Неполадки</div>
-</div>
-<div class="perk-card" data-perk="120">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/4NYG6nw4/icon-Perks-Bitter-Murmur.webp" alt="Тихий шорох">
-        </div>
-    </div>
-    <div class="perk-name">Тихий шорох</div>
-</div>
-<div class="perk-card" data-perk="121">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/pTL4P16V/icon-Perks-Deerstalker.webp" alt="Охотник на оленей">
-        </div>
-    </div>
-    <div class="perk-name">Охотник на оленей</div>
-</div>
-<div class="perk-card" data-perk="122">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/pd6HmFnt/icon-Perks-Distressing.webp" alt="Сеющий страх">
-        </div>
-    </div>
-    <div class="perk-name">Сеющий страх</div>
-</div>
-<div class="perk-card" data-perk="123">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/sfSqsSnh/icon-Perks-Insidious.webp" alt="Коварство">
-        </div>
-    </div>
-    <div class="perk-name">Коварство</div>
-</div>
-<div class="perk-card" data-perk="124">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/y80wjRRK/icon-Perks-Deadlock.webp" alt="Мертвая хватка">
-        </div>
-    </div>
-    <div class="perk-name">Мертвая хватка</div>
-</div>
-<div class="perk-card" data-perk="125">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/Qdn0px4D/icon-Perks-Monstrous-Shrine.webp" alt="Чудовищный храм">
-        </div>
-    </div>
-    <div class="perk-name">Чудовищный храм</div>
-</div>
-<div class="perk-card" data-perk="126">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp" alt="Порча: НОЕД">
-        </div>
-    </div>
-    <div class="perk-name">Порча: НОЕД</div>
-</div>
-<div class="perk-card" data-perk="127">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp" alt="Небрежный мясник">
-        </div>
-    </div>
-    <div class="perk-name">Небрежный мясник</div>
-</div>
-<div class="perk-card" data-perk="128">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/kgVxPNsr/icon-Perks-Spies-From-The-Shadows.webp" alt="Сумеречные шпионы">
-        </div>
-    </div>
-    <div class="perk-name">Сумеречные шпионы</div>
-</div>
-<div class="perk-card" data-perk="129">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/6QJGskTR/icon-Perks-Thrill-Of-The-Hunt.webp" alt="Охотничий азарт">
-        </div>
-    </div>
-    <div class="perk-name">Охотничий азарт</div>
-</div>
-<div class="perk-card" data-perk="130">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/XvkqRXRS/icon-Perks-Unrelenting.webp" alt="Безжалостный">
-        </div>
-    </div>
-    <div class="perk-name">Безжалостный</div>
-</div>
-<div class="perk-card" data-perk="131">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/cHDHJ21F/icon-Perks-Whispers.webp" alt="Шепоты">
-        </div>
-    </div>
-    <div class="perk-name">Шепоты</div>
-</div>
-<div class="perk-card" data-perk="132">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/R0LxStCd/icon-Perks-Boon-Destroyer.webp" alt="Разбитые надежды">
-        </div>
-    </div>
-    <div class="perk-name">Разбитые надежды</div>
-</div>
-<div class="perk-card" data-perk="133">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/vHnYRcnq/T-UI-icon-Perks-Phantom-Fear.webp" alt="Фантомный страх">
-        </div>
-    </div>
-    <div class="perk-name">Фантомный страх</div>
-</div>
-<div class="perk-card" data-perk="134">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/DZzvR6QL/T-UI-icon-Perks-Hex-Overture-Of-Doom.webp" alt="Проклятие Рока">
-        </div>
-    </div>
-    <div class="perk-name">Проклятие Рока</div>
-</div>
-<div class="perk-card" data-perk="135">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/MpbzTNd1/T-UI-icon-Perks-Ravenous.webp" alt="Прожорливость">
-        </div>
-    </div>
-    <div class="perk-name">Прожорливость</div>
-</div>
-<div class="perk-card" data-perk="136">
-    <div class="perk-content">
-        <div class="perk-icon">
-            <img src="https://i.postimg.cc/LsxRkfdX/T-UI-icon-Perks-Wandering-Eye.webp" alt="Блуждающий взгляд">
-        </div>
-    </div>
-    <div class="perk-name">Блуждающий взгляд</div>
-</div>
-
-                    </div>
-                </div>
-                
-                <div class="selected-perks" id="selectedPerks">
-                    <h2>Выбранные перки:</h2>
+                <div class="selected-perks">
+                    <h2>Выбранные перки</h2>
                     <div class="selected-perks-container">
-                        <div class="selected-perk-slot" data-slot="1">
-                            <div class="perk-icon">
-                                <i class="fas fa-plus"></i>
-                            </div>
+                        <div class="selected-perk-slot active" data-slot="1">
                             <div class="perk-slot-info">
-                                <div class="slot-number"></div>
-                                <div class="perk-status">Не выбран</div>
+                                <span class="slot-number">Слот 1</span>
+                                <span class="perk-status">Пусто</span>
                             </div>
                         </div>
-                        <div class="selected-perk-slot" data-slot="2">
-                            <div class="perk-icon">
-                                <i class="fas fa-plus"></i>
-                            </div>
+                        <div class="selected-perk-slot active" data-slot="2">
                             <div class="perk-slot-info">
-                                <div class="slot-number"></div>
-                                <div class="perk-status">Не выбран</div>
+                                <span class="slot-number">Слот 2</span>
+                                <span class="perk-status">Пусто</span>
                             </div>
                         </div>
-                        <div class="selected-perk-slot" data-slot="3">
-                            <div class="perk-icon">
-                                <i class="fas fa-plus"></i>
-                            </div>
+                        <div class="selected-perk-slot active" data-slot="3">
                             <div class="perk-slot-info">
-                                <div class="slot-number"></div>
-                                <div class="perk-status">Не выбран</div>
+                                <span class="slot-number">Слот 3</span>
+                                <span class="perk-status">Пусто</span>
                             </div>
                         </div>
-                        <div class="selected-perk-slot" data-slot="4">
-                            <div class="perk-icon">
-                                <i class="fas fa-plus"></i>
-                            </div>
+                        <div class="selected-perk-slot active" data-slot="4">
                             <div class="perk-slot-info">
-                                <div class="slot-number"></div>
-                                <div class="perk-status">Не выбран</div>
+                                <span class="slot-number">Слот 4</span>
+                                <span class="perk-status">Пусто</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+    
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">PHG | DBD Creator</div>
-
                 <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
             </div>
         </div>
     </footer>
-	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
-			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
-			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
-			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
-			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
-			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
-			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
-
+    
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Элементы интерфейса
-            const killerCards = document.querySelectorAll('.killer-card');
-            const perkCards = document.querySelectorAll('.perk-card');
-            const selectedKillerDiv = document.querySelector('.selected-killer');
-            const perksSelection = document.getElementById('perksSelection');
-            const selectedPerksSection = document.getElementById('selectedPerks');
-            const selectedPerkSlots = document.querySelectorAll('.selected-perk-slot');
+        // Data for killers and perks
+        const killers = [
+            { name: "Охотник", code: "trapper", icon: "https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp" },
+            { name: "Призрак", code: "wraith", icon: "https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp" },
+            { name: "Деревенщина", code: "hillbilly", icon: "https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp" },
+            { name: "Медсестра", code: "nurse", icon: "https://i.postimg.cc/gjntWXgS/K04-The-Nurse-Portrait.webp" },
+            { name: "Тень", code: "shape", icon: "https://i.postimg.cc/Y2syxRSJ/K06-The-Shape-Portrait.webp" },
+            { name: "Ведьма", code: "hag", icon: "https://i.postimg.cc/d3pHtsXq/K05-The-Hag-Portrait.webp" },
+            { name: "Доктор", code: "doctor", icon: "https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp" },
+            { name: "Охотница", code: "huntress", icon: "https://i.postimg.cc/rw6nBpxj/K08-The-Huntress-Portrait.webp" },
+            { name: "Каннибал", code: "cannibal", icon: "https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp" },
+            { name: "Кошмар", code: "nightmare", icon: "https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp" },
+            { name: "Свинья", code: "pig", icon: "https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp" },
+            { name: "Клоун", code: "clown", icon: "https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp" },
+            { name: "Дух", code: "spirit", icon: "https://i.postimg.cc/0QHZc59p/K13-The-Spirit-Portrait.webp" },
+            { name: "Легион", code: "legion", icon: "https://i.postimg.cc/90RbS3fs/K14-The-Legion-Portrait.webp" },
+            { name: "Чума", code: "plague", icon: "https://i.postimg.cc/2ysGNHby/K15-The-Plague-Portrait.webp" },
+            { name: "Гоуст Фейс", code: "ghostface", icon: "https://i.postimg.cc/nVXtZC9f/K16-The-Ghostface-Portrait.webp" },
+            { name: "Демогоргон", code: "demogorgon", icon: "https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp" },
+            { name: "Они", code: "oni", icon: "https://i.postimg.cc/pX8bh4B0/K18-The-Oni-Portrait.webp" },
+            { name: "Стрелок", code: "deathslinger", icon: "https://i.postimg.cc/jSbVzcgR/K19-The-Deathslinger-Portrait.webp" },
+            { name: "Палач", code: "executioner", icon: "https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp" },
+            { name: "Мор", code: "blight", icon: "https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp" },
+            { name: "Близнецы", code: "twins", icon: "https://i.postimg.cc/3wtPQTKw/K22-The-Twins-Portrait.webp" },
+            { name: "Трюкач", code: "trickster", icon: "https://i.postimg.cc/QtVvXytJ/K23-The-Trickster-Portrait.webp" },
+            { name: "Немезис", code: "nemesis", icon: "https://i.postimg.cc/8539smfQ/K24-The-Nemesis-Portrait.webp" },
+            { name: "Сенобит", code: "cenobite", icon: "https://i.postimg.cc/XqCh5B9Z/K25-The-Cenobite-Portrait.webp" },
+            { name: "Художница", code: "artist", icon: "https://i.postimg.cc/pVh34432/K26-The-Artist-Portrait.webp" },
+            { name: "Онрё", code: "onryo", icon: "https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp" },
+            { name: "Грязь", code: "dredge", icon: "https://i.postimg.cc/RZ983FhF/K28-The-Dredge-Portrait.webp" },
+            { name: "Кукловод", code: "mastermind", icon: "https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp" },
+            { name: "Рыцарь", code: "knight", icon: "https://i.postimg.cc/bwT51hSR/K30-The-Knight-Portrait.webp" },
+            { name: "Торговка черепами", code: "skullmerchant", icon: "https://i.postimg.cc/QMdybypZ/K31-The-Skull-Merchant-Portrait.webp" },
+            { name: "Сингулярность", code: "singularity", icon: "https://i.postimg.cc/q7DZZxLh/K32-The-Singularity-Portrait.webp" },
+            { name: "Ксеноморф", code: "xenomorph", icon: "https://i.postimg.cc/hjJ3FQyC/K33-The-Xenomorph-Portrait.webp" },
+            { name: "Хороший Парень", code: "goodguy", icon: "https://i.postimg.cc/G2Zgb36b/K34-The-Yerkes-Portrait.webp" },
+            { name: "Неведомое", code: "unknown", icon: "https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp" },
+            { name: "Лич", code: "lich", icon: "https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp" },
+            { name: "Темный Властелин", code: "darklord", icon: "https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp" },
+            { name: "Егерь", code: "predator", icon: "https://i.postimg.cc/ncKStJ2t/K38-The-Houndmaster-Portrait.webp" },
+            { name: "Гуль", code: "ghoul", icon: "https://i.postimg.cc/CxFPhQrn/K39-The-Ghoul-Portrait.webp" },
+            { name: "Аниматроник", code: "animatronic", icon: "https://i.postimg.cc/13JWfrbC/K40-The-Animatronic-Portrait.webp" },
+            { name: "Красу", code: "krasu", icon: "https://i.postimg.cc/bvrmb2hz/the-krasue.webp" }
+        ];
+
+        const killerPerks = [
+                { name: "Нетерпимость", icon: "https://i.postimg.cc/kXHnzWDt/iconPerks-Agitation.webp", code: "1" },
+                { name: "Детище тьмы", icon: "https://i.postimg.cc/9FQdJHqQ/iconPerks-Shadowborn.webp", code: "2" },
+                { name: "Стойкий", icon: "https://i.postimg.cc/SKD11fNB/iconPerks-Enduring.webp", code: "3" },
+                { name: "Стридор", icon: "https://i.postimg.cc/ZqppCTXV/iconPerks-Stridor.webp", code: "4" },
+                { name: "Оставьте лучшее напоследок", icon: "https://i.postimg.cc/wv5Xb6V7/iconPerks-Save-The-Best-For-Last.webp", code: "5" },
+                { name: "Зверская сила", icon: "https://i.postimg.cc/Twk8mXDW/icon-Perks-Brutal-Strength.webp", code: "6" },
+                { name: "Ищейка", icon: "https://i.postimg.cc/nh7tW566/icon-Perks-Bloodhound.webp", code: "7" },
+                { name: "Детище света", icon: "https://i.postimg.cc/8C9XVPM4/icon-Perks-Lightborn.webp", code: "8" },
+                { name: "Танатофобия", icon: "https://i.postimg.cc/CL58bCWZ/icon-Perks-Thatanophobia.webp", code: "9" },
+                { name: "Угасающий свет", icon: "https://i.postimg.cc/q7kZG50c/icon-Perks-Dying-Light.webp", code: "10" },
+                { name: "Пугающее присутствие", icon: "https://i.postimg.cc/8CSsXLnm/icon-Perks-Unnerving-Presence.webp", code: "11" },
+                { name: "Хищник", icon: "https://i.postimg.cc/8zsbPg10/icon-Perks-Predator.webp", code: "12" },
+                { name: "Умелец", icon: "https://i.postimg.cc/5tBQfsFr/icon-Perks-Tinkerer.webp", code: "13" },
+                { name: "Зов Медсестры", icon: "https://i.postimg.cc/3w53J7X8/icon-Perks-ANurses-Calling.webp", code: "14" },
+                { name: "Поиграть со своей жертвой", icon: "https://i.postimg.cc/tCq5wV8y/icon-Perks-Play-With-Your-Food.webp", code: "15" },
+                { name: "Порча: погибель", icon: "https://i.postimg.cc/Hx102Jbq/icon-Perks-Ruin.webp", code: "16" },
+                { name: "Слежка и наказание", icon: "https://i.postimg.cc/bwvmD2RL/icon-Perks-Monitor-And-Abuse.webp", code: "17" },
+                { name: "Территориальный императив", icon: "https://i.postimg.cc/9XJT4gN5/icon-Perks-Territorial-Imperative.webp", code: "18" },
+                { name: "Барбекю и чили", icon: "https://i.postimg.cc/XqzbM0N0/icon-Perks-BBQAnd-Chili.webp", code: "19" },
+                { name: "Яркое пламя", icon: "https://i.postimg.cc/tTJSKnsY/icon-Perks-Fire-Up.webp", code: "20" },
+                { name: "Порча: пожирание надежды", icon: "https://i.postimg.cc/wMSGcxT3/icon-Perks-Devour-Hope.webp", code: "21" },
+                { name: "Перегрузка", icon: "https://i.postimg.cc/g02b0JwP/icon-Perks-Generator-Overcharge.webp", code: "22" },
+                { name: "Порча: колыбельная охотницы", icon: "https://i.postimg.cc/634S7GtF/icon-Perks-Huntress-Lullaby.webp", code: "23" },
+                { name: "Гибель Франклина", icon: "https://i.postimg.cc/nVjZ7C3F/icon-Perks-Franklins-Loss.webp", code: "24" },
+                { name: "Помни меня", icon: "https://i.postimg.cc/ZqdFpPvP/icon-Perks-Remember-Me.webp", code: "25" },
+                { name: "Порча: третья печать", icon: "https://i.postimg.cc/X7PCLGbs/icon-Perks-The-Third-Seal.webp", code: "26" },
+                { name: "Невыносимое присутствие", icon: "https://i.postimg.cc/ryCjf9nQ/icon-Perks-Overwhelming-Presence.webp", code: "27" },
+                { name: "Хищный зверь", icon: "https://i.postimg.cc/c19ZtfR5/icon-Perks-Beast-Of-Prey.webp", code: "28" },
+                { name: "Нокаут", icon: "https://i.postimg.cc/T324VsTV/icon-Perks-Knock-Out.webp", code: "29" },
+                { name: "Кровавый смотритель", icon: "https://i.postimg.cc/CKgVp70d/icon-Perks-Blood-Warden.webp", code: "30" },
+                { name: "Выбор за тобой", icon: "https://i.postimg.cc/Y21nJ79N/icon-Perks-Make-Your-Choice.webp", code: "31" },
+                { name: "Чертик из табакерки", icon: "https://i.postimg.cc/9FLphQj9/icon-Perks-Pop-Goes-The-Weasel.webp", code: "32" },
+                { name: "Ненависть", icon: "https://i.postimg.cc/XYYm9vWN/icon-Perks-Hatred.webp", code: "33" },
+                { name: "Разлад", icon: "https://i.postimg.cc/mkcnH140/icon-Perks-Discordance.webp", code: "34" },
+                { name: "Темная преданность", icon: "https://i.postimg.cc/43LJp0qq/icon-Perks-Dark-Devotion.webp", code: "35" },
+                { name: "Наблюдение", icon: "https://i.postimg.cc/Gthy7vt5/icon-Perks-Surveillance.webp", code: "36" },
+                { name: "Клоунофобия", icon: "https://i.postimg.cc/RhqkLb7p/icon-Perks-Coulrophobia.webp", code: "37" },
+                { name: "Порча: проклятая земля", icon: "https://i.postimg.cc/k5VHhhDk/icon-Perks-Haunted-Ground.webp", code: "38" },
+                { name: "Железная дева", icon: "https://i.postimg.cc/RVLYnmxC/icon-Perks-Iron-Maiden.webp", code: "39" },
+                { name: "Вмешательство скверны", icon: "https://i.postimg.cc/MpwKwV1P/icon-Perks-Corrupt-Intervention.webp", code: "40" },
+                { name: "Секущий крюк: секрет палача", icon: "https://i.postimg.cc/ZR9krMF7/icon-Perks-Hangmans-Trick.webp", code: "41" },
+                { name: "Розыгрыш", icon: "https://i.postimg.cc/zBpNjg9v/icon-Perks-Bamboozle.webp", code: "42" },
+                { name: "Ярость духа", icon: "https://i.postimg.cc/T3j15CRv/icon-Perks-Spirit-Fury.webp", code: "43" },
+                { name: "Безумное упорство", icon: "https://i.postimg.cc/mkNmMYqp/icon-Perks-Mad-Grit.webp", code: "44" },
+                { name: "Заразительный ужас", icon: "https://i.postimg.cc/nr1SQywQ/icon-Perks-Infectious-Fright.webp", code: "45" },
+                { name: "Скрытная погоня", icon: "https://i.postimg.cc/3J2TSzMz/icon-Perks-Furtive-Chase.webp", code: "46" },
+                { name: "Жестокая изоляция", icon: "https://i.postimg.cc/wTRKtZT7/icon-Perks-Cruel-Confinement.webp", code: "47" },
+                { name: "Тактика зансин", icon: "https://i.postimg.cc/BbXvPpX4/icon-Perks-Zanshin-Tactics.webp", code: "48" },
+                { name: "Порча: кара", icon: "https://i.postimg.cc/vHwRVX1h/icon-Perks-Hex-Retribution.webp", code: "49" },
+                { name: "Тропа терзаний", icon: "https://i.postimg.cc/PJxCzhFG/icon-Perks-Trail-Of-Torment.webp", code: "50" },
+                { name: "Чуткий слух", icon: "https://i.postimg.cc/kGxps3Vc/icon-Perks-Im-All-Ears.webp", code: "51" },
+                { name: "Разрушитель разума", icon: "https://i.postimg.cc/Wb89170h/icon-Perks-Mind-Breaker.webp", code: "52" },
+                { name: "Отзвук крови", icon: "https://i.postimg.cc/SNHhDqt6/icon-Perks-Blood-Echo.webp", code: "53" },
+                { name: "Аварийная кнопка", icon: "https://i.postimg.cc/hGgN5G8d/icon-Perks-Dead-Man-Switch.webp", code: "54" },
+                { name: "Принудительная мера", icon: "https://i.postimg.cc/PNsSv62w/icon-Perks-Forced-Penance.webp", code: "55" },
+                { name: "Пугающая тряска", icon: "https://i.postimg.cc/13NNjmRs/icon-Perks-Thrilling-Tremors.webp", code: "56" },
+                { name: "Выброс", icon: "https://i.postimg.cc/B6CFBmSF/icon-Perks-Surge.webp", code: "57" },
+                { name: "Возмездие", icon: "https://i.postimg.cc/xdJggDhz/icon-Perks-Nemesis.webp", code: "58" },
+                { name: "Знаток техники", icon: "https://i.postimg.cc/Hk2CH5k2/icon-Perks-Gear-Head.webp", code: "59" },
+                { name: "Смертельные узы", icon: "https://i.postimg.cc/QMbvGrSn/icon-Perks-Deathbound.webp", code: "60" },
+                { name: "Порча: благоволение крови", icon: "https://i.postimg.cc/mrpf1sM1/icon-Perks-Hex-Blood-Favor.webp", code: "61" },
+                { name: "Добивание", icon: "https://i.postimg.cc/fyF62j5z/icon-Perks-Coup-De-Grace.webp", code: "62" },
+                { name: "Фанатение", icon: "https://i.postimg.cc/dVzGs7Nh/icon-Perks-Starstruck.webp", code: "63" },
+                { name: "Подрыв", icon: "https://i.postimg.cc/rmHnMy4g/icon-Perks-Eruption.webp", code: "64" },
+                { name: "Мертвая хватка", icon: "https://i.postimg.cc/gkW5JJ5B/icon-Perks-Iron-Grasp.webp", code: "65" },
+                { name: "Порча: не-смерть", icon: "https://i.postimg.cc/QxQ2k513/icon-Perks-Hex-Undying.webp", code: "66" },
+                { name: "Скопидом", icon: "https://i.postimg.cc/Vk4228KZ/icon-Perks-Hoarder.webp", code: "67" },
+                { name: "Порча: контроль толпы", icon: "https://i.postimg.cc/d3dzfZfG/icon-Perks-Hex-Crowd-Control.webp", code: "68" },
+                { name: "Истерия", icon: "https://i.postimg.cc/KjXWtvYj/icon-Perks-Hysteria.webp", code: "69" },
+                { name: "Порча: игрушка", icon: "https://i.postimg.cc/gcZFj10r/icon-Perks-Hex-Plaything.webp", code: "70" },
+                { name: "Драконья хватка", icon: "https://i.postimg.cc/0y14zNBB/icon-Perks-Dragons-Grip.webp", code: "71" },
+                { name: "Притеснение", icon: "https://i.postimg.cc/prZBy2hg/icon-Perks-Oppression.webp", code: "72" },
+                { name: "Выхода нет", icon: "https://i.postimg.cc/LXjDKkH4/icon-Perks-No-Way-Out.webp", code: "73" },
+                { name: "Преследователь-убийца", icon: "https://i.postimg.cc/43m2Mh7n/icon-Perks-Lethal-Pursuer.webp", code: "74" },
+                { name: "Секущий крюк: дар боли", icon: "https://i.postimg.cc/6qYdtYFK/icon-Perks-Scourge-Hook-Gift-Of-Pain.webp", code: "75" },
+                { name: "Мрачные объятья", icon: "https://i.postimg.cc/gjQ2VhZR/T-icon-Perks-Grim-Embrace.webp", code: "76" },
+                { name: "Соленое море", icon: "https://i.postimg.cc/W3pLh4hv/icon-Perks-Call-Of-Brine.webp", code: "77" },
+                { name: "Растворение", icon: "https://i.postimg.cc/sf8qRm9y/icon-Perks-Dissolution.webp", code: "78" },
+                { name: "Лучшая анатомия", icon: "https://i.postimg.cc/tTbP6Kjy/icon-Perks-Superior-Anatomy.webp", code: "79" },
+                { name: "Им не укрыться", icon: "https://i.postimg.cc/L5RTHqXt/icon-Perks-Nowhere-To-Hide.webp", code: "80" },
+                { name: "Секущий крюк: резонанс боли", icon: "https://i.postimg.cc/7ZvLbgDr/T-icon-Perks-Pain-Resonance.webp", code: "81" },
+                { name: "Секущий крюк: пучина ярости", icon: "https://i.postimg.cc/qqCmRfXr/icon-Perks-Flood-Of-Rage.webp", code: "82" },
+                { name: "Явление мрака", icon: "https://i.postimg.cc/m2vv7jtV/icon-Perks-Darkness-Revelated.webp", code: "83" },
+                { name: "Развитая внимательность", icon: "https://i.postimg.cc/nL4pX52v/icon-Perks-Awakened-Awarenesss.webp", code: "84" },
+                { name: "Порча: лик мрака", icon: "https://i.postimg.cc/tT8KDNBX/icon-Perks-Hex-Face-The-Darkness.webp", code: "85" },
+                { name: "Порча: пентименто", icon: "https://i.postimg.cc/FFBz5MBR/T-icon-Perks-Hex-Pentimento.webp", code: "86" },
+                { name: "Безжалостный шторм", icon: "https://i.postimg.cc/qM4brFhP/icon-Perks-Merciless-Storm.webp", code: "87" },
+                { name: "Тлетворное касание", icon: "https://i.postimg.cc/5935B2yr/icon-Perks-Septic-Touch.webp", code: "88" },
+                { name: "Последний этап", icon: "https://i.postimg.cc/BbY1dt1Q/icon-Perks-Terminus.webpg", code: "89" },
+                { name: "Свирепая гордыня", icon: "https://i.postimg.cc/bvJ4hBMy/icon-Perks-Hubris.webp", code: "90" },
+                { name: "Бац!", icon: "https://i.postimg.cc/pTPhrKfL/icon-Perks-Thwack.webp", code: "91" },
+                { name: "Генетические ограничения", icon: "https://i.postimg.cc/4NZrN5F9/Icon-Perks-Genetic-Limits.webp", code: "92" },
+                { name: "Совершенное оружие", icon: "https://i.postimg.cc/tJMYBfLs/icon-Perks-Ultimate-Weapon.webp", code: "93" },
+                { name: "Порча: игра для двоих", icon: "https://i.postimg.cc/G37838Hb/icon-Perks-two-Can-Play.webp", code: "94" },
+                { name: "Свободное", icon: "https://i.postimg.cc/qMNtNJ3y/icon-Perks-Unbound.webp", code: "95" },
+                { name: "Рычаг влияния", icon: "https://i.postimg.cc/nzmRVb1J/icon-Perks-Leverage.webp", code: "96" },
+                { name: "Вынужденная нерешительность", icon: "https://i.postimg.cc/Gtn6DJL6/Icon-Perks-Forced-Hesitation.webp", code: "97" },
+                { name: "Быстрая жестокость", icon: "https://i.postimg.cc/RZ8LWphV/icon-Perks-Rapid-Brutality.webp", code: "98" },
+                { name: "Друзья до гроба", icon: "https://i.postimg.cc/QN2Dqhzp/icon-Perks-friends-Till-The-End.webp", code: "99" },
+                { name: "Непредвиденное", icon: "https://i.postimg.cc/2SvVx0T5/icon-Perks-Unforeseen.webp", code: "100" },
+                { name: "Догонялки", icon: "https://i.postimg.cc/cLZNVT0C/icon-Perks-Game-Afoot.webp", code: "101" },
+                { name: "Машинное обучение", icon: "https://i.postimg.cc/fTGS9Vmm/Icon-Perks-Self-Aware.webp", code: "102" },
+                { name: "Инстинкт чужого", icon: "https://i.postimg.cc/L8ZHphZQ/icon-Perks-Alien-Instinct.webp", code: "103" },
+                { name: "Батарейки в комплекте", icon: "https://i.postimg.cc/8c5SnCSH/icon-Perks-batteries-Included.webp", code: "104" },
+                { name: "Незавершенное", icon: "https://i.postimg.cc/MKgnRC74/icon-Perks-Undone.webp", code: "105" },
+                { name: "Связь с плетением", icon: "https://i.postimg.cc/SsQRkk4X/icon-Perks-Weave-Attunement.webp", code: "106" },
+                { name: "Алчность", icon: "https://i.postimg.cc/6Qmg5hJd/icon-Perks-Human-Greed.webp", code: "107" },
+                { name: "Оглушительный гром", icon: "https://i.postimg.cc/PrvxtSgM/T-UI-icon-Perks-All-Shaking-Thunder.webp", code: "108" },
+                { name: "Порча: только отчаяние", icon: "https://i.postimg.cc/c12x5Qvt/T-UI-icon-Perks-Nothing-But-Misery.webp", code: "109" },
+                { name: "Требуются работники", icon: "https://i.postimg.cc/QMmN6w7j/T-UI-icon-Perks-Help-Wanted.webp", code: "110" },
+                { name: "Безжизненное касание", icon: "https://i.postimg.cc/W19fX74Q/icon-Perks-Languid-Touch.webp", code: "111" },
+                { name: "Владычество", icon: "https://i.postimg.cc/3xjcmTMJ/icon-Perks-Dominance.webp", code: "112" },
+                { name: "Секущий крюк: щербатый компас", icon: "https://i.postimg.cc/q7J4Cw5S/T-UI-icon-Perks-Scourge-Hook-Jagged-Compass.webp", code: "113" },
+                { name: "Переплетенные навсегда", icon: "https://i.postimg.cc/4xzxcmN7/T-UI-icon-Perks-Forever-Entwined.webp", code: "114" },
+                { name: "Фантомный страх", icon: "https://i.postimg.cc/vHnYRcnq/T-UI-icon-Perks-Phantom-Fear.webp", code: "115" },
+                { name: "Темное высокомерие", icon: "https://i.postimg.cc/59Rd2bJh/icon-Perks-Dark-Arrogance.webp", code: "116" },
+                { name: "Порча: горькая участь", icon: "https://i.postimg.cc/13yLWtrN/icon-Perks-Hex-Wretched-Fate.webp", code: "117" },
+                { name: "Без пощады", icon: "https://i.postimg.cc/qqPphdPx/T-UI-icon-Perks-No-Quarter.webp", code: "118" },
+                { name: "Все несвободны", icon: "https://i.postimg.cc/J0D1zh2h/T-UI-icon-Perks-None-Are-Free.webp", code: "119" },
+                { name: "Неполадки", icon: "https://i.postimg.cc/wBgTQg7W/T-UI-icon-Perks-Haywire.webp", code: "120" },
+                { name: "Тихий шорох", icon: "https://i.postimg.cc/4NYG6nw4/icon-Perks-Bitter-Murmur.webp", code: "121" },
+                { name: "Охотник на оленей", icon: "https://i.postimg.cc/pTL4P16V/icon-Perks-Deerstalker.webp", code: "122" },
+                { name: "Сеющий страх", icon: "https://i.postimg.cc/pd6HmFnt/icon-Perks-Distressing.webp", code: "123" },
+                { name: "Коварство", icon: "https://i.postimg.cc/sfSqsSnh/icon-Perks-Insidious.webp", code: "124" },
+                { name: "Все средства хороши", icon: "https://i.postimg.cc/y80wjRRK/icon-Perks-Deadlock.webp", code: "125" },
+                { name: "Секущий крюк: чудовищный храм", icon: "https://i.postimg.cc/Qdn0px4D/icon-Perks-Monstrous-Shrine.webp", code: "126" },
+                { name: "Порча: никому не скрыться от смерти", icon: "https://i.postimg.cc/mrvj5pW6/icon-Perks-No-One-Escapes-Death.webp", code: "127" },
+                { name: "Небрежный мясник", icon: "https://i.postimg.cc/FsCj6Cjg/icon-Perks-Sloppy-Butcher.webp", code: "128" },
+                { name: "Сумеречные шпионы", icon: "https://i.postimg.cc/kgVxPNsr/icon-Perks-Spies-From-The-Shadows.webp", code: "129" },
+                { name: "Порча: охотничий азарт", icon: "https://i.postimg.cc/6QJGskTR/icon-Perks-Thrill-Of-The-Hunt.webp", code: "130" },
+                { name: "Безжалостный", icon: "https://i.postimg.cc/XvkqRXRS/icon-Perks-Unrelenting.webp", code: "131" },
+                { name: "Шепоты", icon: "https://i.postimg.cc/cHDHJ21F/icon-Perks-Whispers.webp", code: "132" },
+                { name: "Разбитые надежды", icon: "https://i.postimg.cc/R0LxStCd/icon-Perks-Boon-Destroyer.webp", code: "133" },
+				{ name: "Проклятие Рока", icon: "https://i.postimg.cc/DZzvR6QL/T-UI-icon-Perks-Hex-Overture-Of-Doom.webp", code: "134" },
+				{ name: "Прожорливость", icon: "https://i.postimg.cc/MpbzTNd1/T-UI-icon-Perks-Ravenous.webp", code: "135" },
+				{ name: "Блужлающий взгляд", icon: "https://i.postimg.cc/LsxRkfdX/T-UI-icon-Perks-Wandering-Eye.webp", code: "136" }
+        ];
+
+        // Система недоступных перков для каждого убийцы
+        const killersData = {
+            trapper: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+            },
+            wraith: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
+            },
+            hillbilly: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+            },
+			nurse: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			shape: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			hag: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			doctor: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			huntress: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			cannibal: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			nightmare: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			pig: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			clown: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			spirit: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			legion: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			plague: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			ghostface: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			demogorgon: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			oni: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			deathslinger: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			executioner: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			blight: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			twins: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			trickster: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			nemesis: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '131', '132', '133', '134', '135', '136']
+			},
+			cenobite: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			artist: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			onryo: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			dredge: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			mastermind: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			knight: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			skullmerchant: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			singularity: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			xenomorph: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			goodguy: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			unknown: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			lich: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			darklord: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			predator: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			ghoul: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			animatronic: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},
+			krasu: {
+                perks: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129',  , '131', '132', '133', '134', '135', '136']
+			},	
+        };
             
-            // Данные о киллерах и их перках
-const killersData = {
-     trapper: {
-        name: "Охотник",
-        icon: '<img src="https://i.postimg.cc/R0LDQz3R/K01-The-Trapper-Portrait.webp" alt="Trapper" width="50">',
-        perks: ['1', '4', '5', '6', '8', '9', '10', '11', '13', '14', '16', '17', '18', '19', '20', '21', '23', '25', '27', '29', '30', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '44', '45', '46', '48', '51', '52', '54', '55', '57', '58', '59', '60', '62', '63', '65', '68', '70', '73', '74', '75', '77', '79', '80', '84', '85', '86', '87', '89', '90', '91', '92', '93', '94', '95', '96', '97', '99', '100', '102', '103', '105', '108', '109', '110', '112', '113', '114', '115', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '128', '129', '130', '131', '133', '134', '135', '136']
-    },
-    wraith: {
-        name: "Призрак",
-        icon: '<img src="https://i.postimg.cc/Kzcs0sBy/K02-The-Wraith-Portrait.webp" alt="Wraith" width="50">',
-        perks: ['3', '5', '6', '7', '9', '11', '12', '13', '14', '15', '16', '17', '18', '19', '21', '22', '23', '24', '26', '27', '28', '29', '30', '31', '32', '33', '35', '37', '38', '41', '42', '44', '46', '47', '49', '50', '51', '53', '54', '55', '56', '58', '59', '61', '63', '64', '65', '66', '68', '69', '70', '71', '72', '74', '75', '76', '77', '78', '79', '81', '82', '83', '84', '86', '87', '88', '89', '91', '93', '94', '96', '97', '98', '99', '100', '101', '102', '104', '105', '107', '109', '111', '112', '113', '115', '116', '118', '120', '121', '123', '125', '126', '128', '129', '131', '132', '134', '135']
-    },
-    hillbilly: {
-        name: "Деревенщина",
-        icon: '<img src="https://i.postimg.cc/3RLfVCF0/K03-The-Hillbilly-Portrait.webp" alt="Hillbilly" width="50">',
-        perks: ['2', '5', '7', '8', '10', '11', '12', '14', '15', '16', '17', '19', '20', '21', '22', '24', '25', '26', '27', '29', '31', '32', '33', '36', '37', '38', '39', '41', '43', '44', '45', '47', '49', '51', '53', '54', '55', '56', '58', '59', '61', '62', '63', '64', '65', '67', '68', '69', '70', '71', '72', '73', '74', '77', '78', '79', '81', '82', '84', '85', '86', '87', '88', '90', '91', '92', '93', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '106', '107', '109', '110', '111', '112', '114', '115', '117', '118', '119', '120', '122', '123', '125', '126', '128', '130', '134', '135']
-    },
-    nurse: {
-        name: "Медсестра",
-        icon: '<img src="https://i.postimg.cc/gjntWXgS/K04-The-Nurse-Portrait.webp" alt="Nurse" width="50">',
-        perks: ['2', '3', '5', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '18', '19', '20', '21', '22', '24', '26', '28', '29', '30', '31', '33', '35', '37', '39', '41', '42', '44', '45', '46', '48', '49', '50', '52', '54', '55', '56', '58', '60', '61', '63', '65', '66', '67', '69', '70', '71', '72', '74', '75', '76', '77', '79', '81', '83', '84', '86', '87', '89', '90', '91', '93', '95', '96', '97', '98', '100', '101', '103', '104', '105', '108', '109', '110', '112', '113', '115', '117', '118', '119', '120', '122', '124', '125', '126', '127', '129', '131', '132', '133', '134', '136']
-    },
-    shape: {
-        name: "Тень",
-        icon: '<img src="https://i.postimg.cc/Y2syxRSJ/K06-The-Shape-Portrait.webp" alt="The Shape" width="50">',
-        perks: ['3', '5', '6', '8', '9', '11', '13', '14', '15', '17', '18', '19', '20', '21', '22', '24', '26', '28', '29', '31', '32', '33', '35', '36', '38', '39', '41', '43', '44', '45', '47', '49', '51', '53', '54', '55', '57', '59', '61', '62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '75', '76', '77', '78', '79', '80', '81', '83', '84', '86', '87', '88', '89', '90', '91', '92', '94', '95', '96', '97', '98', '99', '100', '101', '102', '104', '105', '106', '107', '109', '110', '111', '112', '113', '115', '116', '117', '118', '120', '121', '123', '124', '126', '128', '130', '132', '135']
-    },
-    hag: {
-        name: "Ведьма",
-        icon: '<img src="https://i.postimg.cc/d3pHtsXq/K05-The-Hag-Portrait.webp" alt="The Hag" width="50">',
-        perks: ['3', '6', '7', '8', '11', '13', '14', '16', '17', '19', '20', '22', '24', '25', '26', '28', '29', '31', '32', '33', '35', '36', '37', '39', '40', '41', '43', '45', '47', '48', '51', '54', '55', '57', '58', '59', '61', '62', '63', '64', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '112', '113', '115', '116', '117', '118', '119', '121', '123', '125', '127', '129', '130']
-    },
-    doctor: {
-        name: "Доктор",
-        icon: '<img src="https://i.postimg.cc/tCnvv6Z7/K07-The-Doctor-Portrait.webp" alt="The Doctor" width="50">',
-        perks: ['3', '5', '7', '8', '9', '11', '13', '14', '16', '17', '19', '20', '21', '22', '25', '27', '28', '29', '31', '32', '33', '35', '36', '37', '38', '39', '41', '42', '43', '45', '47', '49', '51', '53', '54', '55', '57', '59', '60', '61', '63', '64', '65', '66', '68', '69', '70', '71', '72', '73', '75', '76', '77', '78', '79', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '107', '108', '109', '110', '111', '112', '113', '115', '116', '118', '119', '120', '121', '123', '124', '126', '128', '130']
-    },
-    huntress: {
-        name: "Охотница",
-        icon: '<img src="https://i.postimg.cc/rw6nBpxj/K08-The-Huntress-Portrait.webp" alt="The Huntress" width="50">',
-        perks: ['4', '6', '8', '9', '11', '12', '14', '16', '17', '18', '19', '21', '22', '24', '25', '26', '29', '30', '31', '32', '33', '35', '37', '38', '39', '41', '42', '43', '44', '47', '51', '53', '54', '55', '57', '58', '61', '62', '63', '64', '65', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '115', '117', '118', '119', '121', '123', '125', '127', '129', '131']
-    },
-    cannibal: {
-        name: "Каннибал",
-        icon: '<img src="https://i.postimg.cc/dV8HwK9Y/K09-The-Cannibal-Portrait.webp" alt="The Cannibal" width="50">',
-        perks: ['5', '7', '8', '9', '11', '12', '14', '15', '18', '19', '20', '21', '22', '23', '25', '26', '29', '31', '32', '33', '34', '36', '37', '38', '39', '40', '42', '43', '44', '45', '47', '49', '52', '53', '54', '55', '57', '59', '61', '63', '64', '65', '66', '67', '68', '69', '70', '72', '73', '74', '76', '77', '78', '79', '80', '81', '83', '84', '85', '86', '87', '88', '89', '90', '91', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '115', '117', '118', '119', '120', '121', '123', '124', '126', '128', '129']
-    },
-    nightmare: {
-        name: "Кошмар",
-        icon: '<img src="https://i.postimg.cc/6QtHQ1HG/K10-The-Nightmare-Portrait.webp" alt="The Nightmare" width="50">',
-        perks: ['3', '5', '8', '9', '11', '12', '14', '16', '17', '19', '20', '21', '22', '24', '25', '27', '29', '31', '32', '33', '35', '36', '37', '38', '39', '40', '41', '43', '44', '45', '46', '48', '53', '54', '55', '56', '57', '61', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '74', '75', '76', '77', '78', '79', '80', '81', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '111', '112', '113', '115', '116', '117', '118', '119', '121', '123', '124', '125', '127', '129']
-    },
-    pig: {
-        name: "Свинья",
-        icon: '<img src="https://i.postimg.cc/9fbLwtSg/K11-The-Pig-Portrait.webp" alt="The Pig" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    clown: {
-        name: "Клоун",
-        icon: '<img src="https://i.postimg.cc/63QYr4xW/K12-The-Clown-Portrait.webp" alt="The Clown" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    spirit: {
-        name: "Дух",
-        icon: '<img src="https://i.postimg.cc/0QHZc59p/K13-The-Spirit-Portrait.webp" alt="The Spirit" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    legion: {
-        name: "Легион",
-        icon: '<img src="https://i.postimg.cc/90RbS3fs/K14-The-Legion-Portrait.webp" alt="The Legion" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    plague: {
-        name: "Чума",
-        icon: '<img src="https://i.postimg.cc/2ysGNHby/K15-The-Plague-Portrait.webp" alt="The Plague" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    ghostface: {
-        name: "Гоуст Фейс",
-        icon: '<img src="https://i.postimg.cc/nVXtZC9f/K16-The-Ghostface-Portrait.webp" alt="Ghost Face" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    demogorgon: {
-        name: "Демогоргон",
-        icon: '<img src="https://i.postimg.cc/9XsHfCyR/K17-The-Demogorgon-Portrait.webp" alt="The Demogorgon" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    oni: {
-        name: "Они",
-        icon: '<img src="https://i.postimg.cc/pX8bh4B0/K18-The-Oni-Portrait.webp" alt="The Oni" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    deathslinger: {
-        name: "Стрелок",
-        icon: '<img src="https://i.postimg.cc/jSbVzcgR/K19-The-Deathslinger-Portrait.webp" alt="The Deathslinger" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    executioner: {
-        name: "Палач",
-        icon: '<img src="https://i.postimg.cc/MpbCtBNV/K20-The-Executioner-Portrait.webp" alt="The Executioner" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    blight: {
-        name: "Мор",
-        icon: '<img src="https://i.postimg.cc/vmYpKBwj/K21-The-Blight-Portrait.webp" alt="The Blight" width="50">',
-        perks: ['1', '2', '3', '5', '7', '8', '9', '11', '12', '14', '15', '16', '17', '19', '20', '21', '22', '24', '26', '27', '28', '29', '31', '32', '33', '35', '37', '38', '41', '42', '43', '44', '45', '47', '49', '50', '51', '53', '55', '56', '57', '58', '59', '61', '62', '63', '64', '66', '67', '69', '70', '71', '72', '74', '75', '77', '78', '79', '80', '81', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '98', '101', '102', '104', '106', '107', '109', '110', '111', '112', '113', '114', '115', '116', '118', '119', '121', '122', '124', '125', '127', '128', '129', '130', '132', '133', '135']
-    },
-    twins: {
-        name: "Близнецы",
-        icon: '<img src="https://i.postimg.cc/3wtPQTKw/K22-The-Twins-Portrait.webp" alt="The Twins" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    trickster: {
-        name: "Трюкач",
-        icon: '<img src="https://i.postimg.cc/QtVvXytJ/K23-The-Trickster-Portrait.webp" alt="The Trickster" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    nemesis: {
-        name: "Немезис",
-        icon: '<img src="https://i.postimg.cc/8539smfQ/K24-The-Nemesis-Portrait.webp" alt="The Nemesis" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    cenobite: {
-        name: "Сенобит",
-        icon: '<img src="https://i.postimg.cc/XqCh5B9Z/K25-The-Cenobite-Portrait.webp" alt="The Cenobite" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    artist: {
-        name: "Художница",
-        icon: '<img src="https://i.postimg.cc/pVh34432/K26-The-Artist-Portrait.webp" alt="The Artist" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    onryo: {
-        name: "Онрё",
-        icon: '<img src="https://i.postimg.cc/05ThsZq7/K27-The-Onryo-Portrait.webp" alt="The Onryō" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    dredge: {
-        name: "Грязь",
-        icon: '<img src="https://i.postimg.cc/RZ983FhF/K28-The-Dredge-Portrait.webp" alt="The Dredge" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    mastermind: {
-        name: "Кукловод",
-        icon: '<img src="https://i.postimg.cc/pXK4X824/K29-The-Master-Mind-Portrait.webp" alt="The Mastermind" width="50">',
-        perks: ['1', '4', '6', '7', '9', '10', '12', '13', '14', '15', '16', '17', '19', '20', '21', '22', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '35', '36', '38', '40', '41', '42', '44', '45', '46', '47', '48', '49', '50', '51', '54', '55', '56', '57', '58', '59', '60', '61', '63', '64', '66', '67', '68', '70', '71', '73', '74', '75', '76', '78', '79', '80', '81', '82', '84', '85', '86', '88', '90', '91', '92', '94', '95', '98', '100', '102', '103', '104', '105', '107', '108', '110', '111', '113', '114', '115', '116', '118', '119', '122', '123', '124', '125', '127', '129', '131', '132', '134', '135', '136']
-    },
-    knight: {
-        name: "Рыцарь",
-        icon: '<img src="https://i.postimg.cc/bwT51hSR/K30-The-Knight-Portrait.webp" alt="The Knight" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    skullMerchant: {
-        name: "Торговка черепами",
-        icon: '<img src="https://i.postimg.cc/QMdybypZ/K31-The-Skull-Merchant-Portrait.webp" alt="The Skull Merchant" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    singularity: {
-        name: "Сингулярность",
-        icon: '<img src="https://i.postimg.cc/q7DZZxLh/K32-The-Singularity-Portrait.webp" alt="The Singularity" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    xenomorph: {
-        name: "Ксеноморф",
-        icon: '<img src="https://i.postimg.cc/hjJ3FQyC/K33-The-Xenomorph-Portrait.webp" alt="The Alien" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    goodGuy: {
-        name: "Хороший Парень",
-        icon: '<img src="https://i.postimg.cc/G2Zgb36b/K34-The-Yerkes-Portrait.webp" alt="The Good Guy" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    unknown: {
-        name: "Неведомое",
-        icon: '<img src="https://i.postimg.cc/0jDWjRqD/K35-The-Unknown-Portrait.webp" alt="The Unknown" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    lich: {
-        name: "Лич",
-        icon: '<img src="https://i.postimg.cc/y6Zrv9Sx/K36-The-Lich-Portrait.webp" alt="The Lich" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    darklord: {
-        name: "Темный Властелин",
-        icon: '<img src="https://i.postimg.cc/3JQf6RgB/K37-The-Dracula-Portrait.webp" alt="The Overlord" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    ranger: {
-        name: "Егерь",
-        icon: '<img src="https://i.postimg.cc/ncKStJ2t/K38-The-Houndmaster-Portrait.webp" alt="The Predator" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    ghoul: {
-        name: "Гуль",
-        icon: '<img src="https://i.postimg.cc/CxFPhQrn/K39-The-Ghoul-Portrait.webp" alt="The Ghoul" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    animatronic: {
-        name: "Аниматроник",
-        icon: '<img src="https://i.postimg.cc/13JWfrbC/K40-The-Animatronic-Portrait.webp" alt="The Animatronic" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    },
-    krasue: {
-        name: "Красу",
-        icon: '<img src="https://i.postimg.cc/bvrmb2hz/the-krasue.webp" alt="The Beauty" width="50">',
-        perks: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136']
-    }
-};
+        // State variables
+        let selectedKiller = null;
+        let selectedPerks = [null, null, null, null];
+        let availablePerks = [...killerPerks];
+
+        // DOM elements
+        const killerGrid = document.getElementById('killer-grid');
+        const perksGrid = document.getElementById('perks-grid');
+        const perksSelection = document.querySelector('.perks-selection');
+        const selectedKillerElement = document.querySelector('.selected-killer');
+        const resetKillerButton = document.querySelector('.reset-killer');
+        const selectedPerksElement = document.querySelector('.selected-perks');
+        const selectedPerksContainer = document.querySelector('.selected-perks-container');
+
+        // Initialize the page
+        function init() {
+            renderKillers();
+            setupEventListeners();
+        }
+
+        // Render killer cards
+        function renderKillers() {
+            killerGrid.innerHTML = '';
             
-            // Переменные состояния
-            let selectedKiller = null;
-            let selectedPerks = {
-                1: null,
-                2: null,
-                3: null,
-                4: null
-            };
-            
-            // Обработчики событий для выбора киллера
-            killerCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const killerId = card.getAttribute('data-killer');
-                    
-                    // Если кликаем на уже выбранного киллера - снимаем выбор
-                    if (selectedKiller === killerId) {
-                        // Сбрасываем выделение
-                        card.classList.remove('selected');
-                        selectedKiller = null;
-                        
-                        // Сбрасываем информацию о выбранном киллере
-                        selectedKillerDiv.querySelector('.killer-icon').innerHTML = '<i class="fas fa-question"></i>';
-                        selectedKillerDiv.querySelector('h3').textContent = 'Киллер не выбран';
-                        selectedKillerDiv.querySelector('p').textContent = 'Выберите киллера из списка выше';
-                        
-                        // Скрываем блок с перками и выбранными перками
-                        perksSelection.classList.remove('visible');
-                        selectedPerksSection.classList.remove('visible');
-                        
-                        // Сбрасываем выбранные перки
-                        resetSelectedPerks();
-                        
-                        return;
-                    }
-                    
-                    // Сброс предыдущего выбора
-                    killerCards.forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    
-                    // Обновление информации о выбранном киллере
-                    selectedKiller = killerId;
-                    const killerData = killersData[killerId];
-                    
-                    selectedKillerDiv.querySelector('.killer-icon').innerHTML = killerData.icon;
-                    selectedKillerDiv.querySelector('h3').textContent = killerData.name;
-                    selectedKillerDiv.querySelector('p').textContent = 'Нажмите на киллера чтобы отменить выбор';
-                    
-                    // Показать выбор перков
-                    perksSelection.classList.add('visible');
-                    
-                    // Обновить доступность перков
-                    updatePerksAvailability(killerData.perks);
-                    
-                    // Показать секцию выбранных перков
-                    selectedPerksSection.classList.add('visible');
-                    
-                    // Сбросить выбранные перки при смене киллера
-                    resetSelectedPerks();
-                });
-            });
-            
-            // Обработчики событий для выбора перков
-            perkCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    if (!selectedKiller) return;
-                    
-                    const perkId = card.getAttribute('data-perk');
-                    
-                    // Проверить, доступен ли перк для выбранного киллера
-                    const killerData = killersData[selectedKiller];
-                    if (!killerData.perks.includes(perkId)) return;
-                    
-                    // Если перк уже выбран, убираем его
-                    if (card.classList.contains('selected')) {
-                        card.classList.remove('selected');
-                        
-                        // Удаляем перк из выбранных
-                        for (let i = 1; i <= 4; i++) {
-                            if (selectedPerks[i] === perkId) {
-                                selectedPerks[i] = null;
-                                break;
-                            }
-                        }
-                        
-                        updateSelectedPerksDisplay();
-                        return;
-                    }
-                    
-                    // Если уже выбрано 4 перка, показываем предупреждение
-                    const selectedCount = Object.values(selectedPerks).filter(p => p !== null).length;
-                    if (selectedCount >= 4) {
-                        alert("Можно выбрать только 4 перка!");
-                        return;
-                    }
-                    
-                    // Добавляем перк
-                    card.classList.add('selected');
-                    
-                    // Найти свободный слот для перка
-                    let freeSlot = null;
-                    for (let i = 1; i <= 4; i++) {
-                        if (!selectedPerks[i]) {
-                            freeSlot = i;
-                            break;
-                        }
-                    }
-                    
-                    // Сохранить выбранный перк
-                    selectedPerks[freeSlot] = perkId;
-                    
-                    // Обновить отображение выбранных перков
-                    updateSelectedPerksDisplay();
-                });
-            });
-            
-            // Обработчики событий для слотов перков (для удаления)
-            selectedPerkSlots.forEach(slot => {
-                slot.addEventListener('click', () => {
-                    const slotNumber = parseInt(slot.getAttribute('data-slot'));
-                    
-                    if (selectedPerks[slotNumber]) {
-                        // Убираем выделение с соответствующего перка
-                        const perkId = selectedPerks[slotNumber];
-                        const perkCard = document.querySelector(`.perk-card[data-perk="${perkId}"]`);
-                        if (perkCard) {
-                            perkCard.classList.remove('selected');
-                        }
-                        
-                        // Очищаем слот
-                        selectedPerks[slotNumber] = null;
-                        updateSelectedPerksDisplay();
-                    }
-                });
-            });
-            
-            // Функция обновления доступности перков
-            function updatePerksAvailability(availablePerks) {
-                perkCards.forEach(card => {
-                    const perkId = card.getAttribute('data-perk');
-                    
-                    if (availablePerks.includes(perkId)) {
-                        card.classList.remove('unavailable');
-                        card.style.pointerEvents = "all";
-                    } else {
-                        card.classList.add('unavailable');
-                        card.style.pointerEvents = "none";
-                    }
-                });
-            }
-            
-            // Функция обновления отображения выбранных перков
-            function updateSelectedPerksDisplay() {
-                selectedPerkSlots.forEach(slot => {
-                    const slotNumber = parseInt(slot.getAttribute('data-slot'));
-                    const perkId = selectedPerks[slotNumber];
-                    
-                    if (perkId) {
-                        // Найти данные перка
-                        const perkCard = document.querySelector(`.perk-card[data-perk="${perkId}"]`);
-                        const perkIcon = perkCard.querySelector('.perk-icon').innerHTML;
-                        const perkName = perkCard.querySelector('.perk-name').textContent;
-                        
-                        slot.querySelector('.perk-icon').innerHTML = perkIcon;
-                        slot.querySelector('.perk-status').textContent = perkName;
-                        slot.classList.add('active');
-                    } else {
-                        slot.querySelector('.perk-icon').innerHTML = '<i class="fas fa-plus"></i>';
-                        slot.querySelector('.perk-status').textContent = 'Не выбран';
-                        slot.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Функция сброса всех выбранных перков
-            function resetSelectedPerks() {
-                // Сбрасываем данные
-                selectedPerks = {
-                    1: null,
-                    2: null,
-                    3: null,
-                    4: null
-                };
+            killers.forEach(killer => {
+                const killerCard = document.createElement('div');
+                killerCard.className = 'killer-card';
+                killerCard.dataset.killer = killer.code;
                 
-                // Очищаем все слоты
-                updateSelectedPerksDisplay();
+                killerCard.innerHTML = `
+                    <div class="killer-icon">
+                        <img src="${killer.icon}" alt="${killer.name}">
+                    </div>
+                    <div class="killer-info">
+                        <h3>${killer.name}</h3>
+                    </div>
+                `;
                 
-                // Убираем выделение со всех перков
-                perkCards.forEach(card => {
-                    card.classList.remove('selected');
+                killerCard.addEventListener('click', () => selectKiller(killer));
+                killerGrid.appendChild(killerCard);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            resetKillerButton.addEventListener('click', resetKiller);
+            
+            // Character selection buttons
+            const characterButtons = document.querySelectorAll('.character-btn');
+            characterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    characterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
                 });
+            });
+        }
+
+        // Select a killer
+        function selectKiller(killer) {
+            selectedKiller = killer;
+            
+            // Update UI
+            document.querySelectorAll('.killer-card').forEach(card => {
+                card.classList.remove('selected');
+                if (card.dataset.killer === killer.code) {
+                    card.classList.add('selected');
+                }
+            });
+            
+            selectedKillerElement.innerHTML = `
+                <div class="killer-icon">
+                    <img src="${killer.icon}" alt="${killer.name}">
+                </div>
+                <h2>${killer.name}</h2>
+            `;
+            
+            perksSelection.classList.add('visible');
+            resetKillerButton.classList.add('visible');
+            selectedPerksElement.classList.add('visible');
+            
+            renderPerks();
+        }
+
+        // Reset killer selection
+        function resetKiller() {
+            selectedKiller = null;
+            selectedPerks = [null, null, null, null];
+            
+            document.querySelectorAll('.killer-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            selectedKillerElement.innerHTML = `
+                <div class="killer-icon">
+                    <i class="fas fa-question"></i>
+                </div>
+                <h2>Выберите убийцу для просмотра доступных перков</h2>
+            `;
+            
+            perksSelection.classList.remove('visible');
+            resetKillerButton.classList.remove('visible');
+            selectedPerksElement.classList.remove('visible');
+            
+            updateSelectedPerksUI();
+        }
+
+        // Render perks
+        function renderPerks() {
+            perksGrid.innerHTML = '';
+            
+            // Получаем список доступных перков для выбранного убийцы
+            const killerAvailablePerks = killersData[selectedKiller.code]?.perks || [];
+            
+            availablePerks.forEach(perk => {
+                const isAvailable = killerAvailablePerks.includes(perk.code);
+                const isSelected = selectedPerks.some(p => p && p.code === perk.code);
+                
+                const perkCard = document.createElement('div');
+                perkCard.className = `perk-card ${isSelected ? 'selected' : ''} ${!isAvailable ? 'unavailable' : ''}`;
+                perkCard.dataset.perk = perk.code;
+                
+                perkCard.innerHTML = `
+                    <div class="perk-content">
+                        <div class="perk-icon">
+                            <img src="${perk.icon}" alt="${perk.name}">
+                        </div>
+                    </div>
+                    <div class="perk-name">${perk.name}</div>
+                `;
+                
+                if (isAvailable) {
+                    perkCard.addEventListener('click', () => selectPerk(perk));
+                }
+                
+                perksGrid.appendChild(perkCard);
+            });
+        }
+
+        // Select a perk
+        function selectPerk(perk) {
+            // Проверяем, не выбран ли уже этот перк
+            const alreadySelectedIndex = selectedPerks.findIndex(p => p && p.code === perk.code);
+            
+            if (alreadySelectedIndex !== -1) {
+                // Если перк уже выбран, убираем его
+                selectedPerks[alreadySelectedIndex] = null;
+            } else {
+                // Проверяем, есть ли свободные слоты
+                const emptySlotIndex = selectedPerks.findIndex(p => p === null);
+                
+                if (emptySlotIndex !== -1) {
+                    // Если есть свободный слот, добавляем перк
+                    selectedPerks[emptySlotIndex] = perk;
+                } else {
+                    // Если все слоты заняты, заменяем первый
+                    selectedPerks[0] = perk;
+                }
             }
-        });
+            
+            updateSelectedPerksUI();
+            renderPerks(); // Перерисовываем перки, чтобы обновить выделение
+        }
+
+        // Update selected perks UI
+        function updateSelectedPerksUI() {
+            const perkSlots = selectedPerksContainer.querySelectorAll('.selected-perk-slot');
+            
+            perkSlots.forEach((slot, index) => {
+                const perk = selectedPerks[index];
+                const perkInfo = slot.querySelector('.perk-slot-info');
+                
+                if (perk) {
+                    perkInfo.innerHTML = `
+                        <span class="slot-number">Слот ${index + 1}</span>
+                        <div class="perk-icon">
+                            <img src="${perk.icon}" alt="${perk.name}">
+                        </div>
+                        <span class="perk-status">${perk.name}</span>
+                    `;
+                    slot.classList.add('active');
+                } else {
+                    perkInfo.innerHTML = `
+                        <span class="slot-number">Слот ${index + 1}</span>
+                        <span class="perk-status">Пусто</span>
+                    `;
+                    slot.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
