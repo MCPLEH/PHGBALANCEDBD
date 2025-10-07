@@ -1,0 +1,2755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Ranked DBD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+            --card-bg: #252525;
+            --main-red: #c21919;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        //.hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--main-red);
+            position: relative;
+            background-color: #080808;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4a4a4a;
+        }
+        
+        .btn-back {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .btn-back:hover {
+            background-color: rgba(194, 25, 25, 0.1);
+        }
+        
+        .btn-danger {
+            background-color: #ff4444;
+        }
+        
+        .btn-danger:hover {
+            background-color: #cc0000;
+        }
+        
+        .match-options {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .match-option {
+            flex: 1;
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .match-option:hover {
+            transform: translateY(-5px);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .match-option.selected {
+            border: 2px solid var(--primary-color);
+            background-color: rgba(194, 25, 25, 0.1);
+        }
+        
+        .match-option h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .character-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .character {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid #333;
+        }
+        
+        .character:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+        
+        .character.selected {
+            background-color: rgba(194, 25, 25, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .chat-container {
+            height: 300px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #1a1a1a;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        
+        .system-message {
+            background-color: rgba(194, 25, 25, 0.2);
+            font-style: italic;
+        }
+        
+        .user-message {
+            background-color: rgba(42, 42, 42, 0.5);
+        }
+        
+        .match-list {
+            margin-top: 20px;
+        }
+        
+        .match-item {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .match-info {
+            flex: 1;
+        }
+        
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .rating-table th, .rating-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        
+        .rating-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .rating-table tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+        
+        .rating-table tr:hover {
+            background-color: rgba(194, 25, 25, 0.1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+            border-left: 4px solid var(--main-red);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .admin-badge {
+            background-color: #ff9900;
+            color: #000;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        .banned-badge {
+            background-color: #ff4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .admin-login {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        .admin-login a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .admin-login a:hover {
+            text-decoration: underline;
+        }
+        
+        .admin-panel {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(40, 40, 40, 0.7);
+            border-radius: 8px;
+            border: 1px solid #ff9900;
+        }
+        
+        .admin-panel h3 {
+            color: #ff9900;
+            margin-bottom: 10px;
+        }
+        
+        .users-list {
+            margin-top: 10px;
+        }
+        
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            background-color: rgba(255, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .chat-info {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .chat-info p {
+            margin-bottom: 5px;
+        }
+
+        .back-buttons-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .match-options {
+                flex-direction: column;
+            }
+            
+            .character-list {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .back-buttons-container {
+                flex-direction: column;
+            }
+        }
+
+        .active-users {
+            background: #2a2a2a;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #4CAF50;
+            font-size: 0.9em;
+        }
+
+        .user-badge {
+            display: inline-block;
+            background: #444;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin: 2px 5px;
+            font-size: 0.8em;
+        }
+
+        .user-badge.current-user {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .message-header strong {
+            color: #ff9900;
+        }
+
+        .message-time {
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .message-content {
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 3px solid #4CAF50;
+        }
+
+        .other-message {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 3px solid #2196F3;
+        }
+
+        .system-message {
+            background: rgba(194, 25, 25, 0.1);
+            border-left: 3px solid var(--primary-color);
+            font-style: italic;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message {
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        .chat-activity {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .match-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .btn-success {
+            background-color: #4CAF50;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+
+        .btn-warning {
+            background-color: #ff9800;
+        }
+
+        .btn-warning:hover {
+            background-color: #e68900;
+        }
+
+        .match-result-options {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .result-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-option input[type="radio"] {
+            margin: 0;
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        .history-filters .form-group {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .history-item {
+            background: #2a2a2a;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .history-header {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .history-win {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .history-loss {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+
+        .history-type {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        .history-details {
+            padding: 15px;
+        }
+
+        .history-details p {
+            margin-bottom: 5px;
+        }
+
+        .match-result-status {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #ff9800;
+        }
+
+        .match-result-status h3 {
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .participant-result {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: #333;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        .participant-result .username {
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .participant-result .status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        .status-pending {
+            background: #ff9800;
+            color: black;
+        }
+
+        .status-win {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-loss {
+            background: #f44336;
+            color: white;
+        }
+
+        .instructions-content {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 15px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .instructions-content h3 {
+            color: var(--primary-color);
+            margin: 15px 0 10px 0;
+        }
+
+        .instructions-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .instructions-content ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .instructions-content li {
+            margin-bottom: 8px;
+        }
+
+        .instructions-content .step {
+            background: rgba(194, 25, 25, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .instructions-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .instructions-btn:hover {
+            background: var(--highlight-color);
+            transform: scale(1.1);
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            z-index: 1000;
+        }
+
+        .connection-online {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .connection-offline {
+            background: #f44336;
+            color: white;
+        }
+
+        .connection-connecting {
+            background: #ff9800;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка инструкций -->
+    <button class="instructions-btn" id="instructions-btn">
+        <i class="fas fa-question"></i>
+    </button>
+
+    <!-- Статус подключения -->
+    <div class="connection-status connection-connecting" id="connection-status">
+        Подключение...
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Модальное окно инструкций -->
+    <div class="modal" id="instructions-modal">
+        <div class="modal-content">
+            <h2>📖 Инструкция по использованию</h2>
+            <div class="instructions-content">
+                <h3>🎮 Как начать играть:</h3>
+                <div class="step">
+                    <strong>Шаг 1: Регистрация и вход</strong>
+                    <p>Зарегистрируйте аккаунт или войдите в систему</p>
+                </div>
+                
+                <div class="step">
+                    <strong>Шаг 2: Создание или поиск матча</strong>
+                    <ul>
+                        <li><strong>Создать поединок</strong> - создайте новую игру и ждите соперников</li>
+                        <li><strong>Найти поединок</strong> - присоединитесь к существующей игре</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <strong>Шаг 3: Настройка матча</strong>
+                    <ul>
+                        <li>Выберите тип матча (1v1 или 1v4)</li>
+                        <li>Выберите сторону (Убийца/Выживший)</li>
+                        <li>Для убийцы - выберите персонажа</li>
+                        <li>Введите название команды или никнейм</li>
+                    </ul>
+                </div>
+
+                <h3>💬 Чат и коммуникация:</h3>
+                <ul>
+                    <li>Чат доступен всем участникам матча в реальном времени</li>
+                    <li>Системные сообщения отображаются красным цветом</li>
+                    <li>Ваши сообщения выделяются зеленым цветом</li>
+                    <li>Сообщения других игроков - синим цветом</li>
+                </ul>
+
+                <h3>🏆 Завершение матча и рейтинг:</h3>
+                <div class="step">
+                    <strong>Система подтверждения результатов:</strong>
+                    <ol>
+                        <li>Любой участник инициирует завершение матча</li>
+                        <li>Все игроки выбирают свой результат (Победа/Поражение)</li>
+                        <li>Система автоматически проверяет корректность результатов</li>
+                        <li>Рейтинг обновляется на основе результатов</li>
+                    </ol>
+                </div>
+
+                <h3>📊 Рейтинговая система:</h3>
+                <ul>
+                    <li>Начальный рейтинг: 1000</li>
+                    <li>Отдельный рейтинг для 1v1 и 1v4 режимов</li>
+                    <li>Используется система Эло для расчета изменений</li>
+                    <li>Проверить рейтинг: <code>!rank никнейм</code></li>
+                </ul>
+
+                <h3>❌ Возможные проблемы:</h3>
+                <ul>
+                    <li><strong>Не видно матчи?</strong> - обновите список кнопкой "Обновить"</li>
+                    <li><strong>Чат не обновляется?</strong> - проверьте подключение к интернету</li>
+                    <li><strong>Не могу завершить матч?</strong> - все участники должны выбрать результат</li>
+                    <li><strong>Забанен?</strong> - обратитесь к администратору</li>
+                </ul>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn" id="close-instructions-btn">Понятно!</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <br>
+            <center>
+            <h1>Рейтинговые матчи Dead by Daylight</h1>
+            <p>Соревнуйтесь в рейтинговых матчах 1v1 и 1v4, повышайте свой рейтинг и станьте лучшим игроком PHG Balance!</p>
+            </center>
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">?</div>
+                <div>
+                    <h3 id="user-status">Войдите в систему для участия</h3>
+                    <div id="auth-buttons">
+                        <button class="btn" id="login-btn">Войти</button>
+                        <button class="btn btn-secondary" id="register-btn">Регистрация</button>
+                    </div>
+                    <div class="admin-login" id="admin-login-section">
+                        <a href="#" id="admin-login-link">Войти как администратор</a>
+                    </div>
+                    <div id="user-panel" class="hidden">
+                        <p><span id="username-display"></span><span id="admin-badge" class="admin-badge hidden">Админ</span><span id="banned-badge" class="banned-badge hidden">Забанен</span></p>
+                        <button class="btn btn-secondary" id="logout-btn">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Главная страница -->
+        <section id="home" class="section">
+            <h2>Выберите действие</h2>
+            <div class="match-options">
+                <div class="match-option" id="create-match-option">
+                    <h3>Создать поединок</h3>
+                    <p>Создайте новый поединок и ожидайте соперников</p>
+                </div>
+                <div class="match-option" id="find-match-option">
+                    <h3>Найти поединок</h3>
+                    <p>Присоединитесь к существующему поединку</p>
+                </div>
+                <div class="match-option" id="rating-option">
+                    <h3>Рейтинг</h3>
+                    <p>Просмотрите текущий рейтинг игроков и команд</p>
+                </div>
+                <div class="match-option" id="history-option">
+                    <h3>История матчей</h3>
+                    <p>Просмотрите историю завершенных матчей</p>
+                </div>
+            </div>
+            
+            <!-- Панель администратора -->
+            <div id="admin-panel" class="admin-panel hidden">
+                <h3>Панель администратора</h3>
+                <div class="form-group">
+                    <label for="ban-username">Забанить пользователя:</label>
+                    <input type="text" id="ban-username" placeholder="Введите ник пользователя">
+                    <button class="btn btn-danger" id="ban-user-btn">Забанить</button>
+                </div>
+                <div class="form-group">
+                    <label for="unban-username">Разбанить пользователя:</label>
+                    <input type="text" id="unban-username" placeholder="Введите ник пользователя">
+                    <button class="btn btn-secondary" id="unban-user-btn">Разбанить</button>
+                </div>
+                <div class="users-list">
+                    <h4>Зарегистрированные пользователи:</h4>
+                    <div id="users-list-container">
+                        <!-- Список пользователей будет генерироваться динамически -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Остальные секции остаются без изменений -->
+        <!-- Создать поединок -->
+        <section id="create-match-section" class="section hidden">
+            <div class="back-buttons-container">
+                <button class="btn btn-back" id="back-from-create">
+                    <i class="fas fa-arrow-left"></i> Назад к выбору
+                </button>
+                <button class="btn btn-back" id="back-to-search">
+                    <i class="fas fa-search"></i> Вернуться к поиску
+                </button>
+            </div>
+            <h2>Создать поединок</h2>
+            
+            <div class="form-group">
+                <label for="match-type">Тип поединка:</label>
+                <select id="match-type">
+                    <option value="1v1">1v1</option>
+                    <option value="1v4">1v4</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="player-side">Сторона:</label>
+                <select id="player-side">
+                    <option value="killer">Убийца</option>
+                    <option value="survivor">Выживший</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="killer-selection">
+                <label>Выберите убийцу:</label>
+                <div class="character-list">
+                    <div class="character" data-id="trapper">Trapper</div>
+                    <div class="character" data-id="wraith">Wraith</div>
+                    <div class="character" data-id="hillbilly">Hillbilly</div>
+                    <div class="character" data-id="nurse">Nurse</div>
+                    <div class="character" data-id="huntress">Huntress</div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="team-name-input">
+                <label for="team-name">Название команды / Ник:</label>
+                <input type="text" id="team-name" placeholder="Введите название команды или ник">
+            </div>
+            
+            <button class="btn" id="create-match-btn">Создать поединок</button>
+        </section>
+
+        <!-- Найти поединок -->
+        <section id="find-match-section" class="section hidden">
+            <div class="back-buttons-container">
+                <button class="btn btn-back" id="back-from-find">
+                    <i class="fas fa-arrow-left"></i> Назад к выбору
+                </button>
+            </div>
+            <h2>Найти поединок</h2>
+            
+            <div class="form-group">
+                <label for="search-type">Тип поединка:</label>
+                <select id="search-type">
+                    <option value="all">Все поединки</option>
+                    <option value="1v1">1v1</option>
+                    <option value="1v4">1v4</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-secondary" id="refresh-matches-btn">Обновить список</button>
+            
+            <div class="match-list" id="matches-container">
+                <!-- Список поединков будет генерироваться динамически -->
+            </div>
+        </section>
+
+        <!-- Рейтинг -->
+        <section id="rating-section" class="section hidden">
+            <div class="back-buttons-container">
+                <button class="btn btn-back" id="back-from-rating">
+                    <i class="fas fa-arrow-left"></i> Назад к выбору
+                </button>
+            </div>
+            <h2>Рейтинг игроков</h2>
+            
+            <div class="form-group">
+                <label for="rating-type">Тип рейтинга:</label>
+                <select id="rating-type">
+                    <option value="1v1">1v1</option>
+                    <option value="1v4">1v4</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-secondary" id="refresh-ratings-btn">Обновить рейтинг</button>
+            
+            <table class="rating-table">
+                <thead>
+                    <tr>
+                        <th>Место</th>
+                        <th>Игрок/Команда</th>
+                        <th>Рейтинг</th>
+                        <th>Победы</th>
+                        <th>Поражения</th>
+                    </tr>
+                </thead>
+                <tbody id="rating-table-body">
+                    <!-- Данные рейтинга будут генерироваться динамически -->
+                </tbody>
+            </table>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <input type="text" id="rank-query" placeholder="Введите !rank [ник] для просмотра рейтинга">
+                <button class="btn btn-secondary" id="check-rank-btn">Проверить</button>
+            </div>
+            
+            <div id="rank-result" style="margin-top: 10px;"></div>
+        </section>
+
+        <!-- Чат матча -->
+        <section id="match-chat-section" class="section hidden">
+            <div class="back-buttons-container">
+                <button class="btn btn-back" id="back-from-chat">
+                    <i class="fas fa-arrow-left"></i> Назад к выбору
+                </button>
+                <button class="btn btn-back" id="back-to-search-from-chat">
+                    <i class="fas fa-search"></i> Вернуться к поиску
+                </button>
+            </div>
+            <h2 id="chat-section-title">Чат матча</h2>
+            
+            <div class="chat-info">
+                <div id="chat-match-details">
+                    <!-- Информация о матче будет добавляться динамически -->
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chat-window">
+                <div class="chat-message system-message">Система: Чат загружен...</div>
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="chat-input" placeholder="Введите сообщение...">
+                <button class="btn btn-secondary" id="send-chat-message-btn">Отправить</button>
+            </div>
+            
+            <!-- Блок статуса завершения матча -->
+            <div id="match-result-status" class="match-result-status hidden">
+                <h3>Статус завершения матча</h3>
+                <div id="participants-results">
+                    <!-- Статусы участников будут добавляться динамически -->
+                </div>
+                <div class="result-buttons" id="result-buttons">
+                    <!-- Кнопки выбора результата будут добавляться динамически -->
+                </div>
+            </div>
+            
+            <div class="match-actions">
+                <button class="btn btn-success" id="complete-match-btn">
+                    <i class="fas fa-flag-checkered"></i> Завершить матч
+                </button>
+                <button class="btn btn-danger" id="cancel-match-btn">
+                    <i class="fas fa-times"></i> Отменить матч
+                </button>
+            </div>
+        </section>
+        
+        <!-- Остальные модальные окна и секции -->
+        <!-- Модальное окно завершения матча -->
+        <div class="modal" id="complete-match-modal">
+            <div class="modal-content">
+                <h2>Завершить матч</h2>
+                <div class="form-group">
+                    <label>Результат матча:</label>
+                    <div class="match-result-options">
+                        <div class="result-option">
+                            <input type="radio" id="win-option" name="match-result" value="win">
+                            <label for="win-option">🏆 Победа</label>
+                        </div>
+                        <div class="result-option">
+                            <input type="radio" id="loss-option" name="match-result" value="loss">
+                            <label for="loss-option">💀 Поражение</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="opponent-selection">
+                    <label for="opponent-select">Противник:</label>
+                    <select id="opponent-select">
+                        <option value="">Выберите противника</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="match-stats">Статистика (опционально):</label>
+                    <textarea id="match-stats" placeholder="Например: 4 жертвы спасены, 2 генератора починено..." rows="3"></textarea>
+                </div>
+                
+                <div class="modal-buttons">
+                    <button class="btn btn-secondary" id="cancel-complete-btn">Отмена</button>
+                    <button class="btn btn-success" id="confirm-complete-btn">Завершить матч</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция истории матчей -->
+        <section id="history-section" class="section hidden">
+            <div class="back-buttons-container">
+                <button class="btn btn-back" id="back-from-history">
+                    <i class="fas fa-arrow-left"></i> Назад к выбору
+                </button>
+            </div>
+            <h2>История матчей</h2>
+            
+            <div class="history-filters">
+                <div class="form-group">
+                    <label for="history-type">Тип матча:</label>
+                    <select id="history-type">
+                        <option value="all">Все матчи</option>
+                        <option value="1v1">1v1</option>
+                        <option value="1v4">1v4</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary" id="refresh-history-btn">Обновить</button>
+            </div>
+            
+            <div class="history-list" id="history-container">
+                <!-- История матчей будет генерироваться динамически -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <h2>Вход в систему</h2>
+            <div class="form-group">
+                <label for="login-username">Имя пользователя:</label>
+                <input type="text" id="login-username" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Пароль:</label>
+                <input type="password" id="login-password" autocomplete="off">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="close-login-btn">Отмена</button>
+                <button class="btn" id="confirm-login-btn">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <h2>Регистрация</h2>
+            <div class="form-group">
+                <label for="register-username">Имя пользователя:</label>
+                <input type="text" id="register-username" autocomplete="off">
+                <div id="username-error" class="error-message hidden"></div>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Пароль:</label>
+                <input type="password" id="register-password" autocomplete="off">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="close-register-btn">Отмена</button>
+                <button class="btn" id="confirm-register-btn">Зарегистрироваться</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно принятия поединка -->
+    <div class="modal" id="accept-match-modal">
+        <div class="modal-content">
+            <h2>Принять поединок</h2>
+            <div id="match-details">
+                <!-- Информация о поединке будет добавляться динамически -->
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="decline-match-btn">Отклонить</button>
+                <button class="btn" id="accept-match-btn">Принять</button>
+            </div>
+        </div>
+    </div>
+
+<h1>Эта страница пока в разработке, но вы можете её протестить, функции уже локально рабочие но только на вашем ПК</h1>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+			<a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
+
+    <script>
+        // Конфигурация Google Apps Script
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJD0jaK8UjG4HNBRWaWJRa4hpNoe4t5YcvFt0cGpG8YbQuWUF_vI-rNqpuE2Z2v1V12A/exec'; // Замените на ваш URL
+
+        // Переменные состояния
+        let currentUser = null;
+        let currentMatch = null;
+        let selectedCharacter = null;
+        let matchChat = [];
+        let allUsers = [];
+        let matches = [];
+        let ratings = [];
+        let matchHistory = [];
+        let isAdmin = false;
+        let isBanned = false;
+
+        // DOM элементы
+        const homeSection = document.getElementById('home');
+        const createMatchSection = document.getElementById('create-match-section');
+        const findMatchSection = document.getElementById('find-match-section');
+        const ratingSection = document.getElementById('rating-section');
+        const matchChatSection = document.getElementById('match-chat-section');
+        const historySection = document.getElementById('history-section');
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            initInstructions();
+            initGoogleSheetsIntegration();
+            loadData();
+            updateUI();
+            initChat();
+            initEventListeners();
+        });
+
+        // Инициализация инструкций
+        function initInstructions() {
+            const instructionsBtn = document.getElementById('instructions-btn');
+            const instructionsModal = document.getElementById('instructions-modal');
+            const closeInstructionsBtn = document.getElementById('close-instructions-btn');
+
+            instructionsBtn.addEventListener('click', () => {
+                instructionsModal.style.display = 'flex';
+            });
+
+            closeInstructionsBtn.addEventListener('click', () => {
+                instructionsModal.style.display = 'none';
+            });
+
+            instructionsModal.addEventListener('click', (e) => {
+                if (e.target === instructionsModal) {
+                    instructionsModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Инициализация интеграции с Google Sheets
+        function initGoogleSheetsIntegration() {
+            testConnection();
+            
+            // Настройка периодического обновления
+            setInterval(() => {
+                if (currentMatch) {
+                    refreshChat();
+                }
+            }, 3000);
+
+            setInterval(() => {
+                if (!findMatchSection.classList.contains('hidden')) {
+                    refreshMatches();
+                }
+            }, 10000);
+        }
+
+        // Тестирование подключения
+        async function testConnection() {
+            const statusElement = document.getElementById('connection-status');
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=test`);
+                if (response.ok) {
+                    statusElement.className = 'connection-status connection-online';
+                    statusElement.textContent = 'Онлайн';
+                } else {
+                    throw new Error('Connection failed');
+                }
+            } catch (error) {
+                statusElement.className = 'connection-status connection-offline';
+                statusElement.textContent = 'Офлайн';
+                console.warn('Google Sheets недоступен, используется локальное хранилище');
+            }
+        }
+
+        // ==================== GOOGLE APPS SCRIPT INTEGRATION ====================
+
+        // Функции для работы с Google Sheets
+        async function loadData() {
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=loadAll`);
+                if (response.ok) {
+                    const data = await response.json();
+                    allUsers = data.users || [];
+                    matches = data.matches || [];
+                    ratings = data.ratings || [];
+                    matchHistory = data.history || [];
+                    console.log('Данные загружены из Google Sheets');
+                } else {
+                    throw new Error('Failed to load data');
+                }
+            } catch (error) {
+                // Fallback на localStorage
+                console.log('Using localStorage fallback');
+                const savedUsers = localStorage.getItem('phgUsers');
+                const savedMatches = localStorage.getItem('phgMatches');
+                const savedRatings = localStorage.getItem('phgRatings');
+                const savedHistory = localStorage.getItem('phgHistory');
+                
+                if (savedUsers) allUsers = JSON.parse(savedUsers);
+                if (savedMatches) matches = JSON.parse(savedMatches);
+                if (savedRatings) ratings = JSON.parse(savedRatings);
+                if (savedHistory) matchHistory = JSON.parse(savedHistory);
+            }
+        }
+
+        async function saveData() {
+            const data = {
+                users: allUsers,
+                matches: matches,
+                ratings: ratings,
+                history: matchHistory
+            };
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'saveAll',
+                        data: data
+                    })
+                });
+
+                if (response.ok) {
+                    console.log('Данные сохранены в Google Sheets');
+                } else {
+                    throw new Error('Failed to save to Google Sheets');
+                }
+            } catch (error) {
+                // Fallback на localStorage
+                localStorage.setItem('phgUsers', JSON.stringify(allUsers));
+                localStorage.setItem('phgMatches', JSON.stringify(matches));
+                localStorage.setItem('phgRatings', JSON.stringify(ratings));
+                localStorage.setItem('phgHistory', JSON.stringify(matchHistory));
+                console.log('Данные сохранены в localStorage');
+            }
+        }
+
+        async function refreshChat() {
+            if (!currentMatch) return;
+
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=getChat&matchId=${currentMatch.id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.chat && JSON.stringify(data.chat) !== JSON.stringify(currentMatch.chat)) {
+                        currentMatch.chat = data.chat;
+                        matchChat = data.chat;
+                        updateChat();
+                    }
+                }
+            } catch (error) {
+                console.log('Chat refresh failed, using local data');
+            }
+        }
+
+        async function sendChatMessageToServer(message) {
+            if (!currentMatch) return;
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'addChatMessage',
+                        matchId: currentMatch.id,
+                        message: message
+                    })
+                });
+            } catch (error) {
+                console.log('Failed to send message to server');
+            }
+        }
+
+        async function updateMatchOnServer(match) {
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'updateMatch',
+                        match: match
+                    })
+                });
+            } catch (error) {
+                console.log('Failed to update match on server');
+            }
+        }
+
+        // ==================== ОСНОВНЫЕ ФУНКЦИИ С ИНТЕГРАЦИЕЙ ====================
+
+        // Обновленная функция отправки сообщения в чат
+        function sendChatMessage() {
+            if (!currentMatch) {
+                alert('Вы не участвуете в активном матче');
+                return;
+            }
+            
+            const messageInput = document.getElementById('chat-input');
+            const message = messageInput.value.trim();
+            
+            if (!message) {
+                return;
+            }
+            
+            // Создание объекта сообщения
+            const chatMessage = {
+                user: currentUser.username,
+                message: message,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            
+            // Добавление сообщения в чат матча
+            currentMatch.chat.push(chatMessage);
+            matchChat.push(chatMessage);
+            
+            // Отправка на сервер
+            sendChatMessageToServer(chatMessage);
+            
+            // Очистка поля ввода
+            messageInput.value = '';
+            
+            // Обновление чата
+            updateChat();
+            
+            // Сохранение данных
+            saveData();
+        }
+
+        // Обновленная функция создания матча
+        function createMatch() {
+            if (!currentUser) {
+                alert('Пожалуйста, войдите в систему для создания матча');
+                return;
+            }
+            
+            if (isBanned) {
+                alert('Вы забанены и не можете создавать матчи');
+                return;
+            }
+            
+            const matchType = document.getElementById('match-type').value;
+            const playerSide = document.getElementById('player-side').value;
+            const teamName = document.getElementById('team-name').value;
+            
+            if (!teamName) {
+                alert('Пожалуйста, введите название команды или ник');
+                return;
+            }
+            
+            if (playerSide === 'killer' && !selectedCharacter) {
+                alert('Пожалуйста, выберите убийцу');
+                return;
+            }
+            
+            // Создание объекта матча
+            currentMatch = {
+                id: generateId(),
+                type: matchType,
+                creator: currentUser.username,
+                side: playerSide,
+                character: selectedCharacter,
+                teamName: teamName,
+                participants: [currentUser.username],
+                status: 'waiting',
+                chat: [],
+                resultSelection: {
+                    initiated: false,
+                    initiator: null,
+                    results: {}
+                },
+                createdAt: new Date().getTime()
+            };
+            
+            // Добавление в список матчей
+            matches.push(currentMatch);
+            
+            // Сохранение данных и отправка на сервер
+            saveData();
+            updateMatchOnServer(currentMatch);
+            
+            // Показать чат матча
+            showMatchChat(currentMatch);
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert('Матч создан! Ожидайте соперников...');
+        }
+
+        // Обновленная функция присоединения к матчу
+        function joinMatch(matchId) {
+            if (!currentUser) {
+                alert('Пожалуйста, войдите в систему для присоединения к матчу');
+                return;
+            }
+            
+            if (isBanned) {
+                alert('Вы забанены и не можете присоединяться к матчам');
+                return;
+            }
+            
+            const match = matches.find(m => m.id === matchId);
+            
+            if (!match) {
+                alert('Матч не найден');
+                return;
+            }
+            
+            if (match.participants.includes(currentUser.username)) {
+                alert('Вы уже участвуете в этом матче');
+                return;
+            }
+            
+            // Проверка на максимальное количество участников
+            if (match.type === '1v1' && match.participants.length >= 2) {
+                alert('Матч 1v1 уже заполнен');
+                return;
+            }
+            
+            if (match.type === '1v4' && match.participants.length >= 5) {
+                alert('Матч 1v4 уже заполнен');
+                return;
+            }
+            
+            // Добавление пользователя в матч
+            match.participants.push(currentUser.username);
+            
+            // Обновление статуса матча
+            if ((match.type === '1v1' && match.participants.length === 2) || 
+                (match.type === '1v4' && match.participants.length === 5)) {
+                match.status = 'active';
+                
+                // Отправка системного сообщения в чат
+                const systemMessage = {
+                    user: 'Система',
+                    message: `Матч начался! Участники: ${match.participants.join(', ')}`,
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                match.chat.push(systemMessage);
+                sendChatMessageToServer(systemMessage);
+            } else {
+                // Отправка системного сообщения в чат
+                const systemMessage = {
+                    user: 'Система',
+                    message: `${currentUser.username} присоединился к матчу`,
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                match.chat.push(systemMessage);
+                sendChatMessageToServer(systemMessage);
+            }
+            
+            // Сохранение данных и отправка на сервер
+            saveData();
+            updateMatchOnServer(match);
+            
+            // Установка текущего матча
+            currentMatch = match;
+            
+            // Показать чат матча
+            showMatchChat(match);
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert('Вы присоединились к матчу!');
+        }
+
+        // ==================== ОСТАЛЬНЫЕ ФУНКЦИИ ====================
+
+        // Кнопки навигации
+        document.getElementById('create-match-option').addEventListener('click', () => showSection(createMatchSection));
+        document.getElementById('find-match-option').addEventListener('click', () => showSection(findMatchSection));
+        document.getElementById('rating-option').addEventListener('click', () => showSection(ratingSection));
+        document.getElementById('history-option').addEventListener('click', () => showSection(historySection));
+        
+        // Кнопки "Назад"
+        document.getElementById('back-from-create').addEventListener('click', () => {
+            if (currentMatch && currentMatch.creator === currentUser.username) {
+                if (confirm('Вы создатель матча. При выходе матч будет удален. Продолжить?')) {
+                    cancelMatchByCreator();
+                }
+            } else {
+                showSection(homeSection);
+            }
+        });
+        
+        document.getElementById('back-from-find').addEventListener('click', () => showSection(homeSection));
+        document.getElementById('back-from-rating').addEventListener('click', () => showSection(homeSection));
+        document.getElementById('back-from-history').addEventListener('click', () => showSection(homeSection));
+        document.getElementById('back-from-chat').addEventListener('click', () => {
+            if (currentMatch && currentMatch.creator === currentUser.username) {
+                if (confirm('Вы создатель матча. При выходе матч будет удален. Продолжить?')) {
+                    cancelMatchByCreator();
+                }
+            } else {
+                showSection(homeSection);
+            }
+        });
+        
+        // Кнопки "Вернуться к поиску"
+        document.getElementById('back-to-search').addEventListener('click', () => showSection(findMatchSection));
+        document.getElementById('back-to-search-from-chat').addEventListener('click', () => showSection(findMatchSection));
+
+        // Функция показа секции
+        function showSection(section) {
+            // Скрыть все секции
+            homeSection.classList.add('hidden');
+            createMatchSection.classList.add('hidden');
+            findMatchSection.classList.add('hidden');
+            ratingSection.classList.add('hidden');
+            matchChatSection.classList.add('hidden');
+            historySection.classList.add('hidden');
+            
+            // Показать нужную секцию
+            section.classList.remove('hidden');
+            
+            // Обновить данные при переходе в определенные секции
+            if (section === findMatchSection) {
+                refreshMatches();
+            } else if (section === ratingSection) {
+                refreshRatings();
+            } else if (section === historySection) {
+                refreshHistory();
+            }
+        }
+
+        // Функция инициализации слушателей событий
+        function initEventListeners() {
+            // Выбор персонажа
+            document.querySelectorAll('.character').forEach(char => {
+                char.addEventListener('click', function() {
+                    document.querySelectorAll('.character').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedCharacter = this.getAttribute('data-id');
+                });
+            });
+            
+            // Создание матча
+            document.getElementById('create-match-btn').addEventListener('click', createMatch);
+            
+            // Обновление списка матчей
+            document.getElementById('refresh-matches-btn').addEventListener('click', refreshMatches);
+            
+            // Обновление рейтинга
+            document.getElementById('refresh-ratings-btn').addEventListener('click', refreshRatings);
+            
+            // Проверка рейтинга
+            document.getElementById('check-rank-btn').addEventListener('click', checkRank);
+            
+            // Отправка сообщения в чат
+            document.getElementById('send-chat-message-btn').addEventListener('click', sendChatMessage);
+            
+            // Отправка сообщения по Enter
+            document.getElementById('chat-input').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.repeat) {
+                    e.preventDefault();
+                    sendChatMessage();
+                }
+            });
+            
+            // Завершение матча
+            document.getElementById('complete-match-btn').addEventListener('click', showMatchResultSelection);
+            document.getElementById('confirm-complete-btn').addEventListener('click', completeMatch);
+            document.getElementById('cancel-complete-btn').addEventListener('click', () => {
+                document.getElementById('complete-match-modal').style.display = 'none';
+            });
+            
+            // Отмена матча
+            document.getElementById('cancel-match-btn').addEventListener('click', cancelMatch);
+            
+            // Обновление истории
+            document.getElementById('refresh-history-btn').addEventListener('click', refreshHistory);
+            
+            // Авторизация
+            document.getElementById('login-btn').addEventListener('click', () => {
+                document.getElementById('login-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('register-btn').addEventListener('click', () => {
+                document.getElementById('register-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('close-login-btn').addEventListener('click', () => {
+                document.getElementById('login-modal').style.display = 'none';
+            });
+            
+            document.getElementById('close-register-btn').addEventListener('click', () => {
+                document.getElementById('register-modal').style.display = 'none';
+            });
+            
+            document.getElementById('confirm-login-btn').addEventListener('click', login);
+            document.getElementById('confirm-register-btn').addEventListener('click', register);
+            
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            
+            // Админ-панель
+            document.getElementById('admin-login-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                adminLogin();
+            });
+            
+            document.getElementById('ban-user-btn').addEventListener('click', banUser);
+            document.getElementById('unban-user-btn').addEventListener('click', unbanUser);
+        }
+
+        // Функция инициализации чата
+        function initChat() {
+            matchChat = [];
+            updateChat();
+        }
+
+        // Функция отмены матча создателем при выходе
+        function cancelMatchByCreator() {
+            if (!currentMatch) return;
+            
+            // Удаление матча из списка активных
+            matches = matches.filter(m => m.id !== currentMatch.id);
+            
+            // Отправка системного сообщения в чат (если есть участники)
+            if (currentMatch.participants.length > 1) {
+                currentMatch.chat.push({
+                    user: 'Система',
+                    message: 'Матч отменен создателем',
+                    timestamp: new Date().toLocaleTimeString()
+                });
+            }
+            
+            // Сброс текущего матча
+            currentMatch = null;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Вернуться на главную
+            showSection(homeSection);
+            
+            // Обновление интерфейса
+            updateUI();
+        }
+
+        // Функция обновления списка матчей
+        function refreshMatches() {
+            const matchesContainer = document.getElementById('matches-container');
+            const searchType = document.getElementById('search-type').value;
+            
+            // Фильтрация матчей по типу и статусу
+            let filteredMatches = matches.filter(match => 
+                match.status === 'waiting' && 
+                (searchType === 'all' || match.type === searchType)
+            );
+            
+            // Очистка контейнера
+            matchesContainer.innerHTML = '';
+            
+            // Добавление матчей в список
+            filteredMatches.forEach(match => {
+                const matchElement = document.createElement('div');
+                matchElement.className = 'match-item';
+                
+                matchElement.innerHTML = `
+                    <div class="match-info">
+                        <h3>${match.teamName} (${match.creator})</h3>
+                        <p>Тип: ${match.type === '1v1' ? '1v1' : '1v4'} | Сторона: ${match.side === 'killer' ? 'Убийца' : 'Выживший'}</p>
+                        ${match.character ? `<p>Убийца: ${match.character}</p>` : ''}
+                        <p>Участников: ${match.participants.length}/${match.type === '1v1' ? 2 : 5}</p>
+                    </div>
+                    <button class="btn join-match-btn" data-match-id="${match.id}">Присоединиться</button>
+                `;
+                
+                matchesContainer.appendChild(matchElement);
+            });
+            
+            // Добавление обработчиков событий для кнопок присоединения
+            document.querySelectorAll('.join-match-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const matchId = this.getAttribute('data-match-id');
+                    joinMatch(matchId);
+                });
+            });
+            
+            // Если нет матчей, показать сообщение
+            if (filteredMatches.length === 0) {
+                matchesContainer.innerHTML = '<p>Нет доступных матчей</p>';
+            }
+        }
+
+        // Функция показа чата матча
+        function showMatchChat(match) {
+            // Обновление заголовка
+            document.getElementById('chat-section-title').textContent = `Чат матча: ${match.teamName}`;
+            
+            // Обновление информации о матче
+            const matchDetails = document.getElementById('chat-match-details');
+            matchDetails.innerHTML = `
+                <p><strong>Тип:</strong> ${match.type === '1v1' ? '1v1' : '1v4'}</p>
+                <p><strong>Создатель:</strong> ${match.creator}</p>
+                <p><strong>Участники:</strong> ${match.participants.join(', ')}</p>
+                <p><strong>Статус:</strong> ${match.status === 'waiting' ? 'Ожидание игроков' : 'Активный'}</p>
+            `;
+            
+            // Установка текущего матча
+            currentMatch = match;
+            
+            // Обновление чата
+            matchChat = match.chat;
+            updateChat();
+            
+            // Обновление блока результатов
+            updateMatchResultStatus();
+            
+            // Показать секцию чата
+            showSection(matchChatSection);
+        }
+
+        // Функция обновления чата
+        function updateChat() {
+            const chatWindow = document.getElementById('chat-window');
+            
+            // Очистка чата
+            chatWindow.innerHTML = '';
+            
+            // Добавление сообщений
+            matchChat.forEach(msg => {
+                const messageElement = document.createElement('div');
+                
+                // Определение класса сообщения
+                let messageClass = 'chat-message ';
+                if (msg.user === 'Система') {
+                    messageClass += 'system-message';
+                } else if (msg.user === currentUser?.username) {
+                    messageClass += 'user-message';
+                } else {
+                    messageClass += 'other-message';
+                }
+                
+                messageElement.className = messageClass;
+                
+                // Форматирование сообщения
+                messageElement.innerHTML = `
+                    <div class="message-header">
+                        <strong>${msg.user}</strong>
+                        <span class="message-time">${msg.timestamp}</span>
+                    </div>
+                    <div class="message-content">${msg.message}</div>
+                `;
+                
+                chatWindow.appendChild(messageElement);
+            });
+            
+            // Прокрутка вниз
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Функция показа выбора результата матча
+        function showMatchResultSelection() {
+            if (!currentMatch) {
+                alert('Нет активного матча');
+                return;
+            }
+            
+            // Инициализация процесса выбора результата
+            currentMatch.resultSelection.initiated = true;
+            currentMatch.resultSelection.initiator = currentUser.username;
+            
+            // Скрыть кнопку завершения матча
+            document.getElementById('complete-match-btn').style.display = 'none';
+            
+            // Показать блок статуса завершения
+            document.getElementById('match-result-status').classList.remove('hidden');
+            
+            // Отправить системное сообщение
+            currentMatch.chat.push({
+                user: 'Система',
+                message: `${currentUser.username} инициировал завершение матча. Все участники должны выбрать свой результат.`,
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            // Обновление интерфейса
+            updateMatchResultStatus();
+            
+            // Сохранение данных
+            saveData();
+            
+            updateChat();
+        }
+
+        // Функция обновления статуса завершения матча
+        function updateMatchResultStatus() {
+            if (!currentMatch) return;
+            
+            const participantsResults = document.getElementById('participants-results');
+            const resultButtons = document.getElementById('result-buttons');
+            
+            participantsResults.innerHTML = '';
+            resultButtons.innerHTML = '';
+            
+            // Показать статус только если процесс завершения инициирован
+            if (currentMatch.resultSelection.initiated) {
+                document.getElementById('match-result-status').classList.remove('hidden');
+                
+                // Отобразить статусы всех участников
+                currentMatch.participants.forEach(participant => {
+                    const userResult = currentMatch.resultSelection.results[participant];
+                    const statusDiv = document.createElement('div');
+                    statusDiv.className = 'participant-result';
+                    
+                    let statusText = 'Ожидание';
+                    let statusClass = 'status-pending';
+                    
+                    if (userResult === 'win') {
+                        statusText = 'Победил';
+                        statusClass = 'status-win';
+                    } else if (userResult === 'loss') {
+                        statusText = 'Проиграл';
+                        statusClass = 'status-loss';
+                    }
+                    
+                    statusDiv.innerHTML = `
+                        <span class="username">${participant}</span>
+                        <span class="status ${statusClass}">${statusText}</span>
+                    `;
+                    
+                    participantsResults.appendChild(statusDiv);
+                });
+                
+                // Показать кнопки выбора результата только если пользователь еще не выбрал
+                if (!currentMatch.resultSelection.results[currentUser.username]) {
+                    const winButton = document.createElement('button');
+                    winButton.className = 'btn btn-success';
+                    winButton.innerHTML = '🏆 Я победил';
+                    winButton.addEventListener('click', () => selectMatchResult('win'));
+                    
+                    const lossButton = document.createElement('button');
+                    lossButton.className = 'btn btn-warning';
+                    lossButton.innerHTML = '💀 Я проиграл';
+                    lossButton.addEventListener('click', () => selectMatchResult('loss'));
+                    
+                    resultButtons.appendChild(winButton);
+                    resultButtons.appendChild(lossButton);
+                } else {
+                    const statusMessage = document.createElement('p');
+                    statusMessage.textContent = 'Вы уже выбрали результат. Ожидайте других участников.';
+                    statusMessage.style.textAlign = 'center';
+                    resultButtons.appendChild(statusMessage);
+                }
+                
+                // Проверить, все ли участники выбрали результат
+                checkAllResultsSelected();
+            } else {
+                document.getElementById('match-result-status').classList.add('hidden');
+            }
+        }
+
+        // Функция выбора результата матча
+        function selectMatchResult(result) {
+            if (!currentMatch) return;
+            
+            // Сохранить выбор пользователя
+            currentMatch.resultSelection.results[currentUser.username] = result;
+            
+            // Отправить системное сообщение
+            currentMatch.chat.push({
+                user: 'Система',
+                message: `${currentUser.username} выбрал результат: ${result === 'win' ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}`,
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            // Обновление интерфейса
+            updateMatchResultStatus();
+            updateChat();
+            
+            // Сохранение данных
+            saveData();
+            
+            // Проверить, все ли участники выбрали результат
+            checkAllResultsSelected();
+        }
+
+        // Функция проверки, все ли участники выбрали результат
+        function checkAllResultsSelected() {
+            if (!currentMatch) return;
+            
+            const allSelected = currentMatch.participants.every(
+                participant => currentMatch.resultSelection.results[participant]
+            );
+            
+            if (allSelected) {
+                // Все выбрали результаты - завершить матч
+                finalizeMatchWithResults();
+            }
+        }
+
+        // Функция завершения матча на основе выбранных результатов
+        function finalizeMatchWithResults() {
+            if (!currentMatch) return;
+            
+            // Определить победителей и проигравших
+            const winners = [];
+            const losers = [];
+            
+            currentMatch.participants.forEach(participant => {
+                if (currentMatch.resultSelection.results[participant] === 'win') {
+                    winners.push(participant);
+                } else {
+                    losers.push(participant);
+                }
+            });
+            
+            // Проверить корректность результатов (должен быть хотя бы один победитель и один проигравший)
+            if (winners.length === 0 || losers.length === 0) {
+                alert('Некорректные результаты: должен быть хотя бы один победитель и один проигравший');
+                return;
+            }
+            
+            // Создание записи в истории матчей
+            const matchRecord = {
+                id: generateId(),
+                matchId: currentMatch.id,
+                type: currentMatch.type,
+                participants: currentMatch.participants,
+                winners: winners,
+                losers: losers,
+                date: new Date().toLocaleDateString(),
+                timestamp: new Date().getTime()
+            };
+            
+            // Добавление в историю
+            matchHistory.push(matchRecord);
+            
+            // Обновление рейтинга для всех пар победитель-проигравший
+            winners.forEach(winner => {
+                losers.forEach(loser => {
+                    updateRatingsForPair(winner, loser, currentMatch.type);
+                });
+            });
+            
+            // Удаление матча из списка активных
+            matches = matches.filter(m => m.id !== currentMatch.id);
+            
+            // Отправка системного сообщения в чат
+            currentMatch.chat.push({
+                user: 'Система',
+                message: `Матч завершен! Победители: ${winners.join(', ')} | Проигравшие: ${losers.join(', ')}`,
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            // Сброс текущего матча
+            currentMatch = null;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Вернуться на главную
+            showSection(homeSection);
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert('Матч успешно завершен! Рейтинги обновлены.');
+        }
+
+        // Функция обновления рейтинга для пары игроков
+        function updateRatingsForPair(winner, loser, matchType) {
+            // Поиск или создание записи рейтинга для победителя
+            let winnerRating = ratings.find(r => r.username === winner && r.type === matchType);
+            if (!winnerRating) {
+                winnerRating = {
+                    username: winner,
+                    type: matchType,
+                    rating: 1000,
+                    wins: 0,
+                    losses: 0
+                };
+                ratings.push(winnerRating);
+            }
+            
+            // Поиск или создание записи рейтинга для проигравшего
+            let loserRating = ratings.find(r => r.username === loser && r.type === matchType);
+            if (!loserRating) {
+                loserRating = {
+                    username: loser,
+                    type: matchType,
+                    rating: 1000,
+                    wins: 0,
+                    losses: 0
+                };
+                ratings.push(loserRating);
+            }
+            
+            // Обновление статистики
+            winnerRating.wins++;
+            loserRating.losses++;
+            
+            // Расчет изменения рейтинга (упрощенная система Эло)
+            const kFactor = 32;
+            const expectedWinner = 1 / (1 + Math.pow(10, (loserRating.rating - winnerRating.rating) / 400));
+            const expectedLoser = 1 / (1 + Math.pow(10, (winnerRating.rating - loserRating.rating) / 400));
+            
+            winnerRating.rating += Math.round(kFactor * (1 - expectedWinner));
+            loserRating.rating += Math.round(kFactor * (0 - expectedLoser));
+            
+            // Минимальный рейтинг 0
+            if (loserRating.rating < 0) loserRating.rating = 0;
+        }
+
+        // Функция отмены матча
+        function cancelMatch() {
+            if (!currentMatch) {
+                alert('Нет активного матча');
+                return;
+            }
+            
+            if (currentMatch.creator !== currentUser.username) {
+                alert('Только создатель матча может его отменить');
+                return;
+            }
+            
+            if (!confirm('Вы уверены, что хотите отменить матч?')) {
+                return;
+            }
+            
+            // Отправка системного сообщения в чат
+            currentMatch.chat.push({
+                user: 'Система',
+                message: 'Матч отменен создателем',
+                timestamp: new Date().toLocaleTimeString()
+            });
+            
+            // Удаление матча из списка активных
+            matches = matches.filter(m => m.id !== currentMatch.id);
+            
+            // Сброс текущего матча
+            currentMatch = null;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Вернуться на главную
+            showSection(homeSection);
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert('Матч отменен');
+        }
+
+        // Функция завершения матча (старая версия)
+        function completeMatch() {
+            showMatchResultSelection();
+        }
+
+        // Функция обновления таблицы рейтинга
+        function refreshRatings() {
+            const ratingType = document.getElementById('rating-type').value;
+            const tableBody = document.getElementById('rating-table-body');
+            
+            // Фильтрация рейтингов по типу
+            let filteredRatings = ratings.filter(r => r.type === ratingType);
+            
+            // Сортировка по рейтингу (по убыванию)
+            filteredRatings.sort((a, b) => b.rating - a.rating);
+            
+            // Очистка таблицы
+            tableBody.innerHTML = '';
+            
+            // Заполнение таблицы
+            filteredRatings.forEach((rating, index) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${rating.username}</td>
+                    <td>${rating.rating}</td>
+                    <td>${rating.wins}</td>
+                    <td>${rating.losses}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Если нет данных, показать сообщение
+            if (filteredRatings.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Нет данных о рейтинге</td></tr>';
+            }
+        }
+
+        // Функция проверки рейтинга
+        function checkRank() {
+            const query = document.getElementById('rank-query').value.trim();
+            const resultDiv = document.getElementById('rank-result');
+            
+            if (!query.startsWith('!rank ')) {
+                resultDiv.innerHTML = '<div class="error-message">Используйте команду: !rank [ник]</div>';
+                return;
+            }
+            
+            const username = query.substring(6).trim();
+            
+            if (!username) {
+                resultDiv.innerHTML = '<div class="error-message">Введите ник пользователя</div>';
+                return;
+            }
+            
+            // Поиск рейтинга пользователя
+            const userRating1v1 = ratings.find(r => r.username === username && r.type === '1v1');
+            const userRating1v4 = ratings.find(r => r.username === username && r.type === '1v4');
+            
+            let resultHTML = `<h3>Рейтинг игрока ${username}:</h3>`;
+            
+            if (userRating1v1) {
+                resultHTML += `
+                    <p><strong>1v1:</strong> Рейтинг: ${userRating1v1.rating}, Победы: ${userRating1v1.wins}, Поражения: ${userRating1v1.losses}</p>
+                `;
+            } else {
+                resultHTML += `<p><strong>1v1:</strong> Нет данных</p>`;
+            }
+            
+            if (userRating1v4) {
+                resultHTML += `
+                    <p><strong>1v4:</strong> Рейтинг: ${userRating1v4.rating}, Победы: ${userRating1v4.wins}, Поражения: ${userRating1v4.losses}</p>
+                `;
+            } else {
+                resultHTML += `<p><strong>1v4:</strong> Нет данных</p>`;
+            }
+            
+            resultDiv.innerHTML = resultHTML;
+        }
+
+        // Функция обновления истории матчей
+        function refreshHistory() {
+            const historyType = document.getElementById('history-type').value;
+            const historyContainer = document.getElementById('history-container');
+            
+            // Фильтрация истории по типу
+            let filteredHistory = matchHistory;
+            if (historyType !== 'all') {
+                filteredHistory = matchHistory.filter(m => m.type === historyType);
+            }
+            
+            // Сортировка по дате (новые сначала)
+            filteredHistory.sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Очистка контейнера
+            historyContainer.innerHTML = '';
+            
+            // Заполнение истории
+            filteredHistory.forEach(match => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                // Определение класса заголовка в зависимости от результата
+                const isWinner = match.winners && match.winners.includes(currentUser?.username);
+                const isLoser = match.losers && match.losers.includes(currentUser?.username);
+                
+                const headerClass = isWinner ? 'history-header history-win' : 
+                                  isLoser ? 'history-header history-loss' : 
+                                  'history-header';
+                
+                historyItem.innerHTML = `
+                    <div class="${headerClass}">
+                        <span>${match.type === '1v1' ? '1v1' : '1v4'} | ${match.date}</span>
+                        <span class="history-type">${isWinner ? 'ПОБЕДА' : 'ПОРАЖЕНИЕ'}</span>
+                    </div>
+                    <div class="history-details">
+                        <p><strong>Победители:</strong> ${match.winners ? match.winners.join(', ') : 'Нет данных'}</p>
+                        <p><strong>Проигравшие:</strong> ${match.losers ? match.losers.join(', ') : 'Нет данных'}</p>
+                    </div>
+                `;
+                
+                historyContainer.appendChild(historyItem);
+            });
+            
+            // Если нет данных, показать сообщение
+            if (filteredHistory.length === 0) {
+                historyContainer.innerHTML = '<div class="history-item"><div class="history-details" style="text-align: center;">Нет данных о матчах</div></div>';
+            }
+        }
+
+        // Функции авторизации
+        function login() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // Поиск пользователя
+            const user = allUsers.find(u => u.username === username && u.password === password);
+            
+            if (!user) {
+                alert('Неверное имя пользователя или пароль');
+                return;
+            }
+            
+            // Установка текущего пользователя
+            currentUser = user;
+            isAdmin = user.isAdmin || false;
+            isBanned = user.isBanned || false;
+            
+            // Скрыть модальное окно
+            document.getElementById('login-modal').style.display = 'none';
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert(`Добро пожаловать, ${username}!`);
+        }
+
+        function register() {
+            const username = document.getElementById('register-username').value.trim();
+            const password = document.getElementById('register-password').value;
+            const usernameError = document.getElementById('username-error');
+            
+            // Сброс ошибки
+            usernameError.textContent = '';
+            usernameError.classList.add('hidden');
+            
+            if (!username || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            if (username.length < 3) {
+                usernameError.textContent = 'Имя пользователя должно содержать не менее 3 символов';
+                usernameError.classList.remove('hidden');
+                return;
+            }
+            
+            if (password.length < 4) {
+                alert('Пароль должен содержать не менее 4 символов');
+                return;
+            }
+            
+            // Проверка на существование пользователя
+            if (allUsers.find(u => u.username === username)) {
+                usernameError.textContent = 'Это имя пользователя уже занято';
+                usernameError.classList.remove('hidden');
+                return;
+            }
+            
+            // Создание нового пользователя
+            const newUser = {
+                username: username,
+                password: password,
+                isAdmin: false,
+                isBanned: false
+            };
+            
+            // Добавление пользователя
+            allUsers.push(newUser);
+            
+            // Установка текущего пользователя
+            currentUser = newUser;
+            isAdmin = false;
+            isBanned = false;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Скрыть модальное окно
+            document.getElementById('register-modal').style.display = 'none';
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert(`Регистрация успешна! Добро пожаловать, ${username}!`);
+        }
+
+        function logout() {
+            currentUser = null;
+            currentMatch = null;
+            isAdmin = false;
+            isBanned = false;
+            
+            // Обновление интерфейса
+            updateUI();
+            
+            alert('Вы вышли из системы');
+        }
+
+        function adminLogin() {
+            const username = prompt('Введите имя администратора:');
+            const password = prompt('Введите пароль администратора:');
+            
+            if (username === 'admin' && password === 'admin123') {
+                // Создание временного пользователя администратора
+                currentUser = {
+                    username: 'admin',
+                    isAdmin: true,
+                    isBanned: false
+                };
+                
+                isAdmin = true;
+                isBanned = false;
+                
+                // Обновление интерфейса
+                updateUI();
+                
+                alert('Вы вошли как администратор');
+            } else {
+                alert('Неверные учетные данные администратора');
+            }
+        }
+
+        // Функции администратора
+        function banUser() {
+            if (!isAdmin) {
+                alert('У вас нет прав администратора');
+                return;
+            }
+            
+            const username = document.getElementById('ban-username').value.trim();
+            
+            if (!username) {
+                alert('Введите имя пользователя');
+                return;
+            }
+            
+            const user = allUsers.find(u => u.username === username);
+            
+            if (!user) {
+                alert('Пользователь не найден');
+                return;
+            }
+            
+            if (user.isAdmin) {
+                alert('Нельзя забанить администратора');
+                return;
+            }
+            
+            user.isBanned = true;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Обновление списка пользователей
+            updateUsersList();
+            
+            alert(`Пользователь ${username} забанен`);
+        }
+
+        function unbanUser() {
+            if (!isAdmin) {
+                alert('У вас нет прав администратора');
+                return;
+            }
+            
+            const username = document.getElementById('unban-username').value.trim();
+            
+            if (!username) {
+                alert('Введите имя пользователя');
+                return;
+            }
+            
+            const user = allUsers.find(u => u.username === username);
+            
+            if (!user) {
+                alert('Пользователь не найден');
+                return;
+            }
+            
+            user.isBanned = false;
+            
+            // Сохранение данных
+            saveData();
+            
+            // Обновление списка пользователей
+            updateUsersList();
+            
+            alert(`Пользователь ${username} разбанен`);
+        }
+
+        function updateUsersList() {
+            const usersListContainer = document.getElementById('users-list-container');
+            
+            // Очистка контейнера
+            usersListContainer.innerHTML = '';
+            
+            // Добавление пользователей в список
+            allUsers.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                
+                userItem.innerHTML = `
+                    <span>${user.username}</span>
+                    <span>
+                        ${user.isAdmin ? '<span class="admin-badge">Админ</span>' : ''}
+                        ${user.isBanned ? '<span class="banned-badge">Забанен</span>' : ''}
+                    </span>
+                `;
+                
+                usersListContainer.appendChild(userItem);
+            });
+        }
+
+        // Функция обновления интерфейса
+        function updateUI() {
+            const authButtons = document.getElementById('auth-buttons');
+            const userPanel = document.getElementById('user-panel');
+            const adminPanel = document.getElementById('admin-panel');
+            const adminLoginSection = document.getElementById('admin-login-section');
+            const usernameDisplay = document.getElementById('username-display');
+            const adminBadge = document.getElementById('admin-badge');
+            const bannedBadge = document.getElementById('banned-badge');
+            const userAvatar = document.getElementById('user-avatar');
+            const userStatus = document.getElementById('user-status');
+            
+            if (currentUser) {
+                // Пользователь авторизован
+                authButtons.classList.add('hidden');
+                userPanel.classList.remove('hidden');
+                adminLoginSection.classList.add('hidden');
+                
+                usernameDisplay.textContent = currentUser.username;
+                
+                // Отображение бейджей
+                if (isAdmin) {
+                    adminBadge.classList.remove('hidden');
+                } else {
+                    adminBadge.classList.add('hidden');
+                }
+                
+                if (isBanned) {
+                    bannedBadge.classList.remove('hidden');
+                } else {
+                    bannedBadge.classList.add('hidden');
+                }
+                
+                // Обновление аватара и статуса
+                userAvatar.textContent = currentUser.username.charAt(0).toUpperCase();
+                userStatus.textContent = isBanned ? 'Забанен' : 'Авторизован';
+                
+                // Показать/скрыть панель администратора
+                if (isAdmin) {
+                    adminPanel.classList.remove('hidden');
+                    updateUsersList();
+                } else {
+                    adminPanel.classList.add('hidden');
+                }
+            } else {
+                // Пользователь не авторизован
+                authButtons.classList.remove('hidden');
+                userPanel.classList.add('hidden');
+                adminPanel.classList.add('hidden');
+                adminLoginSection.classList.remove('hidden');
+                
+                userAvatar.textContent = '?';
+                userStatus.textContent = 'Войдите в систему для участия';
+            }
+        }
+
+        // Вспомогательные функции
+        function generateId() {
+            return Math.random().toString(36).substring(2) + Date.now().toString(36);
+        }
+
+        function loadData() {
+            // Загрузка данных из localStorage
+            const savedUsers = localStorage.getItem('phgUsers');
+            const savedMatches = localStorage.getItem('phgMatches');
+            const savedRatings = localStorage.getItem('phgRatings');
+            const savedHistory = localStorage.getItem('phgHistory');
+            
+            if (savedUsers) allUsers = JSON.parse(savedUsers);
+            if (savedMatches) matches = JSON.parse(savedMatches);
+            if (savedRatings) ratings = JSON.parse(savedRatings);
+            if (savedHistory) matchHistory = JSON.parse(savedHistory);
+        }
+
+        function saveData() {
+            // Сохранение данных в localStorage
+            localStorage.setItem('phgUsers', JSON.stringify(allUsers));
+            localStorage.setItem('phgMatches', JSON.stringify(matches));
+            localStorage.setItem('phgRatings', JSON.stringify(ratings));
+            localStorage.setItem('phgHistory', JSON.stringify(matchHistory));
+        }
+    </script>
+</body>
+</html>
