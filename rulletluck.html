@@ -535,11 +535,134 @@
                 grid-template-columns: 1fr;
             }
         }
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        /* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: var(--secondary-color);
+    margin: 5% auto;
+    padding: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.url-group {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(20, 20, 20, 0.8);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.url-group h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.modal-section {
+    text-align: center;
+    margin: 20px 0;
+}
+/* Скрыть кнопку показа URL в режиме док-браузера */
+body.dock-mode #showUrlsBtn {
+    display: none !important;
+}
+
+/* Также скрыть саму кнопку в модальном окне для док-браузера */
+body.dock-mode .modal-section {
+    display: none !important;
+}
+/* Скрыть кнопку показа URL и иконки соцсетей в режиме OBS */
+body.obs-mode #showUrlsBtn,
+body.obs-mode .modal-section,
+body.obs-mode .section {
+    display: none !important;
+}
+
+/* Скрыть модальное окно если оно было открыто в OBS режиме */
+body.obs-mode .modal {
+    display: none !important;
+}
     </style>
 </head>
 <body>
-    <div class="blood-splatter blood-1">🩸</div>
-    <div class="blood-splatter blood-2">🩸</div>
+    <div class="blood-splatter blood-1">🍀</div>
+    <div class="blood-splatter blood-2">🍀</div>
     
     <header>
         <div class="container">
@@ -562,8 +685,9 @@
     
 	<section class="hero">
         <div class="container">
-            <center><h1>Рулетка Боли и страданий</h1>
-            <p>Вы можете крутить рулетку тут, или встроить её в свой OBS бесплатно</p></center>
+            <br>
+            <center><h1>Колесо удачи PHG 🩸</h1></center>
+            <center><p>Вы можете крутить рулетку тут, или встроить её в свой OBS</p></center>
         </div>
     </section>
 <br>
@@ -576,7 +700,7 @@
             </div>
             <button id="spinButton" class="wheel-button spin">Крутить рулетку</button>
         </div>
-        
+
         <div class="controls-section">
             <div class="tabs">
                 <div class="tab active" data-tab="items">Элементы</div>
@@ -602,7 +726,7 @@
                 
                 <div class="wheel-buttons">
                     <button id="clearItemsBtn" class="wheel-button">Очистить все</button>
-                    <button id="randomizeBtn" class="wheel-button">Случайный порядок</button>
+                    <button id="randomizeBtn" class="wheel-button">Показать\Обновить\Размешать</button>
                 </div>
             </div>
             
@@ -732,51 +856,59 @@
                 </div>
             </div>
         </div>
+        
+        <div class="container">
+        <div class="modal-section" style="text-align: center; margin: 20px 0;">
+        <button id="showUrlsBtn" class="wheel-button">Показать URL для OBS</button>
+    </div>
+</div>
 
-        <div class="url-section">
-            <h2 class="section-title">URL для источника OBS</h2>
+        <div id="urlModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 class="section-title">URL для OBS</h2>
+        
+        <div class="url-group">
+            <h3>URL для источника OBS</h3>
             <textarea id="obsUrl" readonly></textarea>
             <div class="url-actions">
                 <button id="copyUrlBtn" class="wheel-button">Копировать URL</button>
                 <span id="copyStatus"></span>
             </div>
-            <h2 class="section-title">URL для Док-браузера OBS</h2>
+        </div>
+        
+        <div class="url-group">
+            <h3>URL для Док-браузера OBS</h3>
             <textarea id="dockUrl" readonly></textarea>
             <div class="url-actions">
                 <button id="copyDockUrlBtn" class="wheel-button">Копировать URL для док-браузера</button>
+                <span id="copyDockStatus"></span>
             </div>
-            <p class="obs-hint">Док-браузер позволит вам управлять рулеткой прямо из OBS</p>
         </div>
+        
+        <p class="obs-hint">Док-браузер позволит вам управлять рулеткой прямо из OBS бесплатно</p>
+    </div>
+</div>
 
         <!-- Док-браузер интерфейс (скрыт по умолчанию) -->
-        <div id="dockInterface" style="display: none;">
-            <div class="dock-controls">
-                <div class="dock-control-group">
-                    <h3 class="dock-title">Управление рулеткой</h3>
-                    <button id="dockSpinButton" class="wheel-button spin">Крутить рулетку</button>
-                    <div class="wheel-input-group">
-                        <label for="dockNewItem">Новый элемент:</label>
-                        <input type="text" id="dockNewItem" placeholder="Введите текст элемента">
-                    </div>
-                    <button id="dockAddItemBtn" class="wheel-button">Добавить элемент</button>
-                </div>
-                
-                <div class="dock-control-group">
-                    <h3 class="dock-title">Текущие элементы</h3>
-                    <div class="item-list" id="dockItemsList">
-                        <!-- Элементы будут добавляться здесь -->
-                    </div>
-                    <div class="wheel-buttons">
-                        <button id="dockClearItemsBtn" class="wheel-button">Очистить все</button>
-                        <button id="dockRandomizeBtn" class="wheel-button">Случайный порядок</button>
+        <div class="item-list" id="dockItemsList" style="display: none;">
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="section">
-    <p style="font-size: 8px;">Изначально рулетка была придумана по заказу Lagerta_Seeman для шоу матчей по DBD</p>
     
+	<footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
 	<center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
 			<center><a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
 			<a href="https://www.instagram.com/mcpleh_/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
@@ -784,7 +916,6 @@
 			<a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
 			<a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
 			<a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a></center>
-    </center></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -941,13 +1072,17 @@
         
         // Обновление URL для OBS
         function updateObsUrl() {
-            const baseUrl = window.location.href.split('?')[0];
-            const obsModeUrl = `${baseUrl}?obs=true`;
-            const dockModeUrl = `${baseUrl}?dock=true`;
-            
-            obsUrl.value = obsModeUrl;
-            dockUrl.value = dockModeUrl;
-        }
+    const baseUrl = window.location.href.split('?')[0];
+    const obsModeUrl = `${baseUrl}?obs=true`;
+    const dockModeUrl = `${baseUrl}?dock=true`;
+    
+    // Эти элементы теперь в модальном окне
+    const obsUrl = document.getElementById('obsUrl');
+    const dockUrl = document.getElementById('dockUrl');
+    
+    if (obsUrl) obsUrl.value = obsModeUrl;
+    if (dockUrl) dockUrl.value = dockModeUrl;
+}
         
         // Обновление списка элементов
         function updateItemsList() {
@@ -1475,6 +1610,39 @@
         // Инициализация при загрузке
         init();
     });
+    
+    // Элементы модального окна
+const showUrlsBtn = document.getElementById('showUrlsBtn');
+const urlModal = document.getElementById('urlModal');
+const closeModal = document.querySelector('.close');
+const copyDockStatus = document.getElementById('copyDockStatus');
+
+// Показ модального окна
+showUrlsBtn.addEventListener('click', function() {
+    urlModal.style.display = 'block';
+});
+
+// Закрытие модального окна
+closeModal.addEventListener('click', function() {
+    urlModal.style.display = 'none';
+});
+
+// Закрытие при клике вне модального окна
+window.addEventListener('click', function(event) {
+    if (event.target === urlModal) {
+        urlModal.style.display = 'none';
+    }
+});
+
+// Обновление обработчика копирования для док-браузера
+copyDockUrlBtn.addEventListener('click', function() {
+    dockUrl.select();
+    document.execCommand('copy');
+    copyDockStatus.textContent = 'Скопировано!';
+    setTimeout(() => {
+        copyDockStatus.textContent = '';
+    }, 2000);
+});
     </script>
 </body>
 </html>
