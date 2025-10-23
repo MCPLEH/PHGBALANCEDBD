@@ -832,7 +832,7 @@
                 'Chadman',
                 'CHADMAN',
                 'WallHackUser',
-                'AimbotPlayer'
+                'AimbotPlayer',
                 'UnfairAdvantage',
                 'GameBreaker',
                 'Exploiter',
@@ -853,37 +853,198 @@
             
             // Расширенный список файлов и процессов для проверки
             const fileNames = [
-                "Windows/System32/ntoskrnl.exe",
-                "Windows/System32/smss.exe",
-                "Windows/System32/csrss.exe",
-                "Windows/System32/winlogon.exe",
-                "Windows/System32/services.exe",
-                "Windows/System32/lsass.exe",
-                "Windows/System32/svchost.exe",
-                "Windows/System32/explorer.exe",
-                "Program Files/Dead by Daylight/DeadByDaylight.exe",
-                "Program Files/Dead by Daylight/Engine/Binaries/Win64/DeadByDaylight-Win64-Shipping.exe",
-                "Program Files/Dead by Daylight/Engine/Binaries/Win64/DeadByDaylight-Win64-Shipping_BE.exe",
-                "Program Files/Dead by Daylight/EasyAntiCheat/EasyAntiCheat.exe",
-                "Program Files/Dead by Daylight/BattleEye/BEService.exe",
-                "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/Game.ini",
-                "Users/AppData/Local/DeadByDaylight/Saved/Logs/DeadByDaylight.log",
-                "Windows/System32/dxgi.dll",
-                "Windows/System32/d3d11.dll",
-                "Windows/System32/d3d12.dll",
-                "Windows/System32/opengl32.dll",
-                "Windows/System32/nvcuda.dll",
-                "Windows/System32/amdvlk64.dll",
-                "Windows/System32/winhttp.dll",
-                "Windows/System32/ws2_32.dll",
-                "Windows/System32/crypt32.dll",
-                "Windows/System32/bcrypt.dll",
-                "Program Files/Dead by Daylight/Content/Paks/pakchunk0-WindowsNoEditor.pak",
-                "Program Files/Dead by Daylight/Content/Paks/pakchunk1-WindowsNoEditor.pak",
-                "Program Files/Steam/steam.exe",
-                "Program Files/Steam/steamservice.exe",
-                "Program Files/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
-            ];
+    "Windows/System32/ntoskrnl.exe",
+    "Windows/System32/smss.exe",
+    "Windows/System32/csrss.exe",
+    "Windows/System32/winlogon.exe",
+    "Windows/System32/services.exe",
+    "Windows/System32/lsass.exe",
+    "Windows/System32/svchost.exe",
+    "Windows/System32/explorer.exe",
+    
+    // Dead by Daylight исполняемые файлы
+    "Program Files/Dead by Daylight/DeadByDaylight.exe",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/DeadByDaylight-Win64-Shipping.exe",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/DeadByDaylight-Win64-Shipping_BE.exe",
+    "Program Files/Dead by Daylight/EasyAntiCheat/EasyAntiCheat.exe",
+    "Program Files/Dead by Daylight/BattleEye/BEService.exe",
+    "Program Files/Dead by Daylight/Binaries/Win64/DeadByDaylight-Launcher.exe",
+    
+    // BAT файлы (скрипты запуска и конфигурации)
+    "Program Files/Dead by Daylight/LaunchGame.bat",
+    "Program Files/Dead by Daylight/StartWithAntiCheat.bat",
+    "Program Files/Dead by Daylight/VerifyFiles.bat",
+    "Program Files/Dead by Daylight/RepairInstallation.bat",
+    "Program Files/Dead by Daylight/CleanCache.bat",
+    "Program Files/Steam/steamapps/common/Dead by Daylight/Start_DBD.bat",
+    "Users/AppData/Local/DeadByDaylight/ConfigBackup.bat",
+    "Program Files/Dead by Daylight/EasyAntiCheat/Setup.bat",
+    "Program Files/Dead by Daylight/BattleEye/Install.bat",
+    
+    // DLL файлы (библиотеки игры и системы)
+    "Windows/System32/dxgi.dll",
+    "Windows/System32/d3d11.dll",
+    "Windows/System32/d3d12.dll",
+    "Windows/System32/opengl32.dll",
+    "Windows/System32/nvcuda.dll",
+    "Windows/System32/amdvlk64.dll",
+    "Windows/System32/winhttp.dll",
+    "Windows/System32/ws2_32.dll",
+    "Windows/System32/crypt32.dll",
+    "Windows/System32/bcrypt.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/D3D12Core.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/D3D11Core.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/OpenGLDrv.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/VulkanRHI.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/AudioMixer.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/NetworkReplayStreaming.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/PakFileUtilities.dll",
+    "Program Files/Dead by Daylight/Engine/Binaries/Win64/UnrealCEFSubProcess.exe",
+    "Program Files/Dead by Daylight/EasyAntiCheat/EasyAntiCheat_x64.dll",
+    "Program Files/Dead by Daylight/BattleEye/BEClient_x64.dll",
+    "Program Files/Dead by Daylight/steam_api64.dll",
+    "Program Files/Dead by Daylight/EOSSDK-Win64-Shipping.dll",
+    "Program Files/Dead by Daylight/PhysX3_x64.dll",
+    "Program Files/Dead by Daylight/APEXFramework_x64.dll",
+    
+    // PAK файлы (архивы с контентом игры)
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk0-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk1-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk2-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk3-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk4-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk5-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk6-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk7-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk8-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk9-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk10-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk11-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk12-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk13-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk14-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk15-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk16-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk17-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk18-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk19-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk20-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk21-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk22-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk23-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk24-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk25-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk26-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk27-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk28-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk29-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk30-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk31-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk32-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk33-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk34-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk35-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk36-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk37-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk38-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk39-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk40-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk41-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk42-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk43-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk44-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk45-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk46-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk47-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk48-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk49-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk50-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk51-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk52-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk53-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk54-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk55-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk56-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk57-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk58-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk59-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk60-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk61-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk62-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk63-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk64-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk65-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk66-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk67-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk68-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk69-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk70-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk71-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk72-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk73-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk74-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk75-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk76-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk77-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk78-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk79-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk80-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk81-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk82-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk83-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk84-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk85-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk86-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk87-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk88-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk89-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk90-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk91-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk92-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk93-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk94-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk95-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk96-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk97-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk98-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk99-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk100-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional1-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional2-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional3-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional4-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional5-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional6-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional7-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional8-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional9-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-optional10-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s0-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s1-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s2-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s3-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s4-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s5-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s6-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s7-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s8-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s9-WindowsNoEditor.pak",
+    "Program Files/Dead by Daylight/Content/Paks/pakchunk-s10-WindowsNoEditor.pak",
+    
+    // Конфигурационные файлы
+    "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/Game.ini",
+    "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/Engine.ini",
+    "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/Input.ini",
+    "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/GameUserSettings.ini",
+    "Users/AppData/Local/DeadByDaylight/Saved/Config/WindowsNoEditor/Scalability.ini",
+    "Users/AppData/Local/DeadByDaylight/Saved/Logs/DeadByDaylight.log",
+    
+    // Платформенные файлы
+    "Program Files/Steam/steam.exe",
+    "Program Files/Steam/steamservice.exe",
+    "Program Files/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+    "Program Files/Epic Games/Launcher/Engine/Binaries/Win64/EpicWebHelper.exe"
+];
             
             // Функции для работы с localStorage
             function saveToStorage(key, value) {
@@ -1108,47 +1269,55 @@
             }
             
             function startScanAnimation() {
-                scanCount = 0;
-                addLogEntry('Начало проверки системных файлов...', 'log-warning');
-                
-                // Запускаем анимацию файлов, которая будет работать до конца таймера
-                startFileAnimation();
-                
-                scanInterval = setInterval(() => {
-                    const checks = [
-                        { element: processCheck, status: ['safe', 'warning'], messages: ['Проверка процессов...', 'Анализ запущенных процессов...', 'Проверка целостности...'] },
-                        { element: networkCheck, status: ['safe', 'warning'], messages: ['Мониторинг сети...', 'Анализ сетевой активности...', 'Проверка соединений...'] },
-                        { element: memoryCheck, status: ['safe', 'warning'], messages: ['Сканирование памяти...', 'Проверка целостности памяти...', 'Анализ использования...'] }
-                    ];
-                    
-                    const randomCheck = checks[Math.floor(Math.random() * checks.length)];
-                    const randomStatus = randomCheck.status[Math.floor(Math.random() * randomCheck.status.length)];
-                    const randomMessage = randomCheck.messages[Math.floor(Math.random() * randomCheck.messages.length)];
-                    
-                    updateStatus(randomCheck.element, randomStatus, randomMessage);
-                    
-                    // Убрана запись "Обнаружена подозрительная активность" во время проверки
-                    if (Math.random() < 0.05) {
-                        addLogEntry('Проверка целостности файлов игры...', 'log-safe');
-                    }
-                }, 1500);
-                
-                // Таймер обратного отсчета
-                timeLeft = 60;
-                timeLeftElement.textContent = timeLeft;
-                scanTimer.style.display = 'block';
-                
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    timeLeftElement.textContent = timeLeft;
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        clearInterval(fileAnimationInterval);
-                        performFinalCheck();
-                    }
-                }, 1000);
-            }
+    scanCount = 0;
+    addLogEntry('Начало проверки системных файлов...', 'log-warning');
+    
+    // Запускаем анимацию файлов, которая будет работать до конца таймера
+    startFileAnimation();
+    
+    scanInterval = setInterval(() => {
+        const checks = [
+            { element: processCheck, status: ['safe', 'warning'], messages: ['Проверка процессов...', 'Анализ запущенных процессов...', 'Проверка целостности...'] },
+            { element: networkCheck, status: ['safe', 'warning'], messages: ['Мониторинг сети...', 'Анализ сетевой активности...', 'Проверка соединений...'] },
+            { element: memoryCheck, status: ['safe', 'warning'], messages: ['Сканирование памяти...', 'Проверка целостности памяти...', 'Анализ использования...'] }
+        ];
+        
+        const randomCheck = checks[Math.floor(Math.random() * checks.length)];
+        const randomStatus = randomCheck.status[Math.floor(Math.random() * randomCheck.status.length)];
+        const randomMessage = randomCheck.messages[Math.floor(Math.random() * randomCheck.messages.length)];
+        
+        updateStatus(randomCheck.element, randomStatus, randomMessage);
+        
+        // Одна случайная надпись из списка с вероятностью 5%
+        if (Math.random() < 0.05) {
+            const logMessages = [
+                'Проверка целостности файлов игры...',
+                'Проверка статуса системы...',
+                'Проверка процессов игры...',
+                'Проверка сетевой активности...',
+                'Проверка целостности памяти...'
+            ];
+            const randomLogMessage = logMessages[Math.floor(Math.random() * logMessages.length)];
+            addLogEntry(randomLogMessage, 'log-safe');
+        }
+    }, 600);
+    
+    // Таймер обратного отсчета
+    timeLeft = 60;
+    timeLeftElement.textContent = timeLeft;
+    scanTimer.style.display = 'block';
+    
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timeLeftElement.textContent = timeLeft;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            clearInterval(fileAnimationInterval);
+            performFinalCheck();
+        }
+    }, 1000);
+}
             
             function blockScanButton() {
                 scanBtn.disabled = true;
