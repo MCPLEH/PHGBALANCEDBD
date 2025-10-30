@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="https://i.postimg.cc/3NZ70b7T/Logo-Wisp3.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHG Баланс | Skill Check Simulator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #c21919;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #3a3a3a;
+            --highlight-color: #ff2a2a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23121212"/><path d="M0 0L100 100" stroke="%23202020" stroke-width="1"/><path d="M100 0L0 100" stroke="%23202020" stroke-width="1"/></svg>');
+        }
+        
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            padding: 2rem 0;
+            text-align: center;
+            background: radial-gradient(circle, rgba(58,58,58,0.2) 0%, rgba(26,26,26,0.8) 70%);
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #ccc;
+        }
+        
+        .checker-container {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .section {
+            background-color: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        footer {
+            background-color: rgba(10, 10, 10, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Стили для симулятора скилчеков */
+        .game-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .skill-check-wrapper {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .skill-check-circle {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .circle-background {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #2a2a2a;
+            border-radius: 50%;
+            position: absolute;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 70%);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .success-zone {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent var(--start, 0deg),
+                rgba(128, 128, 128, 0.6) var(--start, 0deg),
+                rgba(128, 128, 128, 0.6) calc(var(--start, 0deg) + var(--size, 0deg)),
+                transparent calc(var(--start, 0deg) + var(--size, 0deg)),
+                transparent 360deg
+            );
+            clip-path: circle(50%);
+            opacity: var(--zone-opacity, 0);
+            transition: opacity 0.3s ease;
+        }
+
+        .great-zone {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent var(--start, 0deg),
+                rgba(255, 255, 255, 0.8) var(--start, 0deg),
+                rgba(255, 255, 255, 0.8) calc(var(--start, 0deg) + 10deg),
+                transparent calc(var(--start, 0deg) + 10deg),
+                transparent 360deg
+            );
+            clip-path: circle(50%);
+            opacity: var(--zone-opacity, 0);
+            transition: opacity 0.3s ease;
+        }
+
+        .pointer {
+            position: absolute;
+            width: 6px;
+            height: 180px;
+            background: linear-gradient(to top, #e74c3c, #c0392b);
+            top: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%) rotate(0deg);
+            border-radius: 3px 3px 0 0;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+
+        .center-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #34495e;
+            border: 3px solid #2c3e50;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        .stats {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stat-item {
+            padding: 10px 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .result {
+            font-size: 28px;
+            margin: 20px 0;
+            height: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .success { color: #2ecc71; }
+        .fail { color: #e74c3c; }
+        .great { color: #f1c40f; }
+
+        .difficulty {
+            margin: 15px 0;
+        }
+
+        .difficulty-btn {
+            background: #34495e;
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary-color);
+        }
+
+        .skill-check-notification {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(52, 73, 94, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid #3498db;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 20;
+        }
+
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .instructions {
+            margin: 10px 0;
+            color: #95a5a6;
+            font-size: 14px;
+        }
+
+        .combo-counter {
+            font-size: 18px;
+            color: #f1c40f;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .mode-indicator {
+            font-size: 16px;
+            color: #3498db;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mainPHG.html" class="logo">PHG<span>Balance</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="mainPHG.html">Главная</a></li>
+                        <li><a href="mainTour.html">Турниры</a></li>
+                        <li><a href="guides.html">База знаний</a></li>
+                        <li><a href="builds.html">Билды</a></li>
+                        <li><a href="gallery.html">Галерея</a></li>
+                        <li><a href="FAQ.html">О проекте</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <center>
+        <div class="container">
+            <h1>DBD Skill Check Simulator</h1>
+        </div>
+     </center>
+
+
+        <div class="container">
+            <div class="center-content">
+                <div class="game-container">
+                    <div class="skill-check-wrapper">
+                        <div class="skill-check-notification" id="notification">SKILL CHECK!</div>
+                        <div class="skill-check-circle">
+                            <div class="circle-background"></div>
+                            <div class="success-zone" id="successZone"></div>
+                            <div class="great-zone" id="greatZone"></div>
+                            <div class="pointer" id="pointer"></div>
+                            <div class="center-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="result" id="result"></div>
+                    <div class="combo-counter" id="comboCounter">Стрик: 0</div>
+                    <div class="mode-indicator" id="modeIndicator">Режим: Ручной (SPACE для начала)</div>
+
+                    <div class="instructions" id="instructions">
+                        Нажмите SPACE чтобы ударить по скилчеку
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-item">Успешно: <span id="successCount">0</span></div>
+                        <div class="stat-item">Провалено: <span id="failCount">0</span></div>
+                        <div class="stat-item">Отлично: <span id="greatCount">0</span></div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="btn" onclick="resetGame()">Сброс</button>
+                    </div>
+
+                    <div class="difficulty">
+                        <button class="difficulty-btn active" onclick="setDifficulty('easy')">Легко</button>
+                        <button class="difficulty-btn" onclick="setDifficulty('medium')">Средне</button>
+                        <button class="difficulty-btn" onclick="setDifficulty('hard')">Сложно</button>
+                        <button class="difficulty-btn" onclick="setDifficulty('impossible')">Невозможно</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">PHG | DBD Creator</div>
+                <p class="copyright">© 2025 PHG | DBD Creator. Данный сайт не affiliated с Behaviour Interactive.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <center><p style="font-size: 10px;">Сайт создан при поддержке by PHG community</p></center>
+    <center>
+        <a href="https://x.com/McPleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/5Ny3zZqN/twitter-logos.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.instagram.com/mcpleh/" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/B6XSHTpz/insta.jpg" alt="Логотип" width="40"></a>
+        <a href="https://www.youtube.com/@playhangames" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/LsP2N9L9/YT-ICON.png" alt="Логотип" width="41"></a>
+        <a href="https://www.twitch.tv/mcpleh" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/026kb0jK/twittch.jpg" alt="Логотип" width="40"></a>
+        <a href="https://discord.gg/YCUTMsNxff" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/tRcyQnkq/discord.jpg" alt="Логотип" width="40"></a>
+        <a href="https://t.me/dbdphgnews" target="_blank" rel="noopener noreferrer"><img src="https://i.postimg.cc/zDyvgrPf/telega.jpg" alt="Логотип" width="40"></a>
+    </center>
+
+    <script>
+        let pointer = document.getElementById('pointer');
+        let successZone = document.getElementById('successZone');
+        let greatZone = document.getElementById('greatZone');
+        let resultDisplay = document.getElementById('result');
+        let notification = document.getElementById('notification');
+        let comboCounter = document.getElementById('comboCounter');
+        let modeIndicator = document.getElementById('modeIndicator');
+        let instructions = document.getElementById('instructions');
+        
+        let isActive = false;
+        let gameActive = false;
+        let pointerAngle = 0;
+        let successStart = 0;
+        let successSize = 0;
+        let startAngle = 0;
+        let hasMadeFullCircle = false;
+        let combo = 0;
+        let pointerDirection = 1;
+        let animationId = null;
+        let yellowOnlyStreak = 0;
+        let hasPassedZone = false;
+
+        let successCount = 0;
+        let failCount = 0;
+        let greatCount = 0;
+
+        const difficulties = {
+            easy: { 
+                speed: 2, 
+                zoneSize: { min: 60, max: 90 }, 
+                reverseChance: 0, 
+                yellowOnlyChance: 0,
+                autoMode: false,
+                hasAutoFail: false
+            },
+            medium: { 
+                speed: 3, 
+                zoneSize: { min: 45, max: 75 }, 
+                reverseChance: 0, 
+                yellowOnlyChance: 0,
+                autoMode: false,
+                hasAutoFail: true
+            },
+            hard: { 
+                speed: 4, 
+                zoneSize: { min: 25, max: 45 },
+                reverseChance: 0.3, 
+                yellowOnlyChance: 0.2,
+                autoMode: true,
+                hasAutoFail: true
+            },
+            impossible: { 
+                speed: 5, 
+                zoneSize: { min: 15, max: 30 },
+                reverseChance: 0.5, 
+                yellowOnlyChance: 0.4,
+                autoMode: true,
+                hasAutoFail: true
+            }
+        };
+
+        let currentDifficulty = 'medium';
+        let pointerSpeed = difficulties[currentDifficulty].speed;
+
+        function setDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            pointerSpeed = difficulties[difficulty].speed;
+            yellowOnlyStreak = 0;
+            
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateModeIndicator();
+        }
+
+        function updateModeIndicator() {
+            const isAutoMode = difficulties[currentDifficulty].autoMode;
+            if (isAutoMode) {
+                modeIndicator.textContent = "Режим: Автоматический (нажмите SPACE для старта)";
+                modeIndicator.style.color = "#e74c3c";
+                instructions.textContent = "";
+            } else {
+                modeIndicator.textContent = "Режим: Ручной (нажмите SPACE для начала)";
+                modeIndicator.style.color = "#3498db";
+                instructions.textContent = "";
+            }
+        }
+
+        function startGame() {
+            if (gameActive) return;
+            gameActive = true;
+            combo = 0;
+            updateCombo();
+            
+            if (difficulties[currentDifficulty].autoMode) {
+                startSkillCheck();
+            }
+        }
+
+        function startNextSkillCheck() {
+            if (!gameActive) return;
+            
+            setTimeout(() => {
+                if (!gameActive) return;
+                startSkillCheck();
+            }, 800);
+        }
+
+        function showZones() {
+            successZone.style.setProperty('--zone-opacity', '1');
+            greatZone.style.setProperty('--zone-opacity', '1');
+        }
+
+        function hideZones() {
+            successZone.style.setProperty('--zone-opacity', '0');
+            greatZone.style.setProperty('--zone-opacity', '0');
+        }
+
+        function startSkillCheck() {
+            if (isActive || !gameActive) return;
+            
+            isActive = true;
+            pointerAngle = Math.random() * 360;
+            startAngle = pointerAngle;
+            hasMadeFullCircle = false;
+            hasPassedZone = false;
+            resultDisplay.textContent = '';
+            
+            pointerDirection = Math.random() < difficulties[currentDifficulty].reverseChance ? -1 : 1;
+            
+            notification.style.opacity = '1';
+            showZones();
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 1000);
+
+            const zoneSizeRange = difficulties[currentDifficulty].zoneSize;
+            
+            let yellowOnly = false;
+            if (currentDifficulty === 'hard' || currentDifficulty === 'impossible') {
+                const yellowChance = difficulties[currentDifficulty].yellowOnlyChance;
+                if (currentDifficulty === 'impossible' && yellowOnlyStreak > 0) {
+                    yellowOnly = Math.random() < (yellowChance + 0.2);
+                } else {
+                    yellowOnly = Math.random() < yellowChance;
+                }
+                
+                if (yellowOnly) {
+                    yellowOnlyStreak++;
+                } else {
+                    yellowOnlyStreak = 0;
+                }
+            }
+            
+            if (yellowOnly) {
+                successSize = 10;
+                successZone.style.setProperty('--size', '0deg');
+            } else {
+                successSize = Math.random() * (zoneSizeRange.max - zoneSizeRange.min) + zoneSizeRange.min;
+                successZone.style.setProperty('--size', `${successSize}deg`);
+            }
+            
+            const zoneOffset = 60;
+            successStart = (pointerAngle + zoneOffset) % 360;
+            
+            if (successStart + successSize > 360) {
+                successStart = 360 - successSize;
+            }
+
+            successZone.style.setProperty('--start', `${successStart}deg`);
+            greatZone.style.setProperty('--start', `${successStart}deg`);
+            greatZone.style.setProperty('--size', `10deg`);
+
+            startAnimation();
+        }
+
+        function startAnimation() {
+            if (!isActive) return;
+            
+            function animate() {
+                if (!isActive) return;
+                
+                pointerAngle += pointerSpeed * pointerDirection;
+                
+                let displayAngle = pointerAngle % 360;
+                if (displayAngle < 0) displayAngle += 360;
+
+                pointer.style.transform = `translate(-50%, -100%) rotate(${displayAngle}deg)`;
+                
+                if (!hasPassedZone) {
+                    let normalizedAngle = pointerAngle % 360;
+                    if (normalizedAngle < 0) normalizedAngle += 360;
+                    
+                    if (pointerDirection === 1) {
+                        if (normalizedAngle >= successStart + successSize) {
+                            hasPassedZone = true;
+                        }
+                    } else {
+                        let zoneEnd = (successStart + successSize) % 360;
+                        if (normalizedAngle <= successStart && normalizedAngle >= zoneEnd) {
+                            hasPassedZone = true;
+                        }
+                    }
+                }
+                
+                if (difficulties[currentDifficulty].hasAutoFail && !hasMadeFullCircle && hasPassedZone) {
+                    let rotationSinceZone = Math.abs(pointerAngle - startAngle);
+                    if (rotationSinceZone >= 360) {
+                        hasMadeFullCircle = true;
+                        autoFail();
+                        return;
+                    }
+                }
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function autoFail() {
+            showResult('ПРОПУЩЕНО!', 'fail');
+            failCount++;
+            document.getElementById('failCount').textContent = failCount;
+            combo = 0;
+            updateCombo();
+            gameActive = false;
+            yellowOnlyStreak = 0;
+            stopSkillCheck();
+        }
+
+        function hitSkillCheck() {
+            if (!gameActive) {
+                startGame();
+                return;
+            }
+            
+            if (!isActive && !difficulties[currentDifficulty].autoMode && gameActive) {
+                startSkillCheck();
+                return;
+            }
+            
+            if (isActive) {
+                let normalizedAngle = pointerAngle % 360;
+                if (normalizedAngle < 0) normalizedAngle += 360;
+
+                let hit = false;
+                let isGreat = false;
+
+                const hasGreenZone = successSize > 10;
+
+                if (normalizedAngle >= successStart && normalizedAngle <= successStart + 10) {
+                    hit = true;
+                    isGreat = true;
+                }
+                else if (hasGreenZone && normalizedAngle >= successStart + 10 && normalizedAngle <= successStart + successSize) {
+                    hit = true;
+                    isGreat = false;
+                }
+
+                if (successStart + successSize > 360) {
+                    let overflow = successStart + successSize - 360;
+                    let greatOverflow = successStart + 10 - 360;
+                    
+                    if (normalizedAngle >= successStart || normalizedAngle <= greatOverflow) {
+                        hit = true;
+                        isGreat = true;
+                    }
+                    else if (hasGreenZone && normalizedAngle > greatOverflow && normalizedAngle <= overflow) {
+                        hit = true;
+                        isGreat = false;
+                    }
+                }
+
+                if (isGreat) {
+                    showResult('ОТЛИЧНО!', 'great');
+                    greatCount++;
+                    document.getElementById('greatCount').textContent = greatCount;
+                    combo++;
+                } else if (hit) {
+                    showResult('УСПЕШНО!', 'success');
+                    successCount++;
+                    document.getElementById('successCount').textContent = successCount;
+                    combo++;
+                } else {
+                    showResult('МИМО!', 'fail');
+                    failCount++;
+                    document.getElementById('failCount').textContent = failCount;
+                    combo = 0;
+                    gameActive = false;
+                    yellowOnlyStreak = 0;
+                }
+
+                updateCombo();
+                stopSkillCheck();
+                
+                if (gameActive && difficulties[currentDifficulty].autoMode) {
+                    startNextSkillCheck();
+                }
+            }
+        }
+
+        function updateCombo() {
+            comboCounter.textContent = `Стрик: ${combo}`;
+            if (combo >= 3) {
+                comboCounter.style.color = '#e74c3c';
+                comboCounter.style.textShadow = '0 0 10px #e74c3c';
+            } else if (combo >= 1) {
+                comboCounter.style.color = '#f1c40f';
+                comboCounter.style.textShadow = '0 0 10px #f1c40f';
+            } else {
+                comboCounter.style.color = '#95a5a6';
+                comboCounter.style.textShadow = 'none';
+            }
+        }
+
+        function showResult(text, className) {
+            resultDisplay.textContent = text;
+            resultDisplay.className = `result ${className}`;
+        }
+
+        function stopSkillCheck() {
+            isActive = false;
+            hasMadeFullCircle = false;
+            hasPassedZone = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            hideZones();
+            
+            setTimeout(() => {
+                successZone.style.setProperty('--size', '0deg');
+                greatZone.style.setProperty('--size', '0deg');
+            }, 300);
+        }
+
+        function resetGame() {
+            gameActive = false;
+            stopSkillCheck();
+            successCount = 0;
+            failCount = 0;
+            greatCount = 0;
+            combo = 0;
+            yellowOnlyStreak = 0;
+            document.getElementById('successCount').textContent = '0';
+            document.getElementById('failCount').textContent = '0';
+            document.getElementById('greatCount').textContent = '0';
+            resultDisplay.textContent = '';
+            pointer.style.transform = `translate(-50%, -100%) rotate(0deg)`;
+            notification.style.opacity = '0';
+            updateCombo();
+            
+            hideZones();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                hitSkillCheck();
+            }
+        });
+
+        successZone.style.setProperty('--size', '0deg');
+        greatZone.style.setProperty('--size', '0deg');
+        hideZones();
+        updateModeIndicator();
+    </script>
+</body>
+</html>
